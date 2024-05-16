@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {       
     private Outline outline;
-    private Vector2 originalPosition;// 画像の初期位置
+    public Vector2 originalPosition;// 画像の初期位置
 
     public GameObject Enemy_HP;
     public GameObject Player_HP;
@@ -19,9 +19,14 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public static bool player_Turn_End = false;
     public static bool enemy_Turn_End = false;
 
+    public static bool isSelected = false;    
+
+    public static RectTransform CardPrefab;
+
     public void Start()
     {
         outline = GetComponent<Outline>();
+        
         originalPosition = transform.localPosition;// 画像の初期位置を保存
     }
 
@@ -36,18 +41,24 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
         Debug.Log("----------OnBeginDrag----------");
         outline.enabled = true;
+
+        CardPrefab = GetComponent<RectTransform>(); 
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("OnDrag");
-        MoveWhenDrag();
+        // MoveWhenDrag();
+        isSelected = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log("----------OnEndDrag----------");
         outline.enabled = false;
+
+        isSelected = false;
+
         this.transform.localPosition = originalPosition;// 画像を元の位置に戻す
 
         PlayerMovement();
@@ -55,8 +66,6 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         Debug.Log("Player Count: " + p_Count);
         Debug.Log("Enemy Count: " + e_Count);
-
-        
     }
 
     private void MoveWhenDrag()
@@ -73,7 +82,7 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     private void PlayerMovement()
     {
-        if(gameObject.tag == "P_ATK")
+        if(gameObject.tag == "P_ATK" && MouseUIInteraction.isMouseOverUI == true)
         {
             if(e_HP > 0)
             {
