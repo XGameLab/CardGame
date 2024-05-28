@@ -10,14 +10,20 @@ public class MouseUIInteraction : MonoBehaviour
     {
         outline = GetComponent<Outline>();
     }
-    
+
     void Update()
     {
-        if(OnDragCard.isSelected == true)
+        if (OnDragCard.isSelected)
         {
             Vector2 mousePosition = Input.mousePosition;
             RectTransform rectTransform = this.transform as RectTransform;
-            isMouseOverUI = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition);
+
+            // 获取Canvas和Camera
+            Canvas canvas = GetComponentInParent<Canvas>();
+            Camera camera = canvas.worldCamera;
+
+            // 确保使用相机来检测屏幕坐标
+            isMouseOverUI = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition, camera);
 
             if (isMouseOverUI)
             {
@@ -30,7 +36,7 @@ public class MouseUIInteraction : MonoBehaviour
             }
             // Debug.Log(isMouseOverUI);
         }
-        if(OnDragCard.isSelected == false)
+        else
         {
             outline.enabled = false;
         }

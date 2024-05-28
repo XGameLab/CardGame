@@ -21,11 +21,17 @@ public class MapPoint : MonoBehaviour
     {
         Vector2 mousePosition = Input.mousePosition;
         RectTransform rectTransform = this.transform as RectTransform;
-        isMouseOverMapPoint = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition);
-        
-        if(isMouseOverMapPoint)
+
+        // 获取Canvas和Camera
+        Canvas canvas = GetComponentInParent<Canvas>();
+        Camera camera = canvas.worldCamera;
+
+        // 确保使用相机来检测屏幕坐标
+        isMouseOverMapPoint = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition, camera);
+
+        if (isMouseOverMapPoint)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 outline.enabled = true;
                 // MapPhoto.enabled = true;
@@ -33,11 +39,5 @@ public class MapPoint : MonoBehaviour
                 // DefaultPhoto.enabled = false;
             }
         }
-        // if(!isMouseOverMapPoint)
-        // {
-        //     outline.enabled = false;
-        //     MapPhoto.enabled = false;
-        //     DefaultPhoto.enabled = true;
-        // }
     }
 }

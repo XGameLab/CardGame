@@ -44,44 +44,52 @@ public class BezierArrows : MonoBehaviour
 
     private void Update()
     {
-
-        if(OnDragCard.isSelected == true)
+        if (OnDragCard.isSelected == true)
         {
+            // 获取拖拽卡片的世界空间中心位置
             Vector3 objectCenterWorldSpace = OnDragCard.CardPrefab.GetComponent<RectTransform>().transform.position;
-            this.controlPoints[0] = new Vector2(objectCenterWorldSpace.x, objectCenterWorldSpace.y + 140f);
+            // 将世界空间坐标转换为本地坐标
+            Vector2 objectCenterLocalPosition = this.origin.InverseTransformPoint(objectCenterWorldSpace);
+            this.controlPoints[0] = new Vector2(objectCenterLocalPosition.x, objectCenterLocalPosition.y + 100f);
 
-            // this.controlPoints[0] = new Vector2(this.origin.position.x, this.origin.position.y);
+            // 将鼠标位置从屏幕空间转换为世界空间，然后转换为本地坐标
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseLocalPosition = this.origin.InverseTransformPoint(mouseWorldPosition);
+            this.controlPoints[3] = new Vector2(mouseLocalPosition.x, mouseLocalPosition.y);
 
-            this.controlPoints[3] = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             this.controlPoints[1] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0]) * this.controlPointFactors[0];
             this.controlPoints[2] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0]) * this.controlPointFactors[1];
 
-            for(int i=0; i<this.arrowNodes.Count; i++)
+            for (int i = 0; i < this.arrowNodes.Count; i++)
             {
                 var t = Mathf.Log(1f * i / (this.arrowNodes.Count - 1) + 1f, 2f);
 
-                this.arrowNodes[i].position = 
-                    Mathf.Pow(1-t, 3) * this.controlPoints[0] + 
-                    3 * Mathf.Pow(1-t, 2) * t * this.controlPoints[1] +
-                    3 * (1-t) * Mathf.Pow(t, 2) * this.controlPoints[2] + 
+                Vector2 bezierPosition = 
+                    Mathf.Pow(1 - t, 3) * this.controlPoints[0] + 
+                    3 * Mathf.Pow(1 - t, 2) * t * this.controlPoints[1] +
+                    3 * (1 - t) * Mathf.Pow(t, 2) * this.controlPoints[2] + 
                     Mathf.Pow(t, 3) * this.controlPoints[3];
-                
-                if(i>0)
+
+                // 将贝塞尔曲线的位置设置为本地坐标
+                this.arrowNodes[i].localPosition = new Vector3(bezierPosition.x, bezierPosition.y, 0f);
+
+                if (i > 0)
                 {
-                    var euler = new Vector3(0, 0, Vector2.SignedAngle(Vector2.up, this.arrowNodes[i].position - this.arrowNodes[i-1].position));
-                    this.arrowNodes[i].rotation = Quaternion.Euler(euler);
+                    var euler = new Vector3(0, 0, Vector2.SignedAngle(Vector2.up, this.arrowNodes[i].localPosition - this.arrowNodes[i - 1].localPosition));
+                    this.arrowNodes[i].localRotation = Quaternion.Euler(euler);
                 }
-                
+
                 var scale = this.scaleFactor * (1f - 0.03f * (this.arrowNodes.Count - 1 - i));
                 this.arrowNodes[i].localScale = new Vector3(scale, scale, 1f);
             }
-            this.arrowNodes[0].transform.rotation = this.arrowNodes[1].transform.rotation;   
+            this.arrowNodes[0].localRotation = this.arrowNodes[1].localRotation;
         }
         else
         {
-            this.arrowNodes.ForEach(a => a.GetComponent<RectTransform>().position = new Vector2(-1000, -1000));
+            this.arrowNodes.ForEach(a => a.GetComponent<RectTransform>().localPosition = new Vector2(-1000, -1000));
         }
     }
+
     #endregion
 }
 
