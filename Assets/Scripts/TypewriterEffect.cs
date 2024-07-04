@@ -12,7 +12,7 @@ public class TypewriterEffect : MonoBehaviour
     public Image speakerImage; // 用于显示说话人图像的 Image 组件
     public Image background; // 用于显示背景的 Image 组件
     public float typingSpeed = 0.05f;
-    private string filePath = "dialogue"; // 文本文件的路径，不需要扩展名
+    public string fileName = "dialogue"; // 公共变量用于指定要读取的文本文件名（无扩展名）
     private string separator = "\n"; // 指定的分隔符
 
     private List<DialogueLine> dialogueLines;
@@ -47,7 +47,7 @@ public class TypewriterEffect : MonoBehaviour
         speakerImage.enabled = false; // 默认情况下不显示说话人图像
 
         // 从txt文件中读取内容并按分隔符分割
-        dialogueLines = ReadTextFromResources(filePath, separator);
+        dialogueLines = ReadTextFromResources(fileName, separator);
         if (dialogueLines.Count > 0)
         {
             StartCoroutine(TypeText(dialogueLines[currentLineIndex]));
@@ -197,4 +197,3 @@ public class TypewriterEffect : MonoBehaviour
         }
     }
 }
-

@@ -13,6 +13,7 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public GameObject Player_HP;
     private int e_HP = 10;
     private int p_HP = 10;
+    private int turnEndCount = 1;
     public static int e_Count = 0;
     public static int p_Count = 0;
 
@@ -22,6 +23,18 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public static bool isSelected = false;    
 
     public static RectTransform CardPrefab;
+
+    private bool isPlayerAtk = false;
+    private bool isPlayerDef = false;
+    private bool isPlayerHeal = false;
+    private bool isPlayerThrow = false;
+    private bool isPlayerCnt = false;
+
+    private bool isEnemyAtk = false;
+    private bool isEnemyDef = false;
+    private bool isEnemyHeal = false;
+    private bool isEnemyThrow = false;
+    private bool isEnemyCnt = false;
 
     public void Start()
     {
@@ -84,13 +97,9 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
         if(gameObject.tag == "P_ATK" && MouseUIInteraction.isMouseOverUI == true)
         {
-            if(e_HP > 0)
-            {
-                e_HP--;
-            }
-            Enemy_HP.GetComponent<Text>().text = "HP: " + e_HP;
+            isPlayerAtk = true;
 
-            if(p_Count < 3)
+            if(p_Count < turnEndCount)
             {
                 p_Count++;
                 Debug.Log("行動 " + p_Count);
@@ -100,27 +109,24 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             
         if(gameObject.tag == "P_DEF")
         {
-            if(p_Count < 3)
+            isPlayerDef = true;
+
+            if(p_Count < turnEndCount)
             {
                 p_Count++;
                 Debug.Log("行動 " + p_Count);
             }
             Debug.Log("Player's Defense!");
         }
-   
     }
 
     private void EnemyMovement()
     {
         if(gameObject.tag == "E_ATK")
         {
-            if(p_HP > 0)
-            {
-                p_HP--;
-            }
-            Player_HP.GetComponent<Text>().text = "HP: " + p_HP;
+            isEnemyAtk = true;
 
-            if(e_Count < 3)
+            if(e_Count < turnEndCount)
             {
                 e_Count++;
                 Debug.Log("行動 " + e_Count);
@@ -130,7 +136,9 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             
         if(gameObject.tag == "E_DEF")
         {
-            if(e_Count < 3)
+            isEnemyDef = true;
+
+            if(e_Count < turnEndCount)
             {
                 e_Count++;
                 Debug.Log("行動 " + e_Count);
@@ -141,9 +149,9 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     private void PlayerTurnEnd()
     {
-        if(p_Count >= 3)
+        if(p_Count >= turnEndCount)
         {
-            if(gameObject.tag == "P_ATK" || gameObject.tag == "P_DEF")
+            if(gameObject.tag == "P_ATK" || gameObject.tag == "P_DEF" || gameObject.tag == "P_Heal" || gameObject.tag == "P_Throw" || gameObject.tag == "P_CNT")
             {
                 this.gameObject.SetActive(false);
             }
@@ -153,9 +161,9 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     private void EnemyTurnEnd()
     {
-        if(e_Count >= 3)
+        if(e_Count >= turnEndCount)
         {
-            if(gameObject.tag == "E_ATK" || gameObject.tag == "E_DEF")
+            if(gameObject.tag == "E_ATK" || gameObject.tag == "E_DEF" || gameObject.tag == "E_Heal" || gameObject.tag == "E_Throw" || gameObject.tag == "E_CNT")
             {
                 this.gameObject.SetActive(false);
             }
@@ -171,6 +179,64 @@ public class OnDragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             player_Turn_End = false;
             enemy_Turn_End = false;
             Debug.Log("OHHHHHHH! Battle Start!");//2回出るバグあり。。。
+            DamageCal();
+            ResetTurn();
         }
+    }
+
+    private void EnemyHPDown()
+    {
+        if(e_HP > 0)
+        {
+            e_HP--;
+        }
+        Enemy_HP.GetComponent<Text>().text = "HP: " + e_HP;
+    }
+
+    private void PlayerHPDown()
+    {
+        if(p_HP > 0)
+        {
+            p_HP--;
+        }
+        Player_HP.GetComponent<Text>().text = "HP: " + p_HP;
+    }
+
+    private void DamageCal()
+    {
+        if (isPlayerAtk && isEnemyAtk)
+        {
+            EnemyHPDown();
+            PlayerHPDown();
+        }
+        else
+        {
+            if (isPlayerAtk && !isEnemyDef && !isEnemyCnt)
+            {
+                EnemyHPDown();
+            }
+            if (isEnemyAtk && !isPlayerDef && !isPlayerCnt)
+            {
+                PlayerHPDown();
+            }
+        }
+    }
+
+    private void ResetTurn()
+    {
+        isPlayerAtk = false;
+        isPlayerDef = false;
+        isPlayerHeal = false;
+        isPlayerThrow = false;
+        isPlayerCnt = false;
+
+        isEnemyAtk = false;
+        isEnemyDef = false;
+        isEnemyHeal = false;
+        isEnemyThrow = false;
+        isEnemyCnt = false;
+
+        p_Count = 0;
+        e_Count = 0;
     }
 }

@@ -35,12 +35,12 @@ public class GameController : MonoBehaviour
                 break;
             case game_Status.Battle:
                 countDown();
-                OnDragCard.p_Count = 0;
-                OnDragCard.e_Count = 0;
+                // OnDragCard.p_Count = 0;
+                // OnDragCard.e_Count = 0;
                 break;
         }
     }
-
+    // TURN END countDown 
     private void countDown()
     {
         if(countDown_Time > 0)
