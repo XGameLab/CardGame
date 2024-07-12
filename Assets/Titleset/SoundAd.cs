@@ -13,7 +13,7 @@ public class SoundAd : MonoBehaviour
     [SerializeField] Slider BGMSlider;
     [SerializeField] Slider SESlider;
 
-    public GameObject eventsystem;//消したくないオブジェクト
+    public GameObject GameStateManager;//消したくないオブジェクト
     void Awake()
     {
        

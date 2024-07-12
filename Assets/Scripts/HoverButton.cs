@@ -120,10 +120,20 @@ public class HoverButton : MonoBehaviour
         else if (index == 2 && creditsImage != null) // 点击 Credits 按钮（索引为2）时显示Raw Image
         {
             creditsImage.gameObject.SetActive(true);
+            GameStateManager.Instance.AudioSource.mute = true;
         }
         else if (index == 3) // 点击 Exit 按钮（索引为3）时退出游戏
         {
             Application.Quit();
+        }
+        else if (index == 4) // 点击 Back 按钮
+        {
+            optionPanel.SetActive(false);
+        }
+        else if (index == 5) // 点击 Credits 按钮（索引为2）时显示Raw Image
+        {
+            creditsImage.gameObject.SetActive(false);
+            GameStateManager.Instance.AudioSource.mute = false;
         }
         else
         {

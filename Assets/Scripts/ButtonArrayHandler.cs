@@ -7,6 +7,7 @@ public class ButtonArrayHandler : MonoBehaviour
     public Button[] buttons;
     public RawImage[] images;
     public RawImage[] stageIMG;
+    public RawImage[] clearedIMG; // 新增
     public RawImage littleBar;
     public RawImage bigBar;
     public RawImage circle;
@@ -36,11 +37,13 @@ public class ButtonArrayHandler : MonoBehaviour
     private Button lastClickedButton;
     private Vector2[] buttonTargetPositions;
     private Vector2[] imageTargetPositions;
-    private int lastSelectedIndex = 0;
+    private Vector2[] clearedImageTargetPositions; // 新增
 
     private SceneTransition sceneTransition;
     private float scrollCooldown = 0.15f; // 滚动延迟时间
     private float scrollTimer = 0f; // 滚动计时器
+
+    private bool isEnterStage = false;
 
     void Start()
     {
@@ -66,7 +69,11 @@ public class ButtonArrayHandler : MonoBehaviour
 
         buttonTargetPositions = new Vector2[buttons.Length];
         imageTargetPositions = new Vector2[images.Length];
-        UpdateButtonAndImagePositions(initialButton, true);
+        clearedImageTargetPositions = new Vector2[clearedIMG.Length]; // 新增
+
+        // 设置初始位置
+        int initialIndex = GameStateManager.lastSelectedIndex;
+        OnButtonClick(buttons[initialIndex]);  // 更新为OnButtonClick
 
         if (buttonTexts.Length != buttons.Length)
         {
@@ -97,6 +104,12 @@ public class ButtonArrayHandler : MonoBehaviour
         {
             sceneTransition = transitionCanvas.GetComponent<SceneTransition>();
         }
+
+        // 初始化clearedIMG的显示状态
+        for (int i = 0; i < clearedIMG.Length; i++)
+        {
+            clearedIMG[i].gameObject.SetActive(GameStateManager.Instance.isStageCleared[i]);
+        }
     }
 
     void Update()
@@ -126,18 +139,28 @@ public class ButtonArrayHandler : MonoBehaviour
             rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, imageTargetPositions[index], moveSpeed * Time.deltaTime);
         }
 
-        // 检测鼠标滚轮输入并更新按钮和图片位置
-        scrollTimer += Time.deltaTime;
-        if (scrollTimer >= scrollCooldown)
+        foreach (RawImage image in clearedIMG) // 新增
         {
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (Mathf.Abs(scroll) > 0.05f)
+            RectTransform rectTransform = image.GetComponent<RectTransform>();
+            int index = System.Array.IndexOf(clearedIMG, image);
+            rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, clearedImageTargetPositions[index], moveSpeed * Time.deltaTime);
+        }
+
+        if(!isEnterStage)
+        {
+            // 检测鼠标滚轮输入并更新按钮和图片位置
+            scrollTimer += Time.deltaTime;
+            if (scrollTimer >= scrollCooldown)
             {
-                int newIndex = lastSelectedIndex + (scroll > 0 ? -1 : 1);
-                if (newIndex >= 0 && newIndex < buttons.Length)
+                float scroll = Input.GetAxis("Mouse ScrollWheel");
+                if (Mathf.Abs(scroll) > 0.05f)
                 {
-                    OnButtonClick(buttons[newIndex]);
-                    scrollTimer = 0f; // 重置计时器
+                    int newIndex = GameStateManager.lastSelectedIndex + (scroll > 0 ? -1 : 1);
+                    if (newIndex >= 0 && newIndex < buttons.Length)
+                    {
+                        OnButtonClick(buttons[newIndex]);
+                        scrollTimer = 0f; // 重置计时器
+                    }
                 }
             }
         }
@@ -148,7 +171,7 @@ public class ButtonArrayHandler : MonoBehaviour
         UpdateButtonAndImagePositions(clickedButton, false);
 
         int clickedIndex = System.Array.IndexOf(buttons, clickedButton);
-        lastSelectedIndex = clickedIndex;
+        GameStateManager.lastSelectedIndex = clickedIndex;
 
         if (clickedIndex >= 0 && clickedIndex < buttonTexts.Length)
         {
@@ -189,13 +212,15 @@ public class ButtonArrayHandler : MonoBehaviour
 
     void EnterStage()
     {
-        if (lastSelectedIndex >= 0 && lastSelectedIndex < stageIMG.Length)
+        isEnterStage = true;
+        
+        if (GameStateManager.lastSelectedIndex >= 0 && GameStateManager.lastSelectedIndex < stageIMG.Length)
         {
-            stageIMG[lastSelectedIndex].gameObject.SetActive(true);
+            stageIMG[GameStateManager.lastSelectedIndex].gameObject.SetActive(true);
         }
         buttonQuit.gameObject.SetActive(true);
         buttonM.gameObject.SetActive(false);
-        startButtons[lastSelectedIndex].gameObject.SetActive(true); // 修改这里
+        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(true); // 修改这里
         buttonBG.gameObject.SetActive(true);
 
         foreach (RawImage image in images)
@@ -213,23 +238,46 @@ public class ButtonArrayHandler : MonoBehaviour
         bigBar.gameObject.SetActive(false);
         circle.gameObject.SetActive(true);
 
-        if (lastSelectedIndex >= 0 && lastSelectedIndex < titles.Length && lastSelectedIndex < stageTexts.Length)
+        foreach (RawImage img in clearedIMG) // 修改此部分
         {
-            titleText.text = titles[lastSelectedIndex];
+            img.gameObject.SetActive(false);
+        }
+
+        if (GameStateManager.lastSelectedIndex >= 0 && GameStateManager.lastSelectedIndex < titles.Length && GameStateManager.lastSelectedIndex < stageTexts.Length)
+        {
+            titleText.text = titles[GameStateManager.lastSelectedIndex];
             titleText.gameObject.SetActive(true);
-            stageTexts[lastSelectedIndex].gameObject.SetActive(true);
+            stageTexts[GameStateManager.lastSelectedIndex].gameObject.SetActive(true);
         }
     }
 
     void ExitStage()
     {
-        if (lastSelectedIndex >= 0 && lastSelectedIndex < stageIMG.Length)
+        isEnterStage = false;
+
+        // 确保在退出阶段时禁用所有stageIMG, stageTexts和startButtons
+        foreach (var img in stageIMG)
         {
-            stageIMG[lastSelectedIndex].gameObject.SetActive(false);
+            img.gameObject.SetActive(false);
+        }
+        foreach (var text in stageTexts)
+        {
+            text.gameObject.SetActive(false);
+        }
+        foreach (var button in startButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+
+        if (GameStateManager.lastSelectedIndex >= 0 && GameStateManager.lastSelectedIndex < stageIMG.Length)
+        {
+            stageIMG[GameStateManager.lastSelectedIndex].gameObject.SetActive(false);
+            titleText.gameObject.SetActive(false);
+            stageTexts[GameStateManager.lastSelectedIndex].gameObject.SetActive(false);
         }
         buttonQuit.gameObject.SetActive(false);
         buttonM.gameObject.SetActive(true);
-        startButtons[lastSelectedIndex].gameObject.SetActive(false); // 修改这里
+        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(false); // 修改这里
         buttonBG.gameObject.SetActive(false);
 
         foreach (RawImage image in images)
@@ -246,6 +294,12 @@ public class ButtonArrayHandler : MonoBehaviour
         littleBar.gameObject.SetActive(false);
         bigBar.gameObject.SetActive(true);
         circle.gameObject.SetActive(false);
+
+        // 新增，退出阶段时根据isStageCleared设置clearedIMG的状态
+        for (int i = 0; i < clearedIMG.Length; i++)
+        {
+            clearedIMG[i].gameObject.SetActive(GameStateManager.Instance.isStageCleared[i]);
+        }
 
         titleText.gameObject.SetActive(false);
         foreach (var text in stageTexts)
@@ -302,6 +356,19 @@ public class ButtonArrayHandler : MonoBehaviour
             {
                 RectTransform rectTransform = images[i].GetComponent<RectTransform>();
                 rectTransform.anchoredPosition = imageTargetPositions[i];
+            }
+        }
+
+        for (int i = 0; i < clearedIMG.Length; i++) // 修改此部分
+        {
+            float initialX = -400f + i * imageSpacing;
+            float newX = initialX + (i - clickedIndex) * imageSpacing - i * imageSpacing;
+            clearedImageTargetPositions[i] = new Vector2(newX, clearedIMG[i].GetComponent<RectTransform>().anchoredPosition.y);
+
+            if (initialSetup)
+            {
+                RectTransform rectTransform = clearedIMG[i].GetComponent<RectTransform>();
+                rectTransform.anchoredPosition = clearedImageTargetPositions[i];
             }
         }
     }

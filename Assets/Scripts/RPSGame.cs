@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ public class RPSGame : MonoBehaviour
 {
     public Button player1SubmitButton;
     public Button restartButton;
+    public Button winButton;
 
     public Text player1ChoiceText;
     public Text player2ChoiceText;
@@ -74,18 +76,23 @@ public class RPSGame : MonoBehaviour
     private float player1DefendChance = 0;
     private float player2DefendChance = 0;
 
+    private GameStateManager gameStateManager;
+    // public int currentStageIndex; // 手动指定当前场景编号
+
     void Start()
     {
-        //ClearDebugLog();
+        ClearDebugLog();
 
         allButtons = new Button[] {
             player1SubmitButton,
-            restartButton
+            restartButton,
+            winButton
         };
 
         List<Button> buttonList = new List<Button>(FindObjectsOfType<Button>());
         buttonList.Remove(player1SubmitButton);
         buttonList.Remove(restartButton);
+        buttonList.Remove(winButton);
 
         if (buttonList.Count < 10)
         {
@@ -108,9 +115,11 @@ public class RPSGame : MonoBehaviour
 
         player1SubmitButton.onClick.AddListener(Player1Submit);
         restartButton.onClick.AddListener(RestartGame);
+        // winButton.onClick.AddListener(() => SceneManager.LoadScene("NextScene")); // Replace "NextScene" with your scene name
 
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        winButton.gameObject.SetActive(false);
         player1HPChangeText.gameObject.SetActive(false);
         player2HPChangeText.gameObject.SetActive(false);
 
@@ -122,6 +131,9 @@ public class RPSGame : MonoBehaviour
         UpdateHPText();
         UpdateBalanceText();
         EnablePlayer1Buttons(true);
+
+        // 获取GameStateManager实例
+        gameStateManager = GameStateManager.Instance;
     }
 
     void Shuffle(List<string> list)
@@ -660,7 +672,32 @@ public class RPSGame : MonoBehaviour
             button.gameObject.SetActive(false);
         }
 
-        restartButton.gameObject.SetActive(true);
+        // 记录胜负情况
+        if (player1HP > player2HP)
+        {
+            winButton.gameObject.SetActive(true);
+            RecordWin(true); // Player1 wins
+        }
+        else
+        {
+            restartButton.gameObject.SetActive(true);
+            RecordWin(false); // Player2 wins or it's a tie
+        }
+    }
+
+    // 在EndGame方法中记录胜负情况时，使用gameStateManager.lastSelectedIndex
+    void RecordWin(bool player1Wins)
+    {
+        int lastSelectedIndex = GameStateManager.lastSelectedIndex;
+        if (lastSelectedIndex >= 0 && lastSelectedIndex < gameStateManager.isStageCleared.Length)
+        {
+            gameStateManager.isStageCleared[lastSelectedIndex] = player1Wins;
+            Debug.Log($"Stage {lastSelectedIndex} cleared: {player1Wins}");
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid stage index {lastSelectedIndex}.");
+        }
     }
 
     void RestartGame()
@@ -696,20 +733,21 @@ public class RPSGame : MonoBehaviour
 
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        winButton.gameObject.SetActive(false);
 
         player1HPChangeText.gameObject.SetActive(false);
         player2HPChangeText.gameObject.SetActive(false);
 
         ShuffleAndAssignActions();  // 重启游戏时重新洗牌
-        // ClearDebugLog();
+        ClearDebugLog();
     }
 
     // 清除Debug.Log方法
-    // void ClearDebugLog()
-    // {
-    //     var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
-    //     var type = assembly.GetType("UnityEditor.LogEntries");
-    //     var method = type.GetMethod("Clear");
-    //     method.Invoke(new object(), null);
-    // }
+    void ClearDebugLog()
+    {
+        var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+    }
 }
