@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: aad0e002b64dd1a45966ac57aaaf59ca
+guid: 9c1898d47b3eb15479aafbd0fcf883d0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2191668444884831948
-    second: BG2_0
+      213: 1304841783892465040
+    second: Step1BG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG2_0
+      name: Step1BG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 4080
+        height: 2295
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 431f43d4921a591e0800000000000000
-      internalID: -2191668444884831948
+      spriteID: 0955ff860babb1210800000000000000
+      internalID: 1304841783892465040
       vertices: []
       indices: 
       edges: []

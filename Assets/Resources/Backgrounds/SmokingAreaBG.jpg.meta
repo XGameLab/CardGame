@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5ab84fb10c10750469df9157e0193cf4
+guid: da38f838eb586cf44aa86b9643ef5395
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3095648225022645599
-    second: BG1_0
+      213: 2030494789295406423
+    second: SmokingAreaBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG1_0
+      name: SmokingAreaBG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 3875
+        height: 2583
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f551b02c8a3f5fa20800000000000000
-      internalID: 3095648225022645599
+      spriteID: 75dfb3ab044cd2c10800000000000000
+      internalID: 2030494789295406423
       vertices: []
       indices: 
       edges: []

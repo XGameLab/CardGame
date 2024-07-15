@@ -9,6 +9,7 @@ public class RPSGame : MonoBehaviour
     public Button player1SubmitButton;
     public Button restartButton;
     public Button winButton;
+    public Button continueButton;
 
     public Text player1ChoiceText;
     public Text player2ChoiceText;
@@ -86,13 +87,15 @@ public class RPSGame : MonoBehaviour
         allButtons = new Button[] {
             player1SubmitButton,
             restartButton,
-            winButton
+            winButton,
+            continueButton
         };
 
         List<Button> buttonList = new List<Button>(FindObjectsOfType<Button>());
         buttonList.Remove(player1SubmitButton);
         buttonList.Remove(restartButton);
         buttonList.Remove(winButton);
+        buttonList.Remove(continueButton);
 
         if (buttonList.Count < 10)
         {
@@ -115,7 +118,6 @@ public class RPSGame : MonoBehaviour
 
         player1SubmitButton.onClick.AddListener(Player1Submit);
         restartButton.onClick.AddListener(RestartGame);
-        // winButton.onClick.AddListener(() => SceneManager.LoadScene("NextScene")); // Replace "NextScene" with your scene name
 
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
@@ -672,11 +674,20 @@ public class RPSGame : MonoBehaviour
             button.gameObject.SetActive(false);
         }
 
+        int lastSelectedIndex = GameStateManager.lastSelectedIndex;
         // 记录胜负情况
         if (player1HP > player2HP)
         {
-            winButton.gameObject.SetActive(true);
-            RecordWin(true); // Player1 wins
+            if(lastSelectedIndex != 2 && lastSelectedIndex != 3)
+            {
+                winButton.gameObject.SetActive(true);
+                RecordWin(true); // Player1 wins
+            }
+            else
+            {
+                continueButton.gameObject.SetActive(true);
+                RecordWin(true);
+            }
         }
         else
         {
@@ -734,6 +745,7 @@ public class RPSGame : MonoBehaviour
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
         winButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
 
         player1HPChangeText.gameObject.SetActive(false);
         player2HPChangeText.gameObject.SetActive(false);

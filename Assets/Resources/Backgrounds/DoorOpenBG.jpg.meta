@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e02995945ff30e945947ed8d40601b7e
+guid: 8137ade4bd5d0a5459567d403518d57f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -804578841821404791
-    second: Taira_0
+      213: -5236995443950033484
+    second: DoorOpenBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Taira_0
+      name: DoorOpenBG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 800
-        height: 800
+        width: 4080
+        height: 2720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 981a0736ecf85d4f0800000000000000
-      internalID: -804578841821404791
+      spriteID: 4b5e409f3647257b0800000000000000
+      internalID: -5236995443950033484
       vertices: []
       indices: 
       edges: []

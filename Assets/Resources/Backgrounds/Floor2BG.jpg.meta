@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3effd81b27f4c1c4584cc96ed9ef8585
+guid: 234ed015d4795b243ad0454898921d64
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1662757146100091974
-    second: Watanabe_0
+      213: 1165651052547711651
+    second: Floor2BG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Watanabe_0
+      name: Floor2BG_0
       rect:
         serializedVersion: 2
-        x: 46
-        y: 3
-        width: 733
-        height: 776
+        x: 0
+        y: 0
+        width: 4080
+        height: 2720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64cc90190dc431710800000000000000
-      internalID: 1662757146100091974
+      spriteID: 3a2aa27d4793d2010800000000000000
+      internalID: 1165651052547711651
       vertices: []
       indices: 
       edges: []

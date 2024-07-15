@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d898eeab24f75184c8415e0d357c98f6
+guid: ee169b01ed8ff324cb0c2fcaaf0ab698
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8251505574100086631
-    second: BG3_0
+      213: -445593599996323529
+    second: DarkWata_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG3_0
+      name: DarkWata_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 4080
-        height: 3072
+        x: 46
+        y: 3
+        width: 733
+        height: 776
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 990db911663cc7d80800000000000000
-      internalID: -8251505574100086631
+      spriteID: 739180e4bfee0d9f0800000000000000
+      internalID: -445593599996323529
       vertices: []
       indices: 
       edges: []

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 494758633e5c8644da4bffd9e9c18fc2
+guid: d6aa76373b232cb48b9fff121d63886d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3676123852970347093
-    second: Xue_0
+      213: 7653998179898489512
+    second: XP_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Xue_0
+      name: XP_0
       rect:
         serializedVersion: 2
         x: 5
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ba5bc5925d8cbfcc0800000000000000
-      internalID: -3676123852970347093
+      spriteID: 8aaf550cac6783a60800000000000000
+      internalID: 7653998179898489512
       vertices: []
       indices: 
       edges: []

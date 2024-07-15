@@ -21,6 +21,7 @@ public class TypewriterEffect : MonoBehaviour
     public GameObject historyPanel;
     public TextMeshProUGUI historyText; // 用于显示历史记录的 TextMeshProUGUI
     public string[] fileNames; // 公共变量数组，用于指定不同的文本文件名（无扩展名）
+
     private string separator = "\n"; // 指定的分隔符
     public AudioSource backupAudioSource; // 备用AudioSource
     public AudioClip logSound;
@@ -43,6 +44,8 @@ public class TypewriterEffect : MonoBehaviour
     private Dictionary<string, Color> speakerColors = new Dictionary<string, Color>
     {
         { "Wata", new Color(255 / 255f, 215 / 255f, 0 / 255f) },
+        { "DarkWata", new Color(0 / 255f, 0 / 255f, 0 / 255f) },
+        { "XP", new Color(128 / 255f, 0 / 255f, 43 / 255f) },
         { "X", new Color(127 / 255f, 255 / 255f, 212 / 255f) }, // rgb(127, 255, 212)
         { "Tai", new Color(135 / 255f, 246 / 255f, 0 / 255f) },
         { "NPC", Color.green }, // 旁白颜色
@@ -100,9 +103,11 @@ public class TypewriterEffect : MonoBehaviour
         historyButton.onClick.AddListener(ToggleHistory);
 
         // 加载图像资源
-        speakerImages["Wata"] = Resources.Load<Sprite>("Characters/Watanabe");
-        speakerImages["X"] = Resources.Load<Sprite>("Characters/Xue");
-        speakerImages["Tai"] = Resources.Load<Sprite>("Characters/Taira");
+        speakerImages["Wata"] = Resources.Load<Sprite>("Characters/Wata");
+        speakerImages["DarkWata"] = Resources.Load<Sprite>("Characters/DarkWata");
+        speakerImages["XP"] = Resources.Load<Sprite>("Characters/XP");
+        speakerImages["X"] = Resources.Load<Sprite>("Characters/X");
+        speakerImages["Tai"] = Resources.Load<Sprite>("Characters/Tai");
         // 可以根据需要添加更多说话人的图像
 
         speakerImage.enabled = false; // 默认情况下不显示说话人图像
@@ -172,13 +177,14 @@ public class TypewriterEffect : MonoBehaviour
             if (shouldStartBattle)
             {
                 battleStart.gameObject.SetActive(true);
+                logObject.SetActive(false);
             }
             else
             {
                 continueGame.gameObject.SetActive(true);
-                gameStateManager.isStageCleared[lastSelectedIndex] = true;
+                logObject.SetActive(false);
+                gameStateManager.isStageCleared[lastSelectedIndex] = true; 
             }
-            logObject.SetActive(false);
         }
     }
 
