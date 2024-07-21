@@ -13,11 +13,16 @@ public class TypewriterEffect : MonoBehaviour
     public Image background; // 用于显示背景的 Image 组件
     public float typingSpeed = 0.05f;
     public GameObject battleStart;
-    public GameObject continueGame; // 新添加的 GameObject
+    public GameObject continueGame; 
+    public GameObject continueGame1; 
+    public GameObject playerChoose;
+    public GameObject gameEnd;
     public GameObject logObject; 
     public Button historyButton;
     public Button skipButton; // 跳过按钮
     public Button logButton; // 新添加的按钮
+    public Button playerChoose1;
+    public Button playerChoose2;
     public GameObject historyPanel;
     public TextMeshProUGUI historyText; // 用于显示历史记录的 TextMeshProUGUI
     public string[] fileNames; // 公共变量数组，用于指定不同的文本文件名（无扩展名）
@@ -38,6 +43,8 @@ public class TypewriterEffect : MonoBehaviour
     private string lastSoundEffect = "";
     private string lastBgm = "";
     private bool shouldStartBattle = false; // 新增的标志变量
+    private bool shouldPlayerChoose = false;
+    private bool isGameEnd = false;
     private GameStateManager gameStateManager;
 
     // 定义说话人颜色和图像的字典
@@ -102,6 +109,9 @@ public class TypewriterEffect : MonoBehaviour
 
         historyButton.onClick.AddListener(ToggleHistory);
 
+        playerChoose1.onClick.AddListener(OnPlayerChooseButtonClicked);
+        playerChoose2.onClick.AddListener(OnPlayerChooseButtonClicked);
+
         // 加载图像资源
         speakerImages["Wata"] = Resources.Load<Sprite>("Characters/Wata");
         speakerImages["DarkWata"] = Resources.Load<Sprite>("Characters/DarkWata");
@@ -131,6 +141,7 @@ public class TypewriterEffect : MonoBehaviour
         }
         battleStart.gameObject.SetActive(false);
         continueGame.gameObject.SetActive(false); // 初始化 continueGame 为 false
+        continueGame1.gameObject.SetActive(false);
 
         // 给历史记录面板添加点击事件监听
         historyPanel.GetComponent<Button>().onClick.AddListener(HideHistoryPanel);
@@ -174,15 +185,27 @@ public class TypewriterEffect : MonoBehaviour
         }
         else
         {
+            if (logObject != null)
+            {
+                logObject.SetActive(false);
+            }
+
             if (shouldStartBattle)
             {
                 battleStart.gameObject.SetActive(true);
-                logObject.SetActive(false);
+            }
+            else if (shouldPlayerChoose)
+            {
+                playerChoose.gameObject.SetActive(true);
+            }
+            else if (isGameEnd)
+            {
+                gameEnd.gameObject.SetActive(true);
             }
             else
             {
                 continueGame.gameObject.SetActive(true);
-                logObject.SetActive(false);
+                continueGame1.gameObject.SetActive(true);
                 gameStateManager.isStageCleared[lastSelectedIndex] = true; 
             }
         }
@@ -320,9 +343,18 @@ public class TypewriterEffect : MonoBehaviour
             {
                 battleStart.gameObject.SetActive(true); // 显示 battleStart 对象
             }
+            else if(shouldPlayerChoose)
+            {
+                playerChoose.gameObject.SetActive(true);
+            }
+            else if(isGameEnd)
+            {
+                gameEnd.gameObject.SetActive(true);
+            }
             else
             {
                 continueGame.gameObject.SetActive(true); // 显示 continueGame 对象
+                continueGame1.gameObject.SetActive(true);
                 gameStateManager.isStageCleared[lastSelectedIndex] = true;
             }
 
@@ -340,6 +372,12 @@ public class TypewriterEffect : MonoBehaviour
             PlaySoundEffect(logSound);
         }
         AdvanceDialogue();
+    }
+
+    private void OnPlayerChooseButtonClicked()
+    {
+        int lastSelectedIndex = GameStateManager.lastSelectedIndex;
+        gameStateManager.isStageCleared[lastSelectedIndex] = true;
     }
 
     private void ToggleHistory()
@@ -433,6 +471,14 @@ public class TypewriterEffect : MonoBehaviour
                 if (rawLines.Length > 0 && rawLines[rawLines.Length - 1].Trim() == "$Battle")
                 {
                     shouldStartBattle = true;
+                }
+                else if (rawLines.Length > 0 && rawLines[rawLines.Length - 1].Trim() == "$PlayerChoose")
+                {
+                    shouldPlayerChoose = true;
+                }
+                else if (rawLines.Length > 0 && rawLines[rawLines.Length - 1].Trim() == "$GameEnd")
+                {
+                    isGameEnd = true;
                 }
             }
             else

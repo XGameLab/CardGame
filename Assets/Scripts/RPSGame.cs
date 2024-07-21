@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,19 +7,17 @@ public class RPSGame : MonoBehaviour
 {
     public Button player1SubmitButton;
     public Button restartButton;
-    public Button winButton;
     public Button continueButton;
 
     public Text player1ChoiceText;
     public Text player2ChoiceText;
     public Text resultText;
-    public Text player1HPText;
-    public Text player2HPText;
-    public Text player1BalanceText;
-    public Text player2BalanceText;
-
-    public Text player1HPChangeText;
-    public Text player2HPChangeText;
+    public GameObject player1Heart;
+    public GameObject player2Heart;
+    public GameObject player1NoBalance;
+    public GameObject player2NoBalance;
+    public GameObject[] player1BalanceIndicators;
+    public GameObject[] player2BalanceIndicators;
 
     public Sprite attackSprite;
     public Sprite defendSprite;
@@ -47,6 +44,7 @@ public class RPSGame : MonoBehaviour
     public int ThrowToThrowDamage = 2;
     public int CounterDamage = 4;
     public int CounterFailedDamage = 3;
+    public int preDamage = 0;
 
     private string player1Choice = "";
     private string player2Choice = "";
@@ -77,24 +75,26 @@ public class RPSGame : MonoBehaviour
     private float player1DefendChance = 0;
     private float player2DefendChance = 0;
 
-    private GameStateManager gameStateManager;
-    // public int currentStageIndex; // 手动指定当前场景编号
+    //キャラのHPバー
+    public Slider player1HPSlider;
+    public Slider player2HPSlider;
+    public Slider player1HealPreviewSlider;
+    public Slider player2DamagePreviewSlider;
+
+    private RectTransform player1HandleRectTransform;
+    private RectTransform player2HandleRectTransform;
 
     void Start()
     {
-        ClearDebugLog();
-
         allButtons = new Button[] {
             player1SubmitButton,
             restartButton,
-            winButton,
             continueButton
         };
 
         List<Button> buttonList = new List<Button>(FindObjectsOfType<Button>());
         buttonList.Remove(player1SubmitButton);
         buttonList.Remove(restartButton);
-        buttonList.Remove(winButton);
         buttonList.Remove(continueButton);
 
         if (buttonList.Count < 10)
@@ -121,22 +121,54 @@ public class RPSGame : MonoBehaviour
 
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
-        winButton.gameObject.SetActive(false);
-        player1HPChangeText.gameObject.SetActive(false);
-        player2HPChangeText.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
 
         player1SubmitButton.interactable = false;
 
         player1DefendIcon.gameObject.SetActive(false);
         player2DefendIcon.gameObject.SetActive(false);
 
-        UpdateHPText();
-        UpdateBalanceText();
+        player1NoBalance.SetActive(false);
+        player2NoBalance.SetActive(false);
+
         EnablePlayer1Buttons(true);
 
-        // 获取GameStateManager实例
-        gameStateManager = GameStateManager.Instance;
+        // スライダーの初期設定
+        player1HPSlider.maxValue = player1MaxHP;
+        player1HPSlider.value = player1HP;
+        player2HPSlider.maxValue = player2MaxHP;
+        player2HPSlider.value = player2HP;
+
+        player1HealPreviewSlider.maxValue = player1MaxHP;
+        player1HealPreviewSlider.value = player1HP;
+        player1HealPreviewSlider.gameObject.SetActive(false);
+
+        player2DamagePreviewSlider.maxValue = player2MaxHP;
+        player2DamagePreviewSlider.value = player2HP;
+        player2DamagePreviewSlider.gameObject.SetActive(false);
+
+        // ハンドルのRectTransformを取得
+        player1HandleRectTransform = player1HPSlider.handleRect.GetComponent<RectTransform>();
+        player2HandleRectTransform = player2HPSlider.handleRect.GetComponent<RectTransform>();
+
     }
+
+    void Update()
+    {
+        // HPの変動に応じてスライダーを更新
+        player1HPSlider.value = player1HP;
+        player2HPSlider.value = player2HP;
+
+        // 更新心形scale
+        UpdateHeartScale();
+
+        // Debug専用、後で消す
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            player2HP -= player2MaxHP;
+        }
+    }
+
 
     void Shuffle(List<string> list)
     {
@@ -196,8 +228,40 @@ public class RPSGame : MonoBehaviour
     {
         player1Choice = choice;
         player1ChoiceText.text = "Player 1 chose: " + choice;
-        player1HPChangeText.gameObject.SetActive(false);
         player1SubmitButton.interactable = true;
+
+        // 预览伤害和治疗
+        int damagePreview = player2HP;
+        int healPreview = player1HP;
+
+    if(player1Balance > 0)
+    {
+        switch (choice)
+        {
+            case "Attack":
+                damagePreview = player2HP - AtkDamage;
+                break;
+            case "Throw":
+                damagePreview = player2HP - ThrowDamage;
+                break;
+            case "Counter":
+                damagePreview = player2HP - CounterDamage;
+                break;
+            case "Heal":
+                healPreview = Mathf.Min(player1HP + HealPoint, player1MaxHP);
+                break;
+            default:
+                break;
+        }
+    }
+
+        player2DamagePreviewSlider.value = Mathf.Max(damagePreview, 0);
+        player2DamagePreviewSlider.gameObject.SetActive(true);
+
+        player1HealPreviewSlider.value = healPreview;
+        player1HealPreviewSlider.gameObject.SetActive(true);
+
+        player1NoBalance.SetActive(player1Balance == 0);
     }
 
     void Player1Submit()
@@ -205,6 +269,8 @@ public class RPSGame : MonoBehaviour
         player1Submitted = true;
         player1SubmitButton.interactable = false;
         EnablePlayer1Buttons(false);
+        player2DamagePreviewSlider.gameObject.SetActive(false); // 隐藏伤害预览滑动条
+        player1HealPreviewSlider.gameObject.SetActive(false); // 隐藏治疗预览滑动条
         StartCoroutine(CPUChoose());
     }
 
@@ -232,7 +298,7 @@ public class RPSGame : MonoBehaviour
             }
         }
 
-        player2HPChangeText.gameObject.SetActive(false);
+        player2NoBalance.SetActive(player2Balance == 0);
 
         yield return new WaitForSeconds(1); // 等待
 
@@ -283,6 +349,14 @@ public class RPSGame : MonoBehaviour
             if (player2Choice == "Attack" && (player1Choice == "Attack" || player1Choice == "Defend" || player1Choice == "Counter"))
             {
                 player2Balance--;
+            }
+            if (player1Choice == "Attack" && player2Choice == "Heal")
+            {
+                player2Balance--;
+            }
+            if (player2Choice == "Attack" && player1Choice == "Heal")
+            {
+                player1Balance--;
             }
             if (player1Choice == "Throw" && (player2Choice == "Attack" || player2Choice == "Counter"))
             {
@@ -339,6 +413,7 @@ public class RPSGame : MonoBehaviour
                     // Player1 攻击
                     if (player1Choice == "Attack")
                     {
+                        preDamage = AtkDamage;
                         if (player2Choice == "Heal" || player2Choice == "Throw")
                         {
                             player2HP -= AtkDamage;
@@ -378,6 +453,7 @@ public class RPSGame : MonoBehaviour
                 // 防御逻辑处理
                 if (player1Choice == "Defend")
                 {
+                    preDamage = 0;
                     if (player2Choice == "Attack")
                     {
                         player1TookDamage = false;
@@ -413,7 +489,7 @@ public class RPSGame : MonoBehaviour
                     else if (player1Choice == "Throw")
                     {
                         player2DefendChance = Random.value;
-                        
+
                         if (player2DefendChance <= 0.25f)
                         {
                             player2TookDamage = false;
@@ -487,6 +563,7 @@ public class RPSGame : MonoBehaviour
                 // 反击逻辑
                 if (player1Choice == "Counter")
                 {
+                    preDamage = CounterDamage;
                     if (player2Choice == "Attack" || player2Choice == "Throw")
                     {
                         player2HP -= CounterDamage;
@@ -536,13 +613,9 @@ public class RPSGame : MonoBehaviour
             player1HP = Mathf.Max(player1HP, 0);
             player2HP = Mathf.Max(player2HP, 0);
 
-            player1HPChangeText.text = player1HPChange > 0 ? "+" + player1HPChange : player1HPChange.ToString();
-            player2HPChangeText.text = player2HPChange > 0 ? "+" + player2HPChange : player2HPChange.ToString();
-            player1HPChangeText.gameObject.SetActive(true);
-            player2HPChangeText.gameObject.SetActive(true);
-
-            UpdateHPText();
-            UpdateBalanceText();
+            // 更新平衡指示器和心形scale
+            UpdateBalanceIndicators();
+            UpdateHeartScale();
             CheckGameOver();
 
             // 在Debug.Log中显示每回合选择、HP值和平衡值
@@ -597,6 +670,23 @@ public class RPSGame : MonoBehaviour
         }
     }
 
+    void UpdateHeartScale()
+    {
+        if (player1Heart != null)
+        {
+            // 计算 player1Heart 的 scale
+            float player1Scale = player1HP > 0 ? (1.0f - (player1MaxHP - player1HP) * 0.05f) * 70 : 0f; // max scale:70
+            player1Heart.transform.localScale = new Vector3(player1Scale, player1Scale, player1Scale);
+        }
+
+        if (player2Heart != null)
+        {
+            // 计算 player2Heart 的 scale
+            float player2Scale = player2HP > 0 ? (1.0f - (player2MaxHP - player2HP) * 0.05f) * 70 : 0f;
+            player2Heart.transform.localScale = new Vector3(player2Scale, player2Scale, player2Scale);
+        }
+    }
+
     void ResetButtonColors()
     {
         foreach (Button button in player1Buttons)
@@ -625,16 +715,28 @@ public class RPSGame : MonoBehaviour
         }
     }
 
-    void UpdateHPText()
+    void UpdateBalanceIndicators()
     {
-        player1HPText.text = "1P HP: " + player1HP;
-        player2HPText.text = "2P HP: " + player2HP;
-    }
+        // 更新Player1的平衡指示器
+        for (int i = 0; i < player1MaxBalance; i++)
+        {
+            if (i < player1Balance)
+                player1BalanceIndicators[i].SetActive(true);
+            else
+                player1BalanceIndicators[i].SetActive(false);
+        }
 
-    void UpdateBalanceText()
-    {
-        player1BalanceText.text = "1P Balance: " + player1Balance;
-        player2BalanceText.text = "2P Balance: " + player2Balance;
+        // 更新Player2的平衡指示器
+        for (int i = 0; i < player2MaxBalance; i++)
+        {
+            if (i < player2Balance)
+                player2BalanceIndicators[i].SetActive(true);
+            else
+                player2BalanceIndicators[i].SetActive(false);
+        }
+
+        player1NoBalance.SetActive(player1Balance == 0);
+        player2NoBalance.SetActive(player2Balance == 0);
     }
 
     void CheckGameOver()
@@ -643,18 +745,21 @@ public class RPSGame : MonoBehaviour
         {
             resultText.text = "It's a Tie!";
             resultText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
             EndGame();
         }
         else if (player1HP <= 0)
         {
             resultText.text = "Player 2 Wins the Game!";
             resultText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
             EndGame();
         }
         else if (player2HP <= 0)
         {
             resultText.text = "Player 1 Wins the Game!";
             resultText.gameObject.SetActive(true);
+            continueButton.gameObject.SetActive(true);
             EndGame();
         }
     }
@@ -673,42 +778,6 @@ public class RPSGame : MonoBehaviour
         {
             button.gameObject.SetActive(false);
         }
-
-        int lastSelectedIndex = GameStateManager.lastSelectedIndex;
-        // 记录胜负情况
-        if (player1HP > player2HP)
-        {
-            if(lastSelectedIndex != 2 && lastSelectedIndex != 3)
-            {
-                winButton.gameObject.SetActive(true);
-                RecordWin(true); // Player1 wins
-            }
-            else
-            {
-                continueButton.gameObject.SetActive(true);
-                RecordWin(true);
-            }
-        }
-        else
-        {
-            restartButton.gameObject.SetActive(true);
-            RecordWin(false); // Player2 wins or it's a tie
-        }
-    }
-
-    // 在EndGame方法中记录胜负情况时，使用gameStateManager.lastSelectedIndex
-    void RecordWin(bool player1Wins)
-    {
-        int lastSelectedIndex = GameStateManager.lastSelectedIndex;
-        if (lastSelectedIndex >= 0 && lastSelectedIndex < gameStateManager.isStageCleared.Length)
-        {
-            gameStateManager.isStageCleared[lastSelectedIndex] = player1Wins;
-            Debug.Log($"Stage {lastSelectedIndex} cleared: {player1Wins}");
-        }
-        else
-        {
-            Debug.LogWarning($"Invalid stage index {lastSelectedIndex}.");
-        }
     }
 
     void RestartGame()
@@ -724,9 +793,14 @@ public class RPSGame : MonoBehaviour
         player1Submitted = false;
         player1DefendNextRound = false;
         player2DefendNextRound = false;
+        player1BalanceZeroNextTurn = false; // 重置平衡为零的状态
+        player2BalanceZeroNextTurn = false; // 重置平衡为零的状态
+        player1SkipNextTurn = false; // 重置跳过回合的状态
+        player2SkipNextTurn = false; // 重置跳过回合的状态
 
-        UpdateHPText();
-        UpdateBalanceText();
+        // 更新平衡指示器和心形scale
+        UpdateBalanceIndicators();
+        UpdateHeartScale();
 
         foreach (Button button in player1Buttons)
         {
@@ -744,22 +818,13 @@ public class RPSGame : MonoBehaviour
 
         resultText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
-        winButton.gameObject.SetActive(false);
-        continueButton.gameObject.SetActive(false);
 
-        player1HPChangeText.gameObject.SetActive(false);
-        player2HPChangeText.gameObject.SetActive(false);
+        player1DefendIcon.gameObject.SetActive(false);
+        player2DefendIcon.gameObject.SetActive(false);
+
+        player1NoBalance.SetActive(false);
+        player2NoBalance.SetActive(false);
 
         ShuffleAndAssignActions();  // 重启游戏时重新洗牌
-        ClearDebugLog();
-    }
-
-    // 清除Debug.Log方法
-    void ClearDebugLog()
-    {
-        var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
-        var type = assembly.GetType("UnityEditor.LogEntries");
-        var method = type.GetMethod("Clear");
-        method.Invoke(new object(), null);
     }
 }

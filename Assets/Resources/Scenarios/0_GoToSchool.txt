@@ -4,7 +4,7 @@ NPC:通学路
 NPC:【人ごみざわざわSE】
 Wata:遅刻遅刻...
 NPC:【走るSE】
-Wata:走らなきゃヤバい！！
+Wata:走らなきゃヤべー！！
 #MessageSE
 Wata:あれ？
 Wata:Lain（ライン）からメッセージか
@@ -12,11 +12,12 @@ Wata:Taiさん？
 Wata:...
 Wata:...
 NPC:【ふざけるBGM】
-Wata:草
+Wata:www
 Wata:「学校に来るな」だと...
 Wata:ガキのいたずらかよwww
+Wata:潰すぞ！
 Wata:こんなの無視無視
-Wata:何があったとしても遅刻はアウトだ
+Wata:何があったとしても遅刻はゴミだ
 #GenkiSE
 Wata:だって！
 #GenkiSE
@@ -37,10 +38,10 @@ NPC:【明るいBGM】
 Wata:はぁ...はぁ
 #YattaSE
 Wata:やっと着いた
-Wata:まだ間に合えるかも！
+Wata:まだ間に合うかも！
 Wata:そういえば
 Wata:Taiのやつ
-Wata:謝罪の準備はできたかなw
+Wata:覚悟しとけよw
 NPC:【裏があるBGM】
 NPC:Wataは学校に入った
 NPC:これから何が発生するのか

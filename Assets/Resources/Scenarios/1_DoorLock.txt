@@ -9,10 +9,10 @@ NPC:【ロックされたドアSE】
 Wata:あれ？
 Wata:鍵がかかっているぞ！
 #OmgSE
-Wata:入らないじゃない...
+Wata:入れなくね...
 Wata:...あ！
 Wata:またTaiの仕業か！
-Wata:ひどすぎwww
+Wata:何してんだあいつwww
 Wata:どんだけ俺の顔見たくないんだよw
 Wata:とりあえず
 Wata:ビルに入る方法をさがs...
