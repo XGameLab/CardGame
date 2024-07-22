@@ -15,7 +15,7 @@ public class Player2AI : MonoBehaviour
         }
     }
 
-    public string Player2Action()
+    public string DecidePlayer2Action()
     {
         if (player2Cards == null || player2Cards.Count == 0)
         {
@@ -29,29 +29,11 @@ public class Player2AI : MonoBehaviour
 
         if (buttonHandler != null)
         {
-            string action = "";
-
-            if (buttonHandler.isATK)
-            {
-                action = "ATK";
-            }
-            else if (buttonHandler.isDEF)
-            {
-                action = "DEF";
-            }
-            else if (buttonHandler.isHeal)
-            {
-                action = "Heal";
-            }
-            else if (buttonHandler.isThrow)
-            {
-                action = "Throw";
-            }
-            else if (buttonHandler.isCNT)
-            {
-                action = "CNT";
-            }
-            return action; // 返回Player2的行动
+            if (buttonHandler.isATK) return "ATK";
+            if (buttonHandler.isDEF) return "DEF";
+            if (buttonHandler.isHeal) return "Heal";
+            if (buttonHandler.isThrow) return "Throw";
+            if (buttonHandler.isCNT) return "CNT";
         }
 
         return null;

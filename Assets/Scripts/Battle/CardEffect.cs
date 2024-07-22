@@ -17,6 +17,7 @@ public class CardEffect : MonoBehaviour
     public Button submitButton; // 提交按钮
 
     public Player2AI player2AI; // 引用Player2AI脚本
+    public BattleInfoManager battleInfoManager;
 
     private int currentHandPositionIndex = 0; // 当前手牌位置索引
     private List<int> availableCardIndices; // 可用卡牌索引列表
@@ -55,7 +56,7 @@ public class CardEffect : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !battleInfoManager.isGameOver)
         {
             StartCoroutine(DrawCards(cardsToDraw));
         }
@@ -135,7 +136,7 @@ public class CardEffect : MonoBehaviour
         currentHandCards.Add(newCard);
     }
 
-    void ResetHand()
+    public void ResetHand()
     {
         // 复位当前手牌中的所有卡牌
         foreach (GameObject card in currentHandCards)
@@ -156,6 +157,12 @@ public class CardEffect : MonoBehaviour
 
         // 重新初始化卡牌索引
         InitializeCardIndices();
+
+        // 禁用提交按钮
+        if (submitButton != null)
+        {
+            submitButton.interactable = false;
+        }
 
         Debug.Log("Hand has been reset.");
     }
