@@ -14,11 +14,10 @@ public class TypewriterEffect : MonoBehaviour
     public float typingSpeed = 0.05f;
     public GameObject battleStart;
     public GameObject continueGame; 
-    public GameObject continueGame1; 
     public GameObject playerChoose;
     public GameObject gameEnd;
     public GameObject logObject; 
-    public Button historyButton;
+    public Button[] historyButton;
     public Button skipButton; // 跳过按钮
     public Button logButton; // 新添加的按钮
     public Button playerChoose1;
@@ -107,8 +106,10 @@ public class TypewriterEffect : MonoBehaviour
         logButton.onClick.AddListener(OnLogButtonClicked);
         logButton.interactable = false; // 禁用 logButton
 
-        historyButton.onClick.AddListener(ToggleHistory);
-
+        for(int i = 0; i<2; i++)
+        {
+            historyButton[i].onClick.AddListener(ToggleHistory);
+        }
         playerChoose1.onClick.AddListener(OnPlayerChooseButtonClicked);
         playerChoose2.onClick.AddListener(OnPlayerChooseButtonClicked);
 
@@ -141,7 +142,6 @@ public class TypewriterEffect : MonoBehaviour
         }
         battleStart.gameObject.SetActive(false);
         continueGame.gameObject.SetActive(false); // 初始化 continueGame 为 false
-        continueGame1.gameObject.SetActive(false);
 
         // 给历史记录面板添加点击事件监听
         historyPanel.GetComponent<Button>().onClick.AddListener(HideHistoryPanel);
@@ -205,7 +205,6 @@ public class TypewriterEffect : MonoBehaviour
             else
             {
                 continueGame.gameObject.SetActive(true);
-                continueGame1.gameObject.SetActive(true);
                 gameStateManager.isStageCleared[lastSelectedIndex] = true; 
             }
         }
@@ -350,11 +349,11 @@ public class TypewriterEffect : MonoBehaviour
             else if(isGameEnd)
             {
                 gameEnd.gameObject.SetActive(true);
+                gameStateManager.isStageCleared[lastSelectedIndex] = true;
             }
             else
             {
                 continueGame.gameObject.SetActive(true); // 显示 continueGame 对象
-                continueGame1.gameObject.SetActive(true);
                 gameStateManager.isStageCleared[lastSelectedIndex] = true;
             }
 

@@ -156,7 +156,7 @@ public class BattleInfoManager : MonoBehaviour
 
         if (playerBalanceAndHP.player1Balance != 0 && playerBalanceAndHP.player2Balance != 0)
         {
-            battleInfoText.text = "Player1: " + submitText + player1CannotMoveText + "\nPlayer2: " + player2ActionText + player2CannotMoveText;
+            battleInfoText.text = "自分: " + submitText + player1CannotMoveText + "\n相手: " + player2ActionText + player2CannotMoveText;
         }
 
         playerBalanceAndHP.HidePreviewSliders();

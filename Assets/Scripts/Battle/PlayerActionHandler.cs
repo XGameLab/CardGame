@@ -6,6 +6,7 @@ public class PlayerActionHandler : MonoBehaviour
 {
     public PlayerBalanceAndHP playerBalanceAndHP;
     public BattleInfoManager battleInfoManager;
+    public BattleAnimationManager battleAnimationManager;
 
     private Dictionary<string, Dictionary<string, System.Action>> actionHandlers;
     public event Action<string> OnActionHandled;
@@ -215,6 +216,9 @@ public class PlayerActionHandler : MonoBehaviour
             if (actionHandlers.ContainsKey(player1Action) && actionHandlers[player1Action].ContainsKey(player2Action))
             {
                 actionHandlers[player1Action][player2Action].Invoke();
+                 // 添加动画播放
+                PlayActionAnimation(player1Action, true);
+                PlayActionAnimation(player2Action, false);
             }
             else
             {
@@ -227,16 +231,18 @@ public class PlayerActionHandler : MonoBehaviour
                 {
                     player1CannotAct = true;
                     // OnActionHandled?.Invoke("Player1 行動不可");
-                    battleInfoManager.battleInfoText.text = "Player1: " + battleInfoManager.submitText + "\n↑次回行動不可" + "\nPlayer2: " + battleInfoManager.player2ActionText;
+                    battleInfoManager.battleInfoText.text = "自分: " + battleInfoManager.submitText + "\n↑次回行動不可" + "\n相手: " + battleInfoManager.player2ActionText;
                     battleInfoManager.player1CannotMoveText = "失敗";
+                    battleAnimationManager.SetAnimatorEnabled(false, true);
                 }
 
                 if (playerBalanceAndHP.player2Balance == 0)
                 {
                     player2CannotAct = true;
                     // OnActionHandled?.Invoke("Player2 行動不可");
-                    battleInfoManager.battleInfoText.text = "Player1: " + battleInfoManager.submitText  + "\nPlayer2: " + battleInfoManager.player2ActionText + "\n↑次回行動不可";
+                    battleInfoManager.battleInfoText.text = "自分: " + battleInfoManager.submitText  + "\n相手: " + battleInfoManager.player2ActionText + "\n↑次回行動不可";
                     battleInfoManager.player2CannotMoveText = "失敗";
+                    battleAnimationManager.SetAnimatorEnabled(false, false);
                 }
             }
             else
@@ -259,19 +265,41 @@ public class PlayerActionHandler : MonoBehaviour
         }
     }
 
+    private void PlayActionAnimation(string action, bool isPlayer)
+    {
+        switch (action)
+        {
+            case "ATK":
+                battleAnimationManager.PlayAttackAnimation(isPlayer);
+                break;
+            case "DEF":
+                battleAnimationManager.PlayDefendAnimation(isPlayer);
+                break;
+            case "Heal":
+                battleAnimationManager.PlayHealAnimation(isPlayer);
+                break;
+            case "Throw":
+                battleAnimationManager.PlayThrowAnimation(isPlayer);
+                break;
+            case "CNT":
+                battleAnimationManager.PlayCounterAnimation(isPlayer);
+                break;
+        }
+    }
+
     private void EndGame()
     {
         if (playerBalanceAndHP.player1HP == 0 && playerBalanceAndHP.player2HP == 0)
         {
-            battleInfoManager.GameOver("Player1: " + battleInfoManager.submitText  + "\nPlayer2: " + battleInfoManager.player2ActionText + "\n【It's a Tie】");
+            battleInfoManager.GameOver("自分: " + battleInfoManager.submitText  + "\n相手: " + battleInfoManager.player2ActionText + "\n【It's a Tie】");
         }
         else if (playerBalanceAndHP.player1HP == 0)
         {
-            battleInfoManager.GameOver("Player1: " + battleInfoManager.submitText  + "\nPlayer2: " + battleInfoManager.player2ActionText + "\n【Player2 Wins】");
+            battleInfoManager.GameOver("自分: " + battleInfoManager.submitText  + "\n相手: " + battleInfoManager.player2ActionText + "\n【Player2 Wins】");
         }
         else if (playerBalanceAndHP.player2HP == 0)
         {
-            battleInfoManager.GameOver("Player1: " + battleInfoManager.submitText  + "\nPlayer2: " + battleInfoManager.player2ActionText + "\n【Player1 Wins】");
+            battleInfoManager.GameOver("自分: " + battleInfoManager.submitText  + "\n相手: " + battleInfoManager.player2ActionText + "\n【Player1 Wins】");
         }
     }
 
@@ -280,10 +308,12 @@ public class PlayerActionHandler : MonoBehaviour
         if (player == "Player1" && playerBalanceAndHP.player1HP > 0)
         {
             playerBalanceAndHP.player1Balance = 3;
+            battleAnimationManager.SetAnimatorEnabled(true, true);
         }
         else if (player == "Player2" && playerBalanceAndHP.player2HP > 0)
         {
             playerBalanceAndHP.player2Balance = 3;
+            battleAnimationManager.SetAnimatorEnabled(true, false);
         }
     }
 
