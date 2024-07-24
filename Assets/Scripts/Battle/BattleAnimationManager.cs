@@ -11,10 +11,32 @@ public class BattleAnimationManager : MonoBehaviour
         SetDefaultAnimationStates();
     }
 
-    private void SetDefaultAnimationStates()
+    public void SetDefaultAnimationStates()
     {
         SetTriggerIfExists(playerAnimator, "P1IdleTrigger");
         SetTriggerIfExists(enemyAnimator, "P2IdleTrigger");
+    }
+
+    public void PlayAnimation(string action, bool isPlayer)
+    {
+        switch (action)
+        {
+            case "ATK":
+                PlayAttackAnimation(isPlayer);
+                break;
+            case "DEF":
+                PlayDefendAnimation(isPlayer);
+                break;
+            case "Heal":
+                PlayHealAnimation(isPlayer);
+                break;
+            case "Throw":
+                PlayThrowAnimation(isPlayer);
+                break;
+            case "CNT":
+                PlayCounterAnimation(isPlayer);
+                break;
+        }
     }
 
     public void PlayAttackAnimation(bool isPlayer)
@@ -25,7 +47,7 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2AttackTrigger");
+            SetTriggerIfExists(enemyAnimator, "P2ATKTrigger");
         }
     }
 
@@ -37,7 +59,7 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2DefendTrigger");
+            SetTriggerIfExists(enemyAnimator, "P2DEFTrigger");
         }
     }
 
@@ -110,6 +132,43 @@ public class BattleAnimationManager : MonoBehaviour
         else
         {
             enemyAnimator.enabled = enabled;
+        }
+    }
+
+    public void TriggerExitAnimation(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerAnimator.SetTrigger("ExitTrigger");
+        }
+        else
+        {
+            enemyAnimator.SetTrigger("ExitTrigger");
+        }
+    }
+
+    public void ResetWhenRestart()
+    {
+        ResetTriggers(playerAnimator);
+        ResetTriggers(enemyAnimator);
+
+        SetDefaultAnimationStates();
+
+        TriggerExitAnimation(true); 
+        TriggerExitAnimation(false); 
+
+        SetAnimatorEnabled(true, true);
+        SetAnimatorEnabled(true, false);
+    }
+
+    public void ResetTriggers(Animator animator)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Trigger)
+            {
+                animator.ResetTrigger(param.name);
+            }
         }
     }
 }

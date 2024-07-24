@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Player2AI : MonoBehaviour
 {
     private List<GameObject> player2Cards; // Player2的卡牌列表
+    public BattleAnimationManager battleAnimationManager; 
 
     public void InitializePlayer2Cards(List<int> remainingCardIndices, GameObject[] cardPrefabs)
     {
@@ -29,11 +30,19 @@ public class Player2AI : MonoBehaviour
 
         if (buttonHandler != null)
         {
-            if (buttonHandler.isATK) return "ATK";
-            if (buttonHandler.isDEF) return "DEF";
-            if (buttonHandler.isHeal) return "Heal";
-            if (buttonHandler.isThrow) return "Throw";
-            if (buttonHandler.isCNT) return "CNT";
+            string action = null;
+            if (buttonHandler.isATK) action = "ATK";
+            else if (buttonHandler.isDEF) action = "DEF";
+            else if (buttonHandler.isHeal) action = "Heal";
+            else if (buttonHandler.isThrow) action = "Throw";
+            else if (buttonHandler.isCNT) action = "CNT";
+
+            if (action != null)
+            {
+                battleAnimationManager.PlayAnimation(action, false); // 播放Player2的动画
+            }
+            
+            return action;
         }
 
         return null;

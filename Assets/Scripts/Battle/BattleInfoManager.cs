@@ -5,10 +5,12 @@ using UnityEngine.UI;
 public class BattleInfoManager : MonoBehaviour
 {
     public TMP_Text battleInfoText;
+    public TMP_Text gameOverText;
     public Button submitButton;
     public PlayerActionHandler playerActionHandler;
     public Player2AI player2AI;
     public PlayerBalanceAndHP playerBalanceAndHP;
+    public BattleAnimationManager battleAnimationManager;
     public string atkText;
     public string defText;
     public string healText;
@@ -18,21 +20,16 @@ public class BattleInfoManager : MonoBehaviour
     public string player1CannotMoveText = null;
     public string player2CannotMoveText = null;
     public bool isGameOver = false;
-    public GameObject gameOverObject;
 
     private string player1Action;
     public string player2ActionText;
-
-    void Start()
-    {
-        gameOverObject.SetActive(false);
-    }
 
     void Update()
     {
         if (isGameOver && Input.GetKeyDown(KeyCode.R))
         {
             RestartGame();
+            isGameOver = false;
         }
     }
 
@@ -173,14 +170,21 @@ public class BattleInfoManager : MonoBehaviour
     {
         isGameOver = true;
         battleInfoText.text = message;
-        gameOverObject.SetActive(true);
+        if (playerActionHandler.isPlayer1Win)
+        {
+            gameOverText.text = "You Win!";
+        }
+        else
+        {
+            gameOverText.text = "GameOver";
+        }
     }
 
     public void RestartGame()
     {
-        isGameOver = false;
-        gameOverObject.SetActive(false);
         battleInfoText.text = "ゲーム再開"; // Reset the battle info text
+
+        battleAnimationManager.ResetWhenRestart();
 
         // Reset player HP and balance
         playerBalanceAndHP.player1HP = playerBalanceAndHP.MaxHP;
