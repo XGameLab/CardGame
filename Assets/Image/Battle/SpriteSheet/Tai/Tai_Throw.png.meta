@@ -1,0 +1,527 @@
+fileFormatVersion: 2
+guid: a0e01b02fe5474ac7844d3c7b6afffe2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4035433720334008015
+    second: Tai_Throw_0
+  - first:
+      213: 4660605293864345462
+    second: Tai_Throw_1
+  - first:
+      213: -4814589521712698607
+    second: Tai_Throw_2
+  - first:
+      213: -3797230663300789923
+    second: Tai_Throw_3
+  - first:
+      213: 8772403624738898782
+    second: Tai_Throw_4
+  - first:
+      213: 3183883288928986660
+    second: Tai_Throw_5
+  - first:
+      213: 3599311165124670311
+    second: Tai_Throw_6
+  - first:
+      213: 3721850934775895453
+    second: Tai_Throw_7
+  - first:
+      213: 3507226961633705255
+    second: Tai_Throw_8
+  - first:
+      213: -1319021522236313604
+    second: Tai_Throw_9
+  - first:
+      213: 6849718819988078311
+    second: Tai_Throw_10
+  - first:
+      213: 6739235660188046834
+    second: Tai_Throw_11
+  - first:
+      213: 4126588554357718893
+    second: Tai_Throw_12
+  - first:
+      213: -8638741516256027935
+    second: Tai_Throw_13
+  - first:
+      213: 8940433507355692615
+    second: Tai_Throw_14
+  - first:
+      213: -9112279185928354456
+    second: Tai_Throw_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tai_Throw_0
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 8
+        width: 121
+        height: 541
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fce3427869db00830800000000000000
+      internalID: 4035433720334008015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_1
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 2
+        width: 126
+        height: 546
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67fd61362dbcda040800000000000000
+      internalID: 4660605293864345462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_2
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 8
+        width: 128
+        height: 539
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11b2ffab6542f2db0800000000000000
+      internalID: -4814589521712698607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_3
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 0
+        width: 168
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d594cbf84d68d4bc0800000000000000
+      internalID: -3797230663300789923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_4
+      rect:
+        serializedVersion: 2
+        x: 1776
+        y: 0
+        width: 255
+        height: 546
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5349e65e96ddb970800000000000000
+      internalID: 8772403624738898782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_5
+      rect:
+        serializedVersion: 2
+        x: 2277
+        y: 13
+        width: 198
+        height: 529
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4262aea7bfc6f2c20800000000000000
+      internalID: 3183883288928986660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_6
+      rect:
+        serializedVersion: 2
+        x: 2741
+        y: 18
+        width: 233
+        height: 530
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7637a594f6253f130800000000000000
+      internalID: 3599311165124670311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_7
+      rect:
+        serializedVersion: 2
+        x: 3185
+        y: 17
+        width: 367
+        height: 495
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d95d54ab4bba6a330800000000000000
+      internalID: 3721850934775895453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_8
+      rect:
+        serializedVersion: 2
+        x: 3627
+        y: 17
+        width: 327
+        height: 479
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72d79dae65c2ca030800000000000000
+      internalID: 3507226961633705255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_9
+      rect:
+        serializedVersion: 2
+        x: 4073
+        y: 17
+        width: 367
+        height: 495
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff620cf9e4e1bde0800000000000000
+      internalID: -1319021522236313604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_10
+      rect:
+        serializedVersion: 2
+        x: 4517
+        y: 18
+        width: 233
+        height: 530
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee72b4b9f61f0f50800000000000000
+      internalID: 6849718819988078311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_11
+      rect:
+        serializedVersion: 2
+        x: 4941
+        y: 13
+        width: 198
+        height: 529
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5572f7023968d50800000000000000
+      internalID: 6739235660188046834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_12
+      rect:
+        serializedVersion: 2
+        x: 5328
+        y: 0
+        width: 255
+        height: 546
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f3fa43d66944930800000000000000
+      internalID: 4126588554357718893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_13
+      rect:
+        serializedVersion: 2
+        x: 5838
+        y: 0
+        width: 168
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ead3296c560d1880800000000000000
+      internalID: -8638741516256027935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_14
+      rect:
+        serializedVersion: 2
+        x: 6282
+        y: 8
+        width: 128
+        height: 539
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74e8fef08ecc21c70800000000000000
+      internalID: 8940433507355692615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Throw_15
+      rect:
+        serializedVersion: 2
+        x: 6725
+        y: 2
+        width: 126
+        height: 546
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8650e8cfb5eaa8180800000000000000
+      internalID: -9112279185928354456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d35cd13d26ea04aff9d0ec9f50124e46
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Tai_Throw_0: 4035433720334008015
+      Tai_Throw_1: 4660605293864345462
+      Tai_Throw_10: 6849718819988078311
+      Tai_Throw_11: 6739235660188046834
+      Tai_Throw_12: 4126588554357718893
+      Tai_Throw_13: -8638741516256027935
+      Tai_Throw_14: 8940433507355692615
+      Tai_Throw_15: -9112279185928354456
+      Tai_Throw_2: -4814589521712698607
+      Tai_Throw_3: -3797230663300789923
+      Tai_Throw_4: 8772403624738898782
+      Tai_Throw_5: 3183883288928986660
+      Tai_Throw_6: 3599311165124670311
+      Tai_Throw_7: 3721850934775895453
+      Tai_Throw_8: 3507226961633705255
+      Tai_Throw_9: -1319021522236313604
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

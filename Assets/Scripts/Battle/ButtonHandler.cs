@@ -41,7 +41,7 @@ public class ButtonHandler : MonoBehaviour
         }
     }
 
-    void NotifyButtonPressed()
+    public void NotifyButtonPressed()
     {
         if (rawImage != null)
         {
@@ -49,26 +49,31 @@ public class ButtonHandler : MonoBehaviour
             {
                 OnButtonPressed("ATK");
                 rawImage.texture = atkTexture;
+                // Debug.Log("It's ATK");
             }
             else if (isDEF && OnButtonPressed != null)
             {
                 OnButtonPressed("DEF");
                 rawImage.texture = defTexture;
+                // Debug.Log("It's DEF");
             }
             else if (isHeal && OnButtonPressed != null)
             {
                 OnButtonPressed("Heal");
                 rawImage.texture = healTexture;
+                // Debug.Log("It's Heal");
             }
             else if (isThrow && OnButtonPressed != null)
             {
                 OnButtonPressed("Throw");
                 rawImage.texture = throwTexture;
+                // Debug.Log("It's throw");
             }
             else if (isCNT && OnButtonPressed != null)
             {
                 OnButtonPressed("CNT");
                 rawImage.texture = cntTexture;
+                // Debug.Log("It's CNT");
             }
             button.interactable = false; // 禁用按钮
             StartCoroutine(ResetTextureAfterTime(resetTime)); // 启动协程来恢复原先的纹理

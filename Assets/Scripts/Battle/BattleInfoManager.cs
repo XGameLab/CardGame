@@ -6,6 +6,7 @@ public class BattleInfoManager : MonoBehaviour
 {
     public TMP_Text battleInfoText;
     public TMP_Text gameOverText;
+    public RawImage gameOverInfo;
     public Button submitButton;
     public PlayerActionHandler playerActionHandler;
     public Player2AI player2AI;
@@ -20,9 +21,15 @@ public class BattleInfoManager : MonoBehaviour
     public string player1CannotMoveText = null;
     public string player2CannotMoveText = null;
     public bool isGameOver = false;
+    public GameObject[] stageBG;
 
     private string player1Action;
     public string player2ActionText;
+
+    void Start()
+    {
+        UpdateStageBackground();
+    }
 
     void Update()
     {
@@ -58,6 +65,15 @@ public class BattleInfoManager : MonoBehaviour
         if (playerActionHandler != null)
         {
             playerActionHandler.OnActionHandled -= UpdateBattleInfoText;
+        }
+    }
+
+    private void UpdateStageBackground()
+    {
+        int currentIndex = GameStateManager.lastSelectedIndex;
+        for (int i = 0; i < stageBG.Length; i++)
+        {
+            stageBG[i].SetActive(i == currentIndex);
         }
     }
 
@@ -109,7 +125,7 @@ public class BattleInfoManager : MonoBehaviour
         playerBalanceAndHP.UpdatePreview(damage, heal);
     }
 
-    void OnSubmitButtonClicked()
+    public void OnSubmitButtonClicked()
     {
         if (player2AI == null)
         {
@@ -173,10 +189,12 @@ public class BattleInfoManager : MonoBehaviour
         if (playerActionHandler.isPlayer1Win)
         {
             gameOverText.text = "You Win!";
+            gameOverInfo.color = new Color(0.3f, 0.63f, 1f, 0.78f); // #50D9FF, 透明度200
         }
         else
         {
             gameOverText.text = "GameOver";
+            gameOverInfo.color = new Color(1f, 0.3f, 0.3f, 0.78f); // #50D9FF, 透明度200
         }
     }
 

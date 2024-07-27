@@ -283,7 +283,7 @@ public class PlayerActionHandler : MonoBehaviour
 
     private void PlayActionAnimation(string action, bool isPlayer)
     {
-        Animator animator = isPlayer ? battleAnimationManager.playerAnimator : battleAnimationManager.enemyAnimator;
+        Animator animator = isPlayer ? battleAnimationManager.playerAnimator : battleAnimationManager.enemyAnimators[GameStateManager.lastSelectedIndex];
         if (!animator.isActiveAndEnabled)
         {
             animator.enabled = true;
@@ -310,6 +310,7 @@ public class PlayerActionHandler : MonoBehaviour
                 break;
         }
     }
+
 
     private void CheckGameOver()
     {

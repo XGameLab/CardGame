@@ -25,6 +25,16 @@ public class CardEffect : MonoBehaviour
     private List<GameObject> cardPool; // 卡牌对象池
     private GameObject selectedCard; // 当前选中的卡牌
 
+    string GetButtonType(ButtonHandler handler)
+    {
+        if (handler.isATK) return "ATK";
+        if (handler.isDEF) return "DEF";
+        if (handler.isHeal) return "Heal";
+        if (handler.isThrow) return "Throw";
+        if (handler.isCNT) return "CNT";
+        return string.Empty;
+    }
+
     void Start()
     {
         InitializeCardIndices();
@@ -60,6 +70,34 @@ public class CardEffect : MonoBehaviour
         {
             StartCoroutine(DrawCards(cardsToDraw));
         }
+
+        // 检测数字键的按下
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SelectCardByIndex(0); // 选择第一张卡牌
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SelectCardByIndex(1); // 选择第二张卡牌
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SelectCardByIndex(2); // 选择第三张卡牌
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            SelectCardByIndex(3); // 选择第四张卡牌
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SelectCardByIndex(4); // 选择第五张卡牌
+        }
+
+        // 检测Enter键的按下
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && selectedCard != null)
+        {
+            OnEnterClicked(); // 调用提交按钮的点击处理函数
+        }
     }
 
     void InitializeCardIndices()
@@ -70,6 +108,24 @@ public class CardEffect : MonoBehaviour
             availableCardIndices.Add(i);
         }
         currentHandPositionIndex = 0;
+    }
+
+    // 通过索引选择卡牌
+    void SelectCardByIndex(int index)
+    {
+        if (index >= 0 && index < currentHandCards.Count)
+        {
+            GameObject card = currentHandCards[index];
+            OnCardClicked(card); // 调用卡牌点击处理函数
+
+            // 获取按钮类型并触发事件
+            ButtonHandler buttonHandler = card.GetComponent<ButtonHandler>();
+            if (buttonHandler != null)
+            {
+                string buttonType = GetButtonType(buttonHandler);
+                buttonHandler.NotifyButtonPressed();
+            }
+        }
     }
 
     IEnumerator DrawCards(int numberOfCards)
@@ -212,7 +268,24 @@ public class CardEffect : MonoBehaviour
         {
             submitButton.interactable = false;
         }
-        
+
+        selectedCard = null;
+        StartCoroutine(ResetCards());
+    }
+
+    void OnEnterClicked()
+    {
+        // 禁用提交按钮
+        if (submitButton != null)
+        {
+            submitButton.interactable = false;
+        }
+
+        if (battleInfoManager != null)
+        {
+            battleInfoManager.OnSubmitButtonClicked();
+        }
+        selectedCard = null;
         StartCoroutine(ResetCards());
     }
 

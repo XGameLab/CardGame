@@ -1,0 +1,677 @@
+fileFormatVersion: 2
+guid: 5c8eb9ffc0dfb49d69ea9cffdfb91d0f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6793277683610601859
+    second: Tai_Idle_0
+  - first:
+      213: 691016970620516224
+    second: Tai_Idle_1
+  - first:
+      213: -2722091700350091730
+    second: Tai_Idle_2
+  - first:
+      213: 4887342338792016570
+    second: Tai_Idle_3
+  - first:
+      213: 7730114207484726658
+    second: Tai_Idle_4
+  - first:
+      213: -6053888031470022319
+    second: Tai_Idle_5
+  - first:
+      213: -6843229124432639328
+    second: Tai_Idle_6
+  - first:
+      213: 7048983503815070730
+    second: Tai_Idle_7
+  - first:
+      213: -1822939517923593452
+    second: Tai_Idle_8
+  - first:
+      213: -8865440542399316612
+    second: Tai_Idle_9
+  - first:
+      213: -6100419764788252618
+    second: Tai_Idle_10
+  - first:
+      213: 8764404962425611813
+    second: Tai_Idle_11
+  - first:
+      213: 4263012846379821133
+    second: Tai_Idle_12
+  - first:
+      213: -8707404554661492347
+    second: Tai_Idle_13
+  - first:
+      213: -8522484544109985245
+    second: Tai_Idle_14
+  - first:
+      213: 4306752235479965026
+    second: Tai_Idle_15
+  - first:
+      213: -4835832674529455862
+    second: Tai_Idle_16
+  - first:
+      213: -8623558974291484230
+    second: Tai_Idle_17
+  - first:
+      213: 8963513122176810753
+    second: Tai_Idle_18
+  - first:
+      213: 15573811202162060
+    second: Tai_Idle_19
+  - first:
+      213: -9120095755283578818
+    second: Tai_Idle_20
+  - first:
+      213: 190172443031498251
+    second: Tai_Idle_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tai_Idle_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 2
+        width: 117
+        height: 544
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d763dc760fd69b1a0800000000000000
+      internalID: -6793277683610601859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 2
+        width: 116
+        height: 544
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0873a9b064cf69900800000000000000
+      internalID: 691016970620516224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_2
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 7
+        width: 113
+        height: 540
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2ef7925500393ad0800000000000000
+      internalID: -2722091700350091730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 3
+        width: 115
+        height: 543
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abacc6f76f353d340800000000000000
+      internalID: 4887342338792016570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_4
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 7
+        width: 158
+        height: 542
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28dc3527ae1e64b60800000000000000
+      internalID: 7730114207484726658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_5
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 1
+        width: 194
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1519d3609e44cfba0800000000000000
+      internalID: -6053888031470022319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_6
+      rect:
+        serializedVersion: 2
+        x: 1530
+        y: 2
+        width: 185
+        height: 547
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aac5994e57f701a0800000000000000
+      internalID: -6843229124432639328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_7
+      rect:
+        serializedVersion: 2
+        x: 1782
+        y: 4
+        width: 209
+        height: 545
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a045c7c462503d160800000000000000
+      internalID: 7048983503815070730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_8
+      rect:
+        serializedVersion: 2
+        x: 2034
+        y: 1
+        width: 238
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4137423ba2e93b6e0800000000000000
+      internalID: -1822939517923593452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_9
+      rect:
+        serializedVersion: 2
+        x: 2286
+        y: 0
+        width: 243
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7d31fc3cc0a7f480800000000000000
+      internalID: -8865440542399316612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_10
+      rect:
+        serializedVersion: 2
+        x: 2542
+        y: 0
+        width: 247
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630360b9b84f65ba0800000000000000
+      internalID: -6100419764788252618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_11
+      rect:
+        serializedVersion: 2
+        x: 2797
+        y: 0
+        width: 251
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526ac05a0eb61a970800000000000000
+      internalID: 8764404962425611813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_12
+      rect:
+        serializedVersion: 2
+        x: 3050
+        y: 0
+        width: 247
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48656de893492b30800000000000000
+      internalID: 4263012846379821133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_13
+      rect:
+        serializedVersion: 2
+        x: 3302
+        y: 0
+        width: 243
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58988cbf0b5192780800000000000000
+      internalID: -8707404554661492347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_14
+      rect:
+        serializedVersion: 2
+        x: 3558
+        y: 1
+        width: 238
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3224190167d0ab980800000000000000
+      internalID: -8522484544109985245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_15
+      rect:
+        serializedVersion: 2
+        x: 3814
+        y: 4
+        width: 209
+        height: 545
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d176b0758a4cb30800000000000000
+      internalID: 4306752235479965026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_16
+      rect:
+        serializedVersion: 2
+        x: 4070
+        y: 2
+        width: 185
+        height: 547
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a01d179cdcba3ecb0800000000000000
+      internalID: -4835832674529455862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_17
+      rect:
+        serializedVersion: 2
+        x: 4327
+        y: 1
+        width: 194
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab169bd6dc6f25880800000000000000
+      internalID: -8623558974291484230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_18
+      rect:
+        serializedVersion: 2
+        x: 4581
+        y: 7
+        width: 158
+        height: 542
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10fb6e2a1bbc46c70800000000000000
+      internalID: 8963513122176810753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_19
+      rect:
+        serializedVersion: 2
+        x: 4834
+        y: 3
+        width: 115
+        height: 543
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8df08c7c44573000800000000000000
+      internalID: 15573811202162060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_20
+      rect:
+        serializedVersion: 2
+        x: 5086
+        y: 7
+        width: 113
+        height: 540
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3046cc1b39ee6180800000000000000
+      internalID: -9120095755283578818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Idle_21
+      rect:
+        serializedVersion: 2
+        x: 5339
+        y: 2
+        width: 116
+        height: 544
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0ee5f054d0a3a200800000000000000
+      internalID: 190172443031498251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 1dbe9ff88bfe74120894f704d84ad60b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Tai_Idle_0: -6793277683610601859
+      Tai_Idle_1: 691016970620516224
+      Tai_Idle_10: -6100419764788252618
+      Tai_Idle_11: 8764404962425611813
+      Tai_Idle_12: 4263012846379821133
+      Tai_Idle_13: -8707404554661492347
+      Tai_Idle_14: -8522484544109985245
+      Tai_Idle_15: 4306752235479965026
+      Tai_Idle_16: -4835832674529455862
+      Tai_Idle_17: -8623558974291484230
+      Tai_Idle_18: 8963513122176810753
+      Tai_Idle_19: 15573811202162060
+      Tai_Idle_2: -2722091700350091730
+      Tai_Idle_20: -9120095755283578818
+      Tai_Idle_21: 190172443031498251
+      Tai_Idle_3: 4887342338792016570
+      Tai_Idle_4: 7730114207484726658
+      Tai_Idle_5: -6053888031470022319
+      Tai_Idle_6: -6843229124432639328
+      Tai_Idle_7: 7048983503815070730
+      Tai_Idle_8: -1822939517923593452
+      Tai_Idle_9: -8865440542399316612
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

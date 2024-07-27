@@ -12,6 +12,7 @@ public class ObjectMover : MonoBehaviour
     public float moveDuration = 1f; // 移动时长
     public float startMoveDuration = 1f; // 游戏开始时的移动时长
     public float stayDuration = 2f; // 停留2秒
+    public float waitSec = 3f;
     public BattleInfoManager battleInfoManager;
     public PlayerActionHandler playerActionHandler; // 引用PlayerActionHandler脚本
 
@@ -25,6 +26,7 @@ public class ObjectMover : MonoBehaviour
     private bool isAtInitialPositions = true; // 标记物体是否在初始位置
     private bool isAtTargetPositions = false; // 标记物体是否在目标位置
     private Coroutine hintCoroutine;
+    private bool hintDismissed = false; // 标记提示是否已被关闭
 
     private void Start()
     {
@@ -84,7 +86,7 @@ public class ObjectMover : MonoBehaviour
                 MoveObjectsToTargetPositions();
             }
 
-            // 新增：当游戏结束时停止计时并清零
+            // 当游戏结束时停止计时并清零
             if (battleInfoManager.isGameOver)
             {
                 if (hintCoroutine != null)
@@ -95,8 +97,8 @@ public class ObjectMover : MonoBehaviour
             }
             else
             {
-                // 新增：游戏未结束时恢复计时
-                if (hintCoroutine == null)
+                // 游戏未结束时恢复计时
+                if (hintCoroutine == null && !hintDismissed)
                 {
                     hintCoroutine = StartCoroutine(WaitForDKeyOrMoveHint());
                 }
@@ -172,10 +174,16 @@ public class ObjectMover : MonoBehaviour
 
     private void OnSubmitButtonClicked()
     {
+        // 如果正在计时，则停止并清除计时
         if (hintCoroutine != null)
         {
             StopCoroutine(hintCoroutine);
+            hintCoroutine = null;
         }
+
+        hintDismissed = false; // 重置提示已关闭状态
+
+        // 开始新的计时
         hintCoroutine = StartCoroutine(WaitForDKeyOrMoveHint());
     }
 
@@ -184,7 +192,8 @@ public class ObjectMover : MonoBehaviour
         float timer = 0f;
         bool dKeyPressed = false;
 
-        while (timer < 7f)
+        // 等待7秒或按下D键
+        while (timer < waitSec)
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
@@ -197,10 +206,11 @@ public class ObjectMover : MonoBehaviour
 
         if (dKeyPressed)
         {
-            // 如果按下了D键，移动回初始位置
+            // 如果按下了D键，移动回初始位置并停止计时
             LeanTween.move(hintObj, hintObjInitialPosition, moveDuration).setEase(LeanTweenType.easeInOutQuad);
+            hintDismissed = true; // 标记提示已被关闭
         }
-        else
+        else if (!hintDismissed)
         {
             // 如果没有按下D键，移动到目标位置但不返回
             LeanTween.move(hintObj, hintPosition.position, moveDuration).setEase(LeanTweenType.easeInOutQuad);

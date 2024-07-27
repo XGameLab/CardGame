@@ -328,19 +328,31 @@ public class TypewriterEffect : MonoBehaviour
     {
         if (!isViewingHistory)
         {
-            int lastSelectedIndex = GameStateManager.lastSelectedIndex;
             skip = true;
             StopAllCoroutines(); // 停止当前正在进行的打字效果
-            
+
+            // 添加所有剩余的对话行到历史记录
+            for (int i = currentLineIndex; i < dialogueLines.Count; i++)
+            {
+                if (i >= dialogueHistory.Count) // 确保不重复添加
+                {
+                    dialogueHistory.Add(dialogueLines[i].Speaker + ": " + dialogueLines[i].Text);
+                }            
+            }
+
+            // 确保将最后的对话行索引设置为对话结束的状态
+            currentLineIndex = dialogueLines.Count;
+
             // 隐藏指定的 GameObject
             if (logObject != null)
             {
                 logObject.SetActive(false);
             }
 
+            // 根据游戏逻辑显示相应的UI组件
             if (shouldStartBattle)
             {
-                battleStart.gameObject.SetActive(true); // 显示 battleStart 对象
+                battleStart.gameObject.SetActive(true);
             }
             else if(shouldPlayerChoose)
             {
@@ -349,17 +361,12 @@ public class TypewriterEffect : MonoBehaviour
             else if(isGameEnd)
             {
                 gameEnd.gameObject.SetActive(true);
-                gameStateManager.isStageCleared[lastSelectedIndex] = true;
+                gameStateManager.isStageCleared[GameStateManager.lastSelectedIndex] = true;
             }
             else
             {
-                continueGame.gameObject.SetActive(true); // 显示 continueGame 对象
-                gameStateManager.isStageCleared[lastSelectedIndex] = true;
-            }
-
-            if (currentLineIndex < dialogueLines.Count)
-            {
-                StartCoroutine(TypeText(dialogueLines[currentLineIndex]));
+                continueGame.gameObject.SetActive(true);
+                gameStateManager.isStageCleared[GameStateManager.lastSelectedIndex] = true;
             }
         }
     }

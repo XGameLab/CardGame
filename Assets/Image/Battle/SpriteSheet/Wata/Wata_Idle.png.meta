@@ -1,0 +1,702 @@
+fileFormatVersion: 2
+guid: 829bc1f5bdebeb744a291e1d918f8d02
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9080951260364995339
+    second: Wata_Idle_0
+  - first:
+      213: 1979665625393065431
+    second: Wata_Idle_1
+  - first:
+      213: 2080325392435115833
+    second: Wata_Idle_2
+  - first:
+      213: 2217308599902540110
+    second: Wata_Idle_3
+  - first:
+      213: -4363058806722033530
+    second: Wata_Idle_4
+  - first:
+      213: -6313684006170545850
+    second: Wata_Idle_5
+  - first:
+      213: 3735862169579807292
+    second: Wata_Idle_6
+  - first:
+      213: 2959157696558652775
+    second: Wata_Idle_7
+  - first:
+      213: 5102608598455957095
+    second: Wata_Idle_8
+  - first:
+      213: -5128247154886427059
+    second: Wata_Idle_9
+  - first:
+      213: -5637855985877776263
+    second: Wata_Idle_10
+  - first:
+      213: -684528433006307387
+    second: Wata_Idle_11
+  - first:
+      213: 8008955686141124229
+    second: Wata_Idle_12
+  - first:
+      213: -978484639929976028
+    second: Wata_Idle_13
+  - first:
+      213: 4504037945638225489
+    second: Wata_Idle_14
+  - first:
+      213: 3061072449739042723
+    second: Wata_Idle_15
+  - first:
+      213: -4232805328240895734
+    second: Wata_Idle_16
+  - first:
+      213: -4407319037389342675
+    second: Wata_Idle_17
+  - first:
+      213: -6275187138679125197
+    second: Wata_Idle_18
+  - first:
+      213: -6362933065466923603
+    second: Wata_Idle_19
+  - first:
+      213: 4431222225572856071
+    second: Wata_Idle_20
+  - first:
+      213: -8548759740539419355
+    second: Wata_Idle_21
+  - first:
+      213: 5595559101287649905
+    second: Wata_Idle_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wata_Idle_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 9
+        width: 107
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0bf0b0fe05060e70800000000000000
+      internalID: 9080951260364995339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 6
+        width: 102
+        height: 514
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ddea97c56f297b10800000000000000
+      internalID: 1979665625393065431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_2
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 6
+        width: 122
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 937f1512ceccedc10800000000000000
+      internalID: 2080325392435115833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 6
+        width: 152
+        height: 502
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e411c9e7c6675ce10800000000000000
+      internalID: 2217308599902540110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_4
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 7
+        width: 199
+        height: 457
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 688813bb12d4373c0800000000000000
+      internalID: -4363058806722033530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_5
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 7
+        width: 219
+        height: 396
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 641b32409d94168a0800000000000000
+      internalID: -6313684006170545850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_6
+      rect:
+        serializedVersion: 2
+        x: 1318
+        y: 5
+        width: 214
+        height: 339
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c32ef9b89d278d330800000000000000
+      internalID: 3735862169579807292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_7
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 6
+        width: 202
+        height: 299
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76dddb92f3a011920800000000000000
+      internalID: 2959157696558652775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_8
+      rect:
+        serializedVersion: 2
+        x: 1766
+        y: 8
+        width: 192
+        height: 301
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76632da4c7b10d640800000000000000
+      internalID: 5102608598455957095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_9
+      rect:
+        serializedVersion: 2
+        x: 1985
+        y: 8
+        width: 187
+        height: 311
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e369c126ec4d8b0800000000000000
+      internalID: -5128247154886427059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_10
+      rect:
+        serializedVersion: 2
+        x: 2204
+        y: 0
+        width: 181
+        height: 320
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97802faf9df42c1b0800000000000000
+      internalID: -5637855985877776263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_11
+      rect:
+        serializedVersion: 2
+        x: 2423
+        y: 8
+        width: 187
+        height: 311
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c7110854011086f0800000000000000
+      internalID: -684528433006307387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_12
+      rect:
+        serializedVersion: 2
+        x: 2642
+        y: 8
+        width: 192
+        height: 301
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58e594663c6852f60800000000000000
+      internalID: 8008955686141124229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_13
+      rect:
+        serializedVersion: 2
+        x: 2859
+        y: 6
+        width: 202
+        height: 299
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42b3cca7769bb62f0800000000000000
+      internalID: -978484639929976028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_14
+      rect:
+        serializedVersion: 2
+        x: 3070
+        y: 5
+        width: 214
+        height: 339
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15685ace5ae818e30800000000000000
+      internalID: 4504037945638225489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_15
+      rect:
+        serializedVersion: 2
+        x: 3285
+        y: 7
+        width: 219
+        height: 396
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af2e6ebc2d1b7a20800000000000000
+      internalID: 3061072449739042723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_16
+      rect:
+        serializedVersion: 2
+        x: 3505
+        y: 7
+        width: 199
+        height: 457
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0912d6fafd0245c0800000000000000
+      internalID: -4232805328240895734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_17
+      rect:
+        serializedVersion: 2
+        x: 3738
+        y: 6
+        width: 152
+        height: 502
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d28779cbfae06d2c0800000000000000
+      internalID: -4407319037389342675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_18
+      rect:
+        serializedVersion: 2
+        x: 3960
+        y: 6
+        width: 122
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33b4ee37b8e0ae8a0800000000000000
+      internalID: -6275187138679125197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_19
+      rect:
+        serializedVersion: 2
+        x: 4181
+        y: 11
+        width: 106
+        height: 508
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da5b147d61252b7a0800000000000000
+      internalID: -6362933065466923603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_20
+      rect:
+        serializedVersion: 2
+        x: 4397
+        y: 6
+        width: 102
+        height: 514
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7010614f22dde7d30800000000000000
+      internalID: 4431222225572856071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_21
+      rect:
+        serializedVersion: 2
+        x: 4608
+        y: 9
+        width: 107
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 525ccfa2f44bc5980800000000000000
+      internalID: -8548759740539419355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_Idle_22
+      rect:
+        serializedVersion: 2
+        x: 4827
+        y: 9
+        width: 107
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17254f72b5b67ad40800000000000000
+      internalID: 5595559101287649905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d477bea9a42e78142bbe5602d80568d4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Wata_Idle_0: 9080951260364995339
+      Wata_Idle_1: 1979665625393065431
+      Wata_Idle_10: -5637855985877776263
+      Wata_Idle_11: -684528433006307387
+      Wata_Idle_12: 8008955686141124229
+      Wata_Idle_13: -978484639929976028
+      Wata_Idle_14: 4504037945638225489
+      Wata_Idle_15: 3061072449739042723
+      Wata_Idle_16: -4232805328240895734
+      Wata_Idle_17: -4407319037389342675
+      Wata_Idle_18: -6275187138679125197
+      Wata_Idle_19: -6362933065466923603
+      Wata_Idle_2: 2080325392435115833
+      Wata_Idle_20: 4431222225572856071
+      Wata_Idle_21: -8548759740539419355
+      Wata_Idle_22: 5595559101287649905
+      Wata_Idle_3: 2217308599902540110
+      Wata_Idle_4: -4363058806722033530
+      Wata_Idle_5: -6313684006170545850
+      Wata_Idle_6: 3735862169579807292
+      Wata_Idle_7: 2959157696558652775
+      Wata_Idle_8: 5102608598455957095
+      Wata_Idle_9: -5128247154886427059
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

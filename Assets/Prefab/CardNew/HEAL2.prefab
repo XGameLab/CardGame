@@ -258,7 +258,7 @@ MonoBehaviour:
   isThrow: 0
   isCNT: 0
   atkTexture: {fileID: 2800000, guid: b60ffdcffcc4d1344987403db64218d0, type: 3}
-  defTexture: {fileID: 2800000, guid: d205870e64308fe4d91c54ffe3062358, type: 3}
+  defTexture: {fileID: 2800000, guid: 6b5ba30cb89831b4e9569f75dcb1235a, type: 3}
   healTexture: {fileID: 2800000, guid: 85de32bfdee40044e976bfee6c81f9ca, type: 3}
   throwTexture: {fileID: 2800000, guid: 710c125d76633d24282da6edc07dd626, type: 3}
   cntTexture: {fileID: 2800000, guid: 75a66d6641d518743a89407154a45e86, type: 3}

@@ -1,0 +1,702 @@
+fileFormatVersion: 2
+guid: b3948951572324941a428b11931f762a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 69331888587443791
+    second: Tai_Heal_0
+  - first:
+      213: -7053974818072217183
+    second: Tai_Heal_1
+  - first:
+      213: 1138839228944558497
+    second: Tai_Heal_2
+  - first:
+      213: 3257658084772955484
+    second: Tai_Heal_3
+  - first:
+      213: -8442691758782166353
+    second: Tai_Heal_4
+  - first:
+      213: -293043681248239119
+    second: Tai_Heal_5
+  - first:
+      213: 2708070586159933159
+    second: Tai_Heal_6
+  - first:
+      213: 6040656845004868935
+    second: Tai_Heal_7
+  - first:
+      213: -4135988814822726570
+    second: Tai_Heal_8
+  - first:
+      213: -6722558185843344840
+    second: Tai_Heal_9
+  - first:
+      213: 1690835282971644245
+    second: Tai_Heal_10
+  - first:
+      213: 769141196464744022
+    second: Tai_Heal_11
+  - first:
+      213: -5761179708906187533
+    second: Tai_Heal_12
+  - first:
+      213: -4409576454228755688
+    second: Tai_Heal_13
+  - first:
+      213: -1402964413806567169
+    second: Tai_Heal_14
+  - first:
+      213: -5355438290469135764
+    second: Tai_Heal_15
+  - first:
+      213: 5429338923993751691
+    second: Tai_Heal_16
+  - first:
+      213: -4594670915916795740
+    second: Tai_Heal_17
+  - first:
+      213: 7063724764162502996
+    second: Tai_Heal_18
+  - first:
+      213: 7405596007773684824
+    second: Tai_Heal_19
+  - first:
+      213: -1452985162619629391
+    second: Tai_Heal_20
+  - first:
+      213: -7680434758114000366
+    second: Tai_Heal_21
+  - first:
+      213: -988083233400857336
+    second: Tai_Heal_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tai_Heal_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 12
+        width: 111
+        height: 538
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4e8cde3cf056f000800000000000000
+      internalID: 69331888587443791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_1
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 10
+        width: 110
+        height: 541
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a9314ac64f3b1e90800000000000000
+      internalID: -7053974818072217183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_2
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 5
+        width: 115
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a92581be38fdcf00800000000000000
+      internalID: 1138839228944558497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_3
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 1
+        width: 140
+        height: 547
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c55429ea4c6853d20800000000000000
+      internalID: 3257658084772955484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_4
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 1
+        width: 156
+        height: 547
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faacba1a39885da80800000000000000
+      internalID: -8442691758782166353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_5
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 1
+        width: 175
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1a6831356eeebf0800000000000000
+      internalID: -293043681248239119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_6
+      rect:
+        serializedVersion: 2
+        x: 1374
+        y: 1
+        width: 180
+        height: 549
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e62fb2a9dff49520800000000000000
+      internalID: 2708070586159933159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_7
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 1
+        width: 171
+        height: 550
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74d0c805569b4d350800000000000000
+      internalID: 6040656845004868935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_8
+      rect:
+        serializedVersion: 2
+        x: 1826
+        y: 1
+        width: 176
+        height: 550
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654a08916140a96c0800000000000000
+      internalID: -4135988814822726570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_9
+      rect:
+        serializedVersion: 2
+        x: 2051
+        y: 1
+        width: 182
+        height: 550
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83ab9e692fca4b2a0800000000000000
+      internalID: -6722558185843344840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_10
+      rect:
+        serializedVersion: 2
+        x: 2276
+        y: 0
+        width: 178
+        height: 551
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 551d83f3bbd077710800000000000000
+      internalID: 1690835282971644245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_11
+      rect:
+        serializedVersion: 2
+        x: 2501
+        y: 0
+        width: 190
+        height: 552
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6566665d7d98caa00800000000000000
+      internalID: 769141196464744022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_12
+      rect:
+        serializedVersion: 2
+        x: 2727
+        y: 0
+        width: 188
+        height: 552
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f4557b249d2c00b0800000000000000
+      internalID: -5761179708906187533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_13
+      rect:
+        serializedVersion: 2
+        x: 2952
+        y: 1
+        width: 189
+        height: 551
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81bb4cbe3990ec2c0800000000000000
+      internalID: -4409576454228755688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_14
+      rect:
+        serializedVersion: 2
+        x: 3178
+        y: 0
+        width: 194
+        height: 552
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff0ab828c4ba78ce0800000000000000
+      internalID: -1402964413806567169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_15
+      rect:
+        serializedVersion: 2
+        x: 3403
+        y: 0
+        width: 210
+        height: 552
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6adf08cf39ada5b0800000000000000
+      internalID: -5355438290469135764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_16
+      rect:
+        serializedVersion: 2
+        x: 3628
+        y: 0
+        width: 214
+        height: 551
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8069d94cf2e85b40800000000000000
+      internalID: 5429338923993751691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_17
+      rect:
+        serializedVersion: 2
+        x: 3853
+        y: 0
+        width: 213
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a0f5f445237c30c0800000000000000
+      internalID: -4594670915916795740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_18
+      rect:
+        serializedVersion: 2
+        x: 4075
+        y: 1
+        width: 218
+        height: 532
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 451390f6f34670260800000000000000
+      internalID: 7063724764162502996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_19
+      rect:
+        serializedVersion: 2
+        x: 4302
+        y: 1
+        width: 207
+        height: 544
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 854c6612556f5c660800000000000000
+      internalID: 7405596007773684824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_20
+      rect:
+        serializedVersion: 2
+        x: 4530
+        y: 10
+        width: 121
+        height: 542
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b0d42e51b5f5dbe0800000000000000
+      internalID: -1452985162619629391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_21
+      rect:
+        serializedVersion: 2
+        x: 4746
+        y: 4
+        width: 123
+        height: 546
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2124d0ab74d996590800000000000000
+      internalID: -7680434758114000366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tai_Heal_22
+      rect:
+        serializedVersion: 2
+        x: 4986
+        y: 2
+        width: 110
+        height: 548
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80d5f98c88f9942f0800000000000000
+      internalID: -988083233400857336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ba95bbc7c87ab43bd81ac2edf761392c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Tai_Heal_0: 69331888587443791
+      Tai_Heal_1: -7053974818072217183
+      Tai_Heal_10: 1690835282971644245
+      Tai_Heal_11: 769141196464744022
+      Tai_Heal_12: -5761179708906187533
+      Tai_Heal_13: -4409576454228755688
+      Tai_Heal_14: -1402964413806567169
+      Tai_Heal_15: -5355438290469135764
+      Tai_Heal_16: 5429338923993751691
+      Tai_Heal_17: -4594670915916795740
+      Tai_Heal_18: 7063724764162502996
+      Tai_Heal_19: 7405596007773684824
+      Tai_Heal_2: 1138839228944558497
+      Tai_Heal_20: -1452985162619629391
+      Tai_Heal_21: -7680434758114000366
+      Tai_Heal_22: -988083233400857336
+      Tai_Heal_3: 3257658084772955484
+      Tai_Heal_4: -8442691758782166353
+      Tai_Heal_5: -293043681248239119
+      Tai_Heal_6: 2708070586159933159
+      Tai_Heal_7: 6040656845004868935
+      Tai_Heal_8: -4135988814822726570
+      Tai_Heal_9: -6722558185843344840
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

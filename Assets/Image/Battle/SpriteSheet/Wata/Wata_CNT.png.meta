@@ -1,0 +1,677 @@
+fileFormatVersion: 2
+guid: a8188a71ba87fc64dbb7c2ef9efc377e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3825189024966000929
+    second: Wata_CNT_0
+  - first:
+      213: -5059656698539425897
+    second: Wata_CNT_1
+  - first:
+      213: 8858704263662606037
+    second: Wata_CNT_2
+  - first:
+      213: 8762380033538381992
+    second: Wata_CNT_3
+  - first:
+      213: 3351666195441851688
+    second: Wata_CNT_4
+  - first:
+      213: -5861935107517064995
+    second: Wata_CNT_5
+  - first:
+      213: 4874479384353959127
+    second: Wata_CNT_6
+  - first:
+      213: -2505291736714140241
+    second: Wata_CNT_7
+  - first:
+      213: -2448387653632649691
+    second: Wata_CNT_8
+  - first:
+      213: 3363210159061149977
+    second: Wata_CNT_9
+  - first:
+      213: -1156475916213960377
+    second: Wata_CNT_10
+  - first:
+      213: -8783218721728480370
+    second: Wata_CNT_11
+  - first:
+      213: 4828323637602026732
+    second: Wata_CNT_12
+  - first:
+      213: 3064426865917199529
+    second: Wata_CNT_13
+  - first:
+      213: 1247059513877695282
+    second: Wata_CNT_14
+  - first:
+      213: 7609973297485656550
+    second: Wata_CNT_15
+  - first:
+      213: 7174846243572831763
+    second: Wata_CNT_16
+  - first:
+      213: 2468798935759472014
+    second: Wata_CNT_17
+  - first:
+      213: -2333982573960463530
+    second: Wata_CNT_18
+  - first:
+      213: 2905253791549216531
+    second: Wata_CNT_19
+  - first:
+      213: 4136134601994331664
+    second: Wata_CNT_20
+  - first:
+      213: 2990516585158581084
+    second: Wata_CNT_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wata_CNT_0
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 4
+        width: 100
+        height: 514
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdebd2839d23aeac0800000000000000
+      internalID: -3825189024966000929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_1
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 4
+        width: 99
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79fb1263a0d78c9b0800000000000000
+      internalID: -5059656698539425897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_2
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 4
+        width: 99
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d619d5a79070fa70800000000000000
+      internalID: 8858704263662606037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_3
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 4
+        width: 100
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a8d706273a3a9970800000000000000
+      internalID: 8762380033538381992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_4
+      rect:
+        serializedVersion: 2
+        x: 1855
+        y: 3
+        width: 104
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82d1ff895a2838e20800000000000000
+      internalID: 3351666195441851688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_5
+      rect:
+        serializedVersion: 2
+        x: 2302
+        y: 4
+        width: 138
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd8dd0cd31936aea0800000000000000
+      internalID: -5861935107517064995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_6
+      rect:
+        serializedVersion: 2
+        x: 2735
+        y: 0
+        width: 173
+        height: 515
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dce1698c21a5a340800000000000000
+      internalID: 4874479384353959127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_7
+      rect:
+        serializedVersion: 2
+        x: 3122
+        y: 12
+        width: 171
+        height: 485
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5ae66607a6b3dd0800000000000000
+      internalID: -2505291736714140241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_8
+      rect:
+        serializedVersion: 2
+        x: 3569
+        y: 11
+        width: 169
+        height: 491
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52616c0b664950ed0800000000000000
+      internalID: -2448387653632649691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_9
+      rect:
+        serializedVersion: 2
+        x: 4015
+        y: 13
+        width: 280
+        height: 475
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91923d312d58cae20800000000000000
+      internalID: 3363210159061149977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_10
+      rect:
+        serializedVersion: 2
+        x: 4496
+        y: 21
+        width: 410
+        height: 461
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 741c5ce084f53ffe0800000000000000
+      internalID: -1156475916213960377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_11
+      rect:
+        serializedVersion: 2
+        x: 4942
+        y: 21
+        width: 411
+        height: 461
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b30daab1dbb1680800000000000000
+      internalID: -8783218721728480370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_12
+      rect:
+        serializedVersion: 2
+        x: 5353
+        y: 13
+        width: 281
+        height: 475
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce404ef44c6a10340800000000000000
+      internalID: 4828323637602026732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_13
+      rect:
+        serializedVersion: 2
+        x: 5799
+        y: 11
+        width: 169
+        height: 491
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a4882f9ff7078a20800000000000000
+      internalID: 3064426865917199529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_14
+      rect:
+        serializedVersion: 2
+        x: 6244
+        y: 12
+        width: 172
+        height: 485
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23b837a45027e4110800000000000000
+      internalID: 1247059513877695282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_15
+      rect:
+        serializedVersion: 2
+        x: 6749
+        y: 0
+        width: 173
+        height: 515
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e137da056e0c9960800000000000000
+      internalID: 7609973297485656550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_16
+      rect:
+        serializedVersion: 2
+        x: 7208
+        y: 4
+        width: 138
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 316543205ac229360800000000000000
+      internalID: 7174846243572831763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_17
+      rect:
+        serializedVersion: 2
+        x: 7653
+        y: 3
+        width: 104
+        height: 512
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e854ec34d8fe24220800000000000000
+      internalID: 2468798935759472014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_18
+      rect:
+        serializedVersion: 2
+        x: 8100
+        y: 4
+        width: 101
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65b722707370c9fd0800000000000000
+      internalID: -2333982573960463530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_19
+      rect:
+        serializedVersion: 2
+        x: 8545
+        y: 4
+        width: 99
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 317d5a34ee8815820800000000000000
+      internalID: 2905253791549216531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_20
+      rect:
+        serializedVersion: 2
+        x: 8991
+        y: 4
+        width: 99
+        height: 511
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016e21f9180866930800000000000000
+      internalID: 4136134601994331664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wata_CNT_21
+      rect:
+        serializedVersion: 2
+        x: 9437
+        y: 4
+        width: 101
+        height: 514
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5b9a416df2708920800000000000000
+      internalID: 2990516585158581084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 0c9647da477c0f9498ca0ece0ac9eae9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Wata_CNT_0: -3825189024966000929
+      Wata_CNT_1: -5059656698539425897
+      Wata_CNT_10: -1156475916213960377
+      Wata_CNT_11: -8783218721728480370
+      Wata_CNT_12: 4828323637602026732
+      Wata_CNT_13: 3064426865917199529
+      Wata_CNT_14: 1247059513877695282
+      Wata_CNT_15: 7609973297485656550
+      Wata_CNT_16: 7174846243572831763
+      Wata_CNT_17: 2468798935759472014
+      Wata_CNT_18: -2333982573960463530
+      Wata_CNT_19: 2905253791549216531
+      Wata_CNT_2: 8858704263662606037
+      Wata_CNT_20: 4136134601994331664
+      Wata_CNT_21: 2990516585158581084
+      Wata_CNT_3: 8762380033538381992
+      Wata_CNT_4: 3351666195441851688
+      Wata_CNT_5: -5861935107517064995
+      Wata_CNT_6: 4874479384353959127
+      Wata_CNT_7: -2505291736714140241
+      Wata_CNT_8: -2448387653632649691
+      Wata_CNT_9: 3363210159061149977
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

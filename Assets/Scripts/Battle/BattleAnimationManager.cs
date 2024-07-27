@@ -3,7 +3,8 @@ using UnityEngine;
 public class BattleAnimationManager : MonoBehaviour
 {
     public Animator playerAnimator;
-    public Animator enemyAnimator;
+    public Animator[] enemyAnimators;
+    public ObjectShake objectShake;
 
     private void Start()
     {
@@ -14,7 +15,8 @@ public class BattleAnimationManager : MonoBehaviour
     public void SetDefaultAnimationStates()
     {
         SetTriggerIfExists(playerAnimator, "P1IdleTrigger");
-        SetTriggerIfExists(enemyAnimator, "P2IdleTrigger");
+        SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2IdleTrigger");
+        UpdateEnemyVisibility();
     }
 
     public void PlayAnimation(string action, bool isPlayer)
@@ -47,8 +49,9 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2ATKTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ATKTrigger");
         }
+        objectShake.TriggerShake();
     }
 
     public void PlayDefendAnimation(bool isPlayer)
@@ -59,7 +62,7 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2DEFTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2DEFTrigger");
         }
     }
 
@@ -71,7 +74,7 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2HealTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2HealTrigger");
         }
     }
 
@@ -83,8 +86,9 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2ThrowTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ThrowTrigger");
         }
+        objectShake.TriggerShake();
     }
 
     public void PlayCounterAnimation(bool isPlayer)
@@ -95,7 +99,37 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            SetTriggerIfExists(enemyAnimator, "P2CNTTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2CNTTrigger");
+        }
+        objectShake.TriggerShake();
+    }
+
+    private Animator GetCurrentEnemyAnimator()
+    {
+        int index = GameStateManager.lastSelectedIndex;
+        // Debug.Log("index: " + index);
+        if (index >= 0 && index < enemyAnimators.Length)
+        {
+            Animator currentAnimator = enemyAnimators[index];
+            // Debug.Log("Current enemy animator: " + currentAnimator.name);
+
+            // 获取 SpriteRenderer 并输出当前的 Sprite 名称
+            SpriteRenderer spriteRenderer = currentAnimator.GetComponent<SpriteRenderer>();
+            // if (spriteRenderer != null)
+            // {
+            //     Debug.Log("Current sprite: " + spriteRenderer.sprite.name);
+            // }
+            if (spriteRenderer == null)
+            {
+                Debug.LogWarning("No SpriteRenderer found on " + currentAnimator.name);
+            }
+
+            return currentAnimator;
+        }
+        else
+        {
+            Debug.LogWarning("Invalid enemy animator index, using default.");
+            return enemyAnimators[0]; // 返回默认的动画
         }
     }
 
@@ -131,7 +165,7 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            enemyAnimator.enabled = enabled;
+            GetCurrentEnemyAnimator().enabled = enabled;
         }
     }
 
@@ -143,14 +177,17 @@ public class BattleAnimationManager : MonoBehaviour
         }
         else
         {
-            enemyAnimator.SetTrigger("ExitTrigger");
+            GetCurrentEnemyAnimator().SetTrigger("ExitTrigger");
         }
     }
 
     public void ResetWhenRestart()
     {
         ResetTriggers(playerAnimator);
-        ResetTriggers(enemyAnimator);
+        foreach (var animator in enemyAnimators)
+        {
+            ResetTriggers(animator);
+        }
 
         SetDefaultAnimationStates();
 
@@ -169,6 +206,15 @@ public class BattleAnimationManager : MonoBehaviour
             {
                 animator.ResetTrigger(param.name);
             }
+        }
+    }
+
+    private void UpdateEnemyVisibility()
+    {
+        int currentIndex = GameStateManager.lastSelectedIndex;
+        for (int i = 0; i < enemyAnimators.Length; i++)
+        {
+            enemyAnimators[i].gameObject.SetActive(i == currentIndex);
         }
     }
 }
