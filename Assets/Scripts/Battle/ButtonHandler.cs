@@ -49,7 +49,7 @@ public class ButtonHandler : MonoBehaviour
             {
                 OnButtonPressed("ATK");
                 rawImage.texture = atkTexture;
-                // Debug.Log("It's ATK");
+                Debug.Log("It's ATK");
             }
             else if (isDEF && OnButtonPressed != null)
             {
@@ -74,6 +74,10 @@ public class ButtonHandler : MonoBehaviour
                 OnButtonPressed("CNT");
                 rawImage.texture = cntTexture;
                 // Debug.Log("It's CNT");
+            }
+            else
+            {
+                Debug.Log("Something is going wrong...");
             }
             button.interactable = false; // 禁用按钮
             StartCoroutine(ResetTextureAfterTime(resetTime)); // 启动协程来恢复原先的纹理

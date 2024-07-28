@@ -21,6 +21,7 @@ public class BattleInfoManager : MonoBehaviour
     public string player1CannotMoveText = null;
     public string player2CannotMoveText = null;
     public bool isGameOver = false;
+    public bool isNetBattle = false;
     public GameObject[] stageBG;
 
     private string player1Action;
@@ -28,7 +29,7 @@ public class BattleInfoManager : MonoBehaviour
 
     void Start()
     {
-        UpdateStageBackground();
+        UpdateStageBackground();   
     }
 
     void Update()
@@ -71,9 +72,17 @@ public class BattleInfoManager : MonoBehaviour
     private void UpdateStageBackground()
     {
         int currentIndex = GameStateManager.lastSelectedIndex;
-        for (int i = 0; i < stageBG.Length; i++)
+
+        if (!isNetBattle)
         {
-            stageBG[i].SetActive(i == currentIndex);
+            for (int i = 0; i < stageBG.Length; i++)
+            {
+                stageBG[i].SetActive(i == currentIndex);
+            }
+        }
+        else
+        {
+            stageBG[1].SetActive(true);
         }
     }
 
