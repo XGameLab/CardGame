@@ -3,7 +3,6 @@ using TMPro;
 
 public class GameStart : MonoBehaviour
 {
-    public TextMeshProUGUI gameModeText; // 用于显示游戏模式的文本
     public RectTransform[] cardPos; // 使用 RectTransform 来定义卡牌生成的位置
     public GameObject[] cardPrefabs; // 卡牌预制体数组
 
@@ -20,28 +19,30 @@ public class GameStart : MonoBehaviour
     {
         ChooseGameMode.OnGameOffline += OfflineGame;
         ChooseGameMode.OnGameOnline += OnlineGame;
+        ScoreManager.OnRetryGame += RetrySpawnCards; // 监听重置事件
     }
 
     void OnDisable()
     {
         ChooseGameMode.OnGameOffline -= OfflineGame;
         ChooseGameMode.OnGameOnline -= OnlineGame;
+        ScoreManager.OnRetryGame -= RetrySpawnCards; // 取消监听重置事件
     }
 
     public void OfflineGame()
     {
-        gameModeText.text = "オフライン モード";
         SpawnCards();
     }
 
     public void OnlineGame()
     {
-        gameModeText.text = "オンライン モード";
         SpawnCards();
     }
 
     private void SpawnCards()
     {
+        ResetGame();
+
         if (cardPrefabs.Length != 5)
         {
             Debug.LogError("Prefab array must contain exactly 5 elements.");
@@ -54,30 +55,25 @@ public class GameStart : MonoBehaviour
             return;
         }
 
-        // 为每个位置生成4个随机Prefab
         foreach (var pos in cardPos)
         {
             bool cardSpawned = false;
 
-            // 尝试找到一个未达到最大限制的Prefab进行生成
             while (!cardSpawned)
             {
                 int randomIndex = Random.Range(0, cardPrefabs.Length);
 
                 if (prefabCounts[randomIndex] < maxPerPrefab)
                 {
-                    // 生成卡牌
                     GameObject card = Instantiate(cardPrefabs[randomIndex], pos);
                     card.SetActive(true);
 
-                    // 调整卡牌的UI位置
                     RectTransform cardRectTransform = card.GetComponent<RectTransform>();
                     if (cardRectTransform != null)
                     {
                         cardRectTransform.anchoredPosition = Vector2.zero;
                     }
 
-                    // 增加该Prefab的生成计数
                     prefabCounts[randomIndex]++;
                     cardSpawned = true;
                 }
@@ -92,5 +88,11 @@ public class GameStart : MonoBehaviour
         {
             prefabCounts[i] = 0;
         }
+    }
+
+    private void RetrySpawnCards()
+    {
+        // 在游戏重置时重新发牌
+        SpawnCards();
     }
 }

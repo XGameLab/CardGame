@@ -4,25 +4,34 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    public TextMeshProUGUI gameModeText;
     public TextMeshProUGUI p1ScoreText;
     public TextMeshProUGUI p2ScoreText;
+    public TextMeshProUGUI winnerText;
+    public GameObject winnerObj;
     public GameObject p1Panel; 
     public GameObject p2Panel; 
+    public Button retryButton;
 
     private int player1Score = 0;
     private int player2Score = 0;
     private int currentPlayer = 1;
-    private bool isOfflineMode = false; // 标志位，跟踪当前是否为离线模式
+    private bool isOfflineMode = false;
     private Outline player1Outline;
     private Outline player2Outline;
 
+    public static event System.Action OnRetryGame;
+
     void Start()
     {
-        // 获取玩家对象的Outline组件
+        winnerText.text = "";
+        winnerObj.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+        retryButton.onClick.AddListener(RetryGame);
+
         player1Outline = p1Panel.GetComponent<Outline>();
         player2Outline = p2Panel.GetComponent<Outline>();
 
-        // 确保初始时只有玩家1的对象发光
         UpdatePlayerOutline();
     }
 
@@ -32,6 +41,7 @@ public class ScoreManager : MonoBehaviour
         CardPressed.OnDifferentTypeCardsMatched += OnCardMismatch;
         ChooseGameMode.OnGameOffline += SetOfflineMode;
         ChooseGameMode.OnGameOnline += SetOnlineMode;
+        ChooseGameMode.OnGameStart += SetCurrentPlayer; // 添加事件监听
     }
 
     void OnDisable()
@@ -40,6 +50,7 @@ public class ScoreManager : MonoBehaviour
         CardPressed.OnDifferentTypeCardsMatched -= OnCardMismatch;
         ChooseGameMode.OnGameOffline -= SetOfflineMode;
         ChooseGameMode.OnGameOnline -= SetOnlineMode;
+        ChooseGameMode.OnGameStart -= SetCurrentPlayer; // 移除事件监听
     }
 
     void OnCardMatch()
@@ -57,27 +68,27 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Player 2 Score: " + player2Score);
         }
 
-        // 检查总分数
         if (player1Score + player2Score >= 10)
         {
+            winnerObj.SetActive(true);
+            retryButton.gameObject.SetActive(true);
             if (player1Score > player2Score)
             {
-                Debug.Log("P1 Win");
+                winnerText.text = "Winner: Player1";
             }
             else if (player2Score > player1Score)
             {
-                Debug.Log("P2 Win");
+                winnerText.text = "Winner: Player2";
             }
             else
             {
-                Debug.Log("Tie");
+                winnerText.text = "Tie Game!";
             }
         }
     }
 
     void OnCardMismatch()
     {
-        // 只有在离线模式时才切换玩家
         if (isOfflineMode)
         {
             currentPlayer = (currentPlayer == 1) ? 2 : 1;
@@ -89,26 +100,52 @@ public class ScoreManager : MonoBehaviour
     void SetOfflineMode()
     {
         isOfflineMode = true;
-        currentPlayer = 1; // 开始时总是Player 1
+        currentPlayer = 1;
         UpdatePlayerOutline();
+        gameModeText.text = "オフライン モード";
         Debug.Log("Offline mode activated.");
     }
 
     void SetOnlineMode()
     {
         isOfflineMode = false;
-        currentPlayer = 1; // 始终保持Player 1
+        currentPlayer = 1;
         UpdatePlayerOutline();
+        gameModeText.text = "オンライン モード";
         Debug.Log("Online mode activated.");
+    }
+
+    void SetCurrentPlayer(int player)
+    {
+        currentPlayer = player;
+        UpdatePlayerOutline();
+        Debug.Log("Current Player set to: " + currentPlayer);
     }
 
     void UpdatePlayerOutline()
     {
         if (player1Outline != null && player2Outline != null)
         {
-            // 根据当前玩家切换发光效果
             player1Outline.enabled = (currentPlayer == 1);
             player2Outline.enabled = (currentPlayer == 2);
         }
+    }
+
+    void RetryGame()
+    {
+        player1Score = 0;
+        player2Score = 0;
+        p1ScoreText.text = player1Score.ToString();
+        p2ScoreText.text = player2Score.ToString();
+
+        winnerText.text = "";
+        winnerObj.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+
+        UpdatePlayerOutline();
+
+        Debug.Log("Game Reset!");
+
+        OnRetryGame?.Invoke();
     }
 }
