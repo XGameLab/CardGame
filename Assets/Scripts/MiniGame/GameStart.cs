@@ -1,46 +1,115 @@
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class GameStart : MonoBehaviour
+public class GameStart : MonoBehaviourPunCallbacks
 {
-    public RectTransform[] cardPos; // 使用 RectTransform 来定义卡牌生成的位置
-    public GameObject[] cardPrefabs; // 卡牌预制体数组
+    public RectTransform[] cardPos;
+    public GameObject[] cardPrefabs;
 
-    private int maxPerPrefab = 4; // 每种卡牌最大生成数量
-    private int[] prefabCounts; // 跟踪每种Prefab的生成次数
+    private int maxPerPrefab = 4;
+    private int[] prefabCounts;
+
+    [SerializeField]
+    private int seed; // 随机种子，公开到Inspector
+
+    private const string SeedProperty = "GameSeed";
+    private bool isGameStarted = false;
 
     void Start()
     {
         prefabCounts = new int[cardPrefabs.Length];
-        ResetGame();
+        PhotonNetwork.AddCallbackTarget(this);
     }
 
     void OnEnable()
     {
-        ChooseGameMode.OnGameOffline += OfflineGame;
-        ChooseGameMode.OnGameOnline += OnlineGame;
-        ScoreManager.OnRetryGame += RetrySpawnCards; // 监听重置事件
+        ScoreManager.OnRetryGame += RetrySpawnCards;
+        ChooseGameMode.OnGameOffline += StartOfflineGame;
+        ChooseGameMode.OnGameOnline += StartOnlineGame;
     }
 
     void OnDisable()
     {
-        ChooseGameMode.OnGameOffline -= OfflineGame;
-        ChooseGameMode.OnGameOnline -= OnlineGame;
-        ScoreManager.OnRetryGame -= RetrySpawnCards; // 取消监听重置事件
+        PhotonNetwork.RemoveCallbackTarget(this);
+        ScoreManager.OnRetryGame -= RetrySpawnCards;
+        ChooseGameMode.OnGameOffline -= StartOfflineGame;
+        ChooseGameMode.OnGameOnline -= StartOnlineGame;
     }
 
-    public void OfflineGame()
+    private void StartOfflineGame()
     {
+        isGameStarted = true;
+        GenerateSeedForOfflineMode();
         SpawnCards();
     }
 
-    public void OnlineGame()
+    private void StartOnlineGame()
     {
-        SpawnCards();
+        isGameStarted = true;
+        // 联机模式的处理逻辑将在OnJoinedRoom中完成
+    }
+
+    private void GenerateAndSetSeed()
+    {
+        seed = Random.Range(int.MinValue, int.MaxValue);
+        Debug.Log("Host Seed: " + seed);
+
+        ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable
+        {
+            { SeedProperty, seed }
+        };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+    }
+
+    private void GenerateSeedForOfflineMode()
+    {
+        seed = Random.Range(int.MinValue, int.MaxValue);
+        Debug.Log("Offline Mode Seed: " + seed);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GenerateAndSetSeed();
+            if (isGameStarted)
+            {
+                SpawnCards();
+            }
+        }
+        else
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(SeedProperty, out object seedValue))
+            {
+                seed = (int)seedValue;
+                Debug.Log("Client received Seed: " + seed);
+                if (isGameStarted)
+                {
+                    SpawnCards();
+                }
+            }
+        }
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey(SeedProperty))
+        {
+            seed = (int)propertiesThatChanged[SeedProperty];
+            Debug.Log("Updated Seed from properties: " + seed);
+            if (isGameStarted)
+            {
+                SpawnCards();
+            }
+        }
     }
 
     private void SpawnCards()
     {
+        // 清理旧的卡牌
         ResetGame();
 
         if (cardPrefabs.Length != 5)
@@ -55,6 +124,9 @@ public class GameStart : MonoBehaviour
             return;
         }
 
+        Random.InitState(seed);
+        Debug.Log("Using Seed: " + seed);
+
         foreach (var pos in cardPos)
         {
             bool cardSpawned = false;
@@ -65,14 +137,20 @@ public class GameStart : MonoBehaviour
 
                 if (prefabCounts[randomIndex] < maxPerPrefab)
                 {
-                    GameObject card = Instantiate(cardPrefabs[randomIndex], pos);
-                    card.SetActive(true);
+                    // 清理位置上已有的卡牌
+                    ClearPreviousCard(pos);
 
-                    RectTransform cardRectTransform = card.GetComponent<RectTransform>();
-                    if (cardRectTransform != null)
+                    // 使用PhotonNetwork.Instantiate在网络上创建卡牌
+                    GameObject card;
+                    if (PhotonNetwork.IsConnected)
                     {
-                        cardRectTransform.anchoredPosition = Vector2.zero;
+                        card = PhotonNetwork.Instantiate(cardPrefabs[randomIndex].name, pos.position, Quaternion.identity);
                     }
+                    else
+                    {
+                        card = Instantiate(cardPrefabs[randomIndex], pos.position, Quaternion.identity);
+                    }
+                    card.transform.SetParent(pos, false);
 
                     prefabCounts[randomIndex]++;
                     cardSpawned = true;
@@ -81,9 +159,23 @@ public class GameStart : MonoBehaviour
         }
     }
 
+    private void ClearPreviousCard(RectTransform position)
+    {
+        foreach (Transform child in position)
+        {
+            if (child.gameObject.GetComponent<PhotonView>() != null)
+            {
+                PhotonNetwork.Destroy(child.gameObject);
+            }
+            else
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
     private void ResetGame()
     {
-        // 重置每种Prefab的计数
         for (int i = 0; i < prefabCounts.Length; i++)
         {
             prefabCounts[i] = 0;
@@ -92,7 +184,23 @@ public class GameStart : MonoBehaviour
 
     private void RetrySpawnCards()
     {
-        // 在游戏重置时重新发牌
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            GenerateAndSetSeed();
+        }
+        else if (!PhotonNetwork.IsConnected)
+        {
+            GenerateSeedForOfflineMode();
+        }
+
         SpawnCards();
+    }
+
+    private void OnValidate()
+    {
+        if (Application.isPlaying && isGameStarted)
+        {
+            SpawnCards();
+        }
     }
 }

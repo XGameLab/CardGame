@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 using System.Collections;
 
-public class CardPressed : MonoBehaviour
+public class CardPressed : MonoBehaviourPunCallbacks
 {
     public bool isATK;
     public bool isDEF;
@@ -16,6 +17,7 @@ public class CardPressed : MonoBehaviour
     public Texture throwTexture;
     public Texture cntTexture;
     public Texture defaultTex;
+
     public static event System.Action OnSameTypeCardsMatched;
     public static event System.Action OnDifferentTypeCardsMatched;
 
@@ -28,6 +30,11 @@ public class CardPressed : MonoBehaviour
     {
         rawImage = GetComponent<RawImage>();
         button = GetComponent<Button>();
+
+        if (ScoreManager.Instance == null)
+        {
+            Debug.LogError("ScoreManager instance not found.");
+        }
 
         if (rawImage == null)
         {
@@ -47,48 +54,65 @@ public class CardPressed : MonoBehaviour
 
     void OnCardClicked()
     {
+        int currentPlayer = ScoreManager.Instance.CurrentPlayer;
+        bool isOfflineMode = ScoreManager.Instance.IsOfflineMode;
+
+        // 检查当前玩家和网络状态，决定是否允许点击
+        if (isOfflineMode || (currentPlayer == 1 && PhotonNetwork.IsMasterClient) || (currentPlayer == 2 && !PhotonNetwork.IsMasterClient))
+        {
+            HandleCardClick();
+        }
+        else
+        {
+            Debug.Log("Card click not allowed. CurrentPlayer: " + currentPlayer);
+        }
+    }
+
+    private void HandleCardClick()
+    {
         if (firstCard == null)
         {
             firstCard = this;
-            ChangeCardImage();
+            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT);
         }
         else if (secondCard == null && firstCard != this)
         {
             secondCard = this;
-            ChangeCardImage();
+            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT);
             CompareCards();
         }
     }
 
-    void ChangeCardImage()
+    void ChangeCardImage(bool atk, bool def, bool heal, bool thw, bool cnt)
     {
-        if (isATK)
+        if (atk)
         {
             rawImage.texture = atkTexture;
         }
-        else if (isDEF)
+        else if (def)
         {
             rawImage.texture = defTexture;
         }
-        else if (isHeal)
+        else if (heal)
         {
             rawImage.texture = healTexture;
         }
-        else if (isThrow)
+        else if (thw)
         {
             rawImage.texture = throwTexture;
         }
-        else if (isCNT)
+        else if (cnt)
         {
             rawImage.texture = cntTexture;
         }
+
+        Debug.Log($"Card clicked. Type: {GetCardType(this)}");
     }
 
     void CompareCards()
     {
         if (firstCard != null && secondCard != null)
         {
-            // 比较卡牌种类
             if ((firstCard.isATK && secondCard.isATK) ||
                 (firstCard.isDEF && secondCard.isDEF) ||
                 (firstCard.isHeal && secondCard.isHeal) ||
@@ -99,15 +123,13 @@ public class CardPressed : MonoBehaviour
                 DisableCardInteractivity(firstCard);
                 DisableCardInteractivity(secondCard);
 
-                // 触发匹配成功事件
                 OnSameTypeCardsMatched?.Invoke();
-
                 ResetCards();
             }
             else
             {
                 Debug.Log("The two cards are of different types.");
-                OnDifferentTypeCardsMatched?.Invoke(); // 触发匹配失败事件
+                OnDifferentTypeCardsMatched?.Invoke();
                 StartCoroutine(ResetCardsAfterDelay(1f));
             }
         }
@@ -115,9 +137,9 @@ public class CardPressed : MonoBehaviour
 
     void DisableCardInteractivity(CardPressed card)
     {
-        if (card != null && card.button != null)
+        if (card.button != null)
         {
-            card.button.interactable = false; // 禁用卡牌的按钮交互
+            card.button.interactable = false;
         }
     }
 
@@ -142,5 +164,15 @@ public class CardPressed : MonoBehaviour
         }
 
         ResetCards();
+    }
+
+    string GetCardType(CardPressed card)
+    {
+        if (card.isATK) return "ATK";
+        if (card.isDEF) return "DEF";
+        if (card.isHeal) return "Heal";
+        if (card.isThrow) return "Throw";
+        if (card.isCNT) return "CNT";
+        return "Unknown";
     }
 }

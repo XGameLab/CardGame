@@ -1,26 +1,46 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviourPunCallbacks
 {
+    public static ScoreManager Instance { get; private set; }
     public TextMeshProUGUI gameModeText;
     public TextMeshProUGUI p1ScoreText;
     public TextMeshProUGUI p2ScoreText;
     public TextMeshProUGUI winnerText;
     public GameObject winnerObj;
-    public GameObject p1Panel; 
-    public GameObject p2Panel; 
+    public GameObject p1Panel;
+    public GameObject p2Panel;
     public Button retryButton;
 
     private int player1Score = 0;
     private int player2Score = 0;
     private int currentPlayer = 1;
+    public int CurrentPlayer
+    {
+        get { return currentPlayer; }
+        private set { currentPlayer = value; } // 设置为 private 来保护
+    }
     private bool isOfflineMode = false;
+    public bool IsOfflineMode => isOfflineMode;
     private Outline player1Outline;
     private Outline player2Outline;
 
     public static event System.Action OnRetryGame;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -41,7 +61,7 @@ public class ScoreManager : MonoBehaviour
         CardPressed.OnDifferentTypeCardsMatched += OnCardMismatch;
         ChooseGameMode.OnGameOffline += SetOfflineMode;
         ChooseGameMode.OnGameOnline += SetOnlineMode;
-        ChooseGameMode.OnGameStart += SetCurrentPlayer; // 添加事件监听
+        ChooseGameMode.OnGameStart += SetCurrentPlayer;
     }
 
     void OnDisable()
@@ -50,7 +70,7 @@ public class ScoreManager : MonoBehaviour
         CardPressed.OnDifferentTypeCardsMatched -= OnCardMismatch;
         ChooseGameMode.OnGameOffline -= SetOfflineMode;
         ChooseGameMode.OnGameOnline -= SetOnlineMode;
-        ChooseGameMode.OnGameStart -= SetCurrentPlayer; // 移除事件监听
+        ChooseGameMode.OnGameStart -= SetCurrentPlayer;
     }
 
     void OnCardMatch()
@@ -68,33 +88,117 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Player 2 Score: " + player2Score);
         }
 
-        if (player1Score + player2Score >= 10)
+        // 同步分数到所有客户端
+        if (!isOfflineMode)
         {
-            winnerObj.SetActive(true);
-            retryButton.gameObject.SetActive(true);
+            photonView.RPC("UpdateScore", RpcTarget.Others, player1Score, player2Score);
+        }
+
+        // 检查胜利条件
+        if ((isOfflineMode && player1Score + player2Score >= 10) || (!isOfflineMode && (player1Score >= 10 || player2Score >= 10)))
+        {
+            string winnerMessage;
             if (player1Score > player2Score)
             {
-                winnerText.text = "Winner: Player1";
+                winnerMessage = "Winner: Player1";
             }
             else if (player2Score > player1Score)
             {
-                winnerText.text = "Winner: Player2";
+                winnerMessage = "Winner: Player2";
             }
             else
             {
-                winnerText.text = "Tie Game!";
+                winnerMessage = "Tie Game!";
+            }
+
+            // 显示胜利信息
+            winnerText.text = winnerMessage;
+            // 仅在在线模式下调用RPC显示胜利信息
+            if (!isOfflineMode)
+            {
+                photonView.RPC("ShowWinner", RpcTarget.All, winnerMessage);
+            }
+            else
+            {
+                ShowWinner(winnerMessage); // 在离线模式下直接调用本地方法
             }
         }
+    }
+
+    [PunRPC]
+    void ShowWinner(string winnerMessage)
+    {
+        winnerText.text = winnerMessage;
+        winnerObj.SetActive(true);
+        retryButton.gameObject.SetActive(true);
+    }
+
+
+    [PunRPC]
+    void UpdateScore(int p1Score, int p2Score)
+    {
+        player1Score = p1Score;
+        player2Score = p2Score;
+
+        p1ScoreText.text = player1Score.ToString();
+        p2ScoreText.text = player2Score.ToString();
+        
+        Debug.Log("Scores updated. Player 1: " + player1Score + ", Player 2: " + player2Score);
     }
 
     void OnCardMismatch()
     {
         if (isOfflineMode)
         {
-            currentPlayer = (currentPlayer == 1) ? 2 : 1;
+            // 直接切换玩家
+            SwitchPlayer();
+        }
+        else
+        {
+            // 客户端请求切换玩家
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("RequestPlayerSwitch", RpcTarget.MasterClient);
+            }
+            else
+            {
+                SwitchPlayer();
+            }
+        }
+    }
+
+    [PunRPC]
+    void RequestPlayerSwitch()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SwitchPlayer();
+        }
+    }
+
+    void SwitchPlayer()
+    {
+        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+
+        if (isOfflineMode)
+        {
+            // 直接调用本地更新方法
             UpdatePlayerOutline();
             Debug.Log("Switching to Player " + currentPlayer);
         }
+        else
+        {
+            // 使用RPC同步给所有客户端
+            photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, currentPlayer);
+        }
+    }
+
+    [PunRPC]
+    void UpdateCurrentPlayer(int player)
+    {
+        currentPlayer = player;
+        UpdatePlayerOutline();
+        Debug.Log("Switching to Player " + currentPlayer);
     }
 
     void SetOfflineMode()
