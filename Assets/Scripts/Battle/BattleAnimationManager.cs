@@ -5,6 +5,7 @@ public class BattleAnimationManager : MonoBehaviour
     public Animator playerAnimator;
     public Animator[] enemyAnimators;
     public ObjectShake objectShake;
+    public AudioManager audioManager;
 
     private void Start()
     {
@@ -46,6 +47,7 @@ public class BattleAnimationManager : MonoBehaviour
         if (isPlayer)
         {
             SetTriggerIfExists(playerAnimator, "P1ATKTrigger");
+            audioManager.PlaySound("P1ATKTrigger");
         }
         else
         {
@@ -59,6 +61,7 @@ public class BattleAnimationManager : MonoBehaviour
         if (isPlayer)
         {
             SetTriggerIfExists(playerAnimator, "P1DEFTrigger");
+            audioManager.PlaySound("P1DEFTrigger");
         }
         else
         {
@@ -71,6 +74,7 @@ public class BattleAnimationManager : MonoBehaviour
         if (isPlayer)
         {
             SetTriggerIfExists(playerAnimator, "P1HealTrigger");
+            audioManager.PlaySound("P1HealTrigger");
         }
         else
         {
@@ -83,6 +87,7 @@ public class BattleAnimationManager : MonoBehaviour
         if (isPlayer)
         {
             SetTriggerIfExists(playerAnimator, "P1ThrowTrigger");
+            audioManager.PlaySound("P1ThrowTrigger");
         }
         else
         {
@@ -96,6 +101,7 @@ public class BattleAnimationManager : MonoBehaviour
         if (isPlayer)
         {
             SetTriggerIfExists(playerAnimator, "P1CNTTrigger");
+            audioManager.PlaySound("P1CNTTrigger");
         }
         else
         {

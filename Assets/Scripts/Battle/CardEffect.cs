@@ -18,6 +18,7 @@ public class CardEffect : MonoBehaviour
 
     public Player2AI player2AI; // 引用Player2AI脚本
     public BattleInfoManager battleInfoManager;
+    public AudioManager audioManager;
 
     private int currentHandPositionIndex = 0; // 当前手牌位置索引
     private List<int> availableCardIndices; // 可用卡牌索引列表
@@ -285,6 +286,7 @@ public class CardEffect : MonoBehaviour
         {
             battleInfoManager.OnSubmitButtonClicked();
         }
+        audioManager.PlayRandomBattleSE();
         selectedCard = null;
         StartCoroutine(ResetCards());
     }

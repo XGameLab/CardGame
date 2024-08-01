@@ -69,6 +69,11 @@ public class FollowMouse : MonoBehaviourPunCallbacks, IPunObservable
         mousePosition.z = Camera.main.nearClipPlane; // 设置适当的Z值
 
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        // 添加偏移量
+        Vector3 offset = new Vector3(0.2f, -0.5f, 0f);
+        worldPosition += offset;
+        
         transform.position = worldPosition;
 
          // 如果连接到Photon服务器并且不是离线模式，才发送RPC

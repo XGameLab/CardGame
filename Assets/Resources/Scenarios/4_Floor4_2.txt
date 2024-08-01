@@ -1,7 +1,7 @@
-NPC:【Floor4Classroom2BG】
-NPC:【無言BGM】
+*WhiteBoard2BG
+@DefaultBGM
 NPC:勝者は...
-NPC:【歓声SE】
+#VictorySE
 NPC:Wata
 X:...
 Wata:当たり前だけど

@@ -291,6 +291,13 @@ public class PlayerActionHandler : MonoBehaviour
 
         battleAnimationManager.ResetTriggers(animator); // 确保重置触发器
 
+        // 检查 player1CannotAct 状态，如果 player1 不能行动且是 player1 的动画，则跳过震动和音效
+        if (player1CannotAct && isPlayer)
+        {
+            Debug.Log("Player1 cannot act, skipping animation and sound.");
+            return;
+        }
+
         switch (action)
         {
             case "ATK":

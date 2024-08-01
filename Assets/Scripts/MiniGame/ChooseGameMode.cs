@@ -74,6 +74,8 @@ public class ChooseGameMode : MonoBehaviourPunCallbacks
 
     void OnStartButtonClick()
     {
+        Cursor.visible = false; // 隐藏光标
+        
         if (toggleOffline.isOn)
         {
             Debug.Log("Starting offline game...");

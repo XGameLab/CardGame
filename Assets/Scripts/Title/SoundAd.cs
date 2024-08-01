@@ -12,10 +12,10 @@ public class SoundAd : MonoBehaviour
 
     //それぞれのスライダーを入れるとこです。。
     [SerializeField] Slider BgmSlider;
-    [SerializeField] Slider SeSlider;
+    // [SerializeField] Slider SeSlider;
     
     public TextMeshProUGUI BgmVolumeText;
-    public TextMeshProUGUI SeVolumeText;
+    // public TextMeshProUGUI SeVolumeText;
     private AudioSource audioSource;
     public GameObject eventsystem;//消したくないオブジェクト
     void Awake()

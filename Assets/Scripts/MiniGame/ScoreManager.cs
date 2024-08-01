@@ -11,9 +11,11 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI p2ScoreText;
     public TextMeshProUGUI winnerText;
     public GameObject winnerObj;
+    public GameObject exitObj; 
     public GameObject p1Panel;
     public GameObject p2Panel;
     public Button retryButton;
+    public Button exitButton;
 
     private int player1Score = 0;
     private int player2Score = 0;
@@ -46,8 +48,12 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     {
         winnerText.text = "";
         winnerObj.SetActive(false);
+        exitObj.SetActive(false);
         retryButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
+
         retryButton.onClick.AddListener(RetryGame);
+        exitButton.onClick.AddListener(OnExitButtonClicked);
 
         player1Outline = p1Panel.GetComponent<Outline>();
         player2Outline = p2Panel.GetComponent<Outline>();
@@ -131,6 +137,9 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         winnerText.text = winnerMessage;
         winnerObj.SetActive(true);
         retryButton.gameObject.SetActive(true);
+        exitButton.gameObject.SetActive(true);
+
+        Cursor.visible = true; // 隐藏光标
     }
 
 
@@ -237,6 +246,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
 
     void RetryGame()
     {
+        Cursor.visible = false; // 隐藏光标
+
         player1Score = 0;
         player2Score = 0;
         p1ScoreText.text = player1Score.ToString();
@@ -245,11 +256,34 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         winnerText.text = "";
         winnerObj.SetActive(false);
         retryButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
 
         UpdatePlayerOutline();
 
         Debug.Log("Game Reset!");
 
         OnRetryGame?.Invoke();
+    }
+
+    void OnExitButtonClicked()
+    {
+        if (isOfflineMode)
+        {
+            ShowExit();
+        }
+        else
+        {
+            photonView.RPC("ShowExit", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    void ShowExit()
+    {   
+        if(!isOfflineMode)
+        {
+            exitObj.SetActive(true);  // 使 exitObj 可见
+            Debug.Log("Exit Object is now visible.");
+        }  
     }
 }

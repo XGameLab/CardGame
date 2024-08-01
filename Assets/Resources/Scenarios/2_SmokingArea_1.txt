@@ -1,9 +1,9 @@
 *SmokingAreaBG
-NPC:【無言BGM】
-NPC:【足音SE】
+@DefaultBGM
+#WalkSE
 NPC:喫煙エリア
 NPC:そこに顔色が悪そうな男がいる
-NPC:【どっかに潜む殺気BGM】
+@DangerBGM
 XP:お前
 XP:あのビルに入っちゃダメだ
 XP:悪いがおとなしく家に帰ってくれ
@@ -18,7 +18,7 @@ XP:...
 XP:わかった
 XP:じゃぁ...
 Wata:入らせるの？
-NPC:【笑い声SE】
+#LaughterSE
 XP:それは...
 XP:俺を倒してからな！！
 NPC:あの男はすごい勢いで

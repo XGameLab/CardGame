@@ -1,9 +1,8 @@
 NPC:【通学路BG】
-NPC:【無言BGM】
+@DefaultBGM
 NPC:通学路
-NPC:【人ごみざわざわSE】
 Wata:遅刻遅刻...
-NPC:【走るSE】
+#RunSE
 Wata:走らなきゃヤべー！！
 #MessageSE
 Wata:あれ？
@@ -11,7 +10,7 @@ Wata:Lain（ライン）からメッセージか
 Wata:Taiさん？
 Wata:...
 Wata:...
-NPC:【ふざけるBGM】
+@JokingBGM
 Wata:www
 Wata:「学校に来るな」だと...
 Wata:ガキのいたずらかよwww
@@ -26,15 +25,14 @@ Wata:俺は！
 Wata:授業に一度も欠席したことのない！
 #GenkiSE
 Wata:優等生だ！（自称）
-NPC:【急ぐ/焦るBGM】
 NPC:Wataはこう言いながら
 NPC:ダッシュし始めた
-NPC:【走るSE】
+#DisappearSE
 NPC:...
 NPC:数分後
+@RelaxBGM
 *EntrySchoolBG
 NPC:学校正門
-NPC:【明るいBGM】
 Wata:はぁ...はぁ
 #YattaSE
 Wata:やっと着いた
@@ -42,7 +40,7 @@ Wata:まだ間に合うかも！
 Wata:そういえば
 Wata:Taiのやつ
 Wata:覚悟しとけよw
-NPC:【裏があるBGM】
+@UnsafeBGM
 NPC:Wataは学校に入った
 NPC:これから何が発生するのか
 NPC:心の準備が一つもないまま

@@ -8,6 +8,7 @@ public class HoverButton : MonoBehaviour
 {
     public Button[] buttons; // 按钮数组
     public string startSceneName;  // Start按钮对应的场景名称
+    public string miniGameSceneName;
     public GameObject optionPanel; // Option按钮对应的面板
     public RawImage creditsImage; // Credits按钮对应的Raw Image
 
@@ -60,6 +61,24 @@ public class HoverButton : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        // 场景切换或对象销毁时清理协程和事件
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (scaleCoroutines[i] != null)
+            {
+                StopCoroutine(scaleCoroutines[i]);
+                scaleCoroutines[i] = null;
+            }
+
+            if (buttons[i] != null)
+            {
+                buttons[i].onClick.RemoveAllListeners();
+            }
+        }
+    }
+
     public void OnPointerEnter(int index)
     {
         Image buttonImage = buttons[index].GetComponent<Image>();
@@ -78,6 +97,7 @@ public class HoverButton : MonoBehaviour
             if (scaleCoroutines[index] != null)
             {
                 StopCoroutine(scaleCoroutines[index]);
+                scaleCoroutines[index] = null; // 确保协程被正确停止
             }
             // 启动新的缩放协程
             scaleCoroutines[index] = StartCoroutine(ScaleButton(rectTransform, originalScales[index], originalScales[index] * hoverScale, scaleDuration));
@@ -100,6 +120,7 @@ public class HoverButton : MonoBehaviour
             if (scaleCoroutines[index] != null)
             {
                 StopCoroutine(scaleCoroutines[index]);
+                scaleCoroutines[index] = null; // 确保协程被正确停止
             }
             // 启动新的缩放协程
             scaleCoroutines[index] = StartCoroutine(ScaleButton(rectTransform, rectTransform.localScale, originalScales[index], scaleDuration));
@@ -113,24 +134,28 @@ public class HoverButton : MonoBehaviour
         {
             SceneManager.LoadScene(startSceneName);
         }
-        else if (index == 1 && optionPanel != null) // 点击 Option 按钮（索引为1）时打开面板
+        else if (index == 1 && !string.IsNullOrEmpty(miniGameSceneName)) // 点击 MiniGame 按钮时进入迷你游戏
+        {
+            SceneManager.LoadScene(miniGameSceneName);
+        }
+        else if (index == 2 && optionPanel != null) // 点击 Option 按钮时打开面板
         {
             optionPanel.SetActive(true);
         }
-        else if (index == 2 && creditsImage != null) // 点击 Credits 按钮（索引为2）时显示Raw Image
+        else if (index == 3 && creditsImage != null) // 点击 Credits 按钮时显示Raw Image
         {
             creditsImage.gameObject.SetActive(true);
             GameStateManager.Instance.AudioSource.mute = true;
         }
-        else if (index == 3) // 点击 Exit 按钮（索引为3）时退出游戏
+        else if (index == 4) // 点击 Exit 按钮时退出游戏
         {
             Application.Quit();
         }
-        else if (index == 4) // 点击 Back 按钮
+        else if (index == 5) // 点击 Back 按钮
         {
             optionPanel.SetActive(false);
         }
-        else if (index == 5) // 点击 Credits 按钮（索引为2）时显示Raw Image
+        else if (index == 6) // 点击 Credits 按钮时显示Raw Image
         {
             creditsImage.gameObject.SetActive(false);
             GameStateManager.Instance.AudioSource.mute = false;
