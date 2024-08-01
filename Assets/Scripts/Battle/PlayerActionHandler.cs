@@ -4,30 +4,30 @@ using System.Collections.Generic;
 
 public class PlayerActionHandler : MonoBehaviour
 {
-    public PlayerBalanceAndHP playerBalanceAndHP;
-    public BattleInfoManager battleInfoManager;
-    public BattleAnimationManager battleAnimationManager;
+    public PlayerBalanceAndHP playerBalanceAndHP; // プレイヤーのHPとバランス管理の参照
+    public BattleInfoManager battleInfoManager; // バトル情報管理の参照
+    public BattleAnimationManager battleAnimationManager; // バトルアニメーション管理の参照
 
-    private Dictionary<string, Dictionary<string, System.Action>> actionHandlers;
-    public event Action<string> OnActionHandled;
-    public int atkDamage;
-    public int throwDamage;
-    public int cntDamage;
-    public int healingAmount;
+    private Dictionary<string, Dictionary<string, System.Action>> actionHandlers; // アクションのハンドラ辞書
+    public event Action<string> OnActionHandled; // アクションが処理されたときのイベント
+    public int atkDamage; // 攻撃のダメージ量
+    public int throwDamage; // 投げ技のダメージ量
+    public int cntDamage; // 反撃のダメージ量
+    public int healingAmount; // 回復量
 
-    public bool player1CannotAct;
-    public bool player2CannotAct;
-    public bool isPlayer1Win;
+    public bool player1CannotAct; // プレイヤー1が行動できないかどうかのフラグ
+    public bool player2CannotAct; // プレイヤー2が行動できないかどうかのフラグ
+    public bool isPlayer1Win; // プレイヤー1が勝ったかどうかのフラグ
 
     void Start()
     {
         isPlayer1Win = false;
-        InitializeActionHandlers();
+        InitializeActionHandlers(); // アクションハンドラを初期化
     }
 
     void Update()
     {
-        CheckGameOver();
+        CheckGameOver(); // ゲームオーバーかどうかを確認
     }
 
     void InitializeActionHandlers()
@@ -200,7 +200,7 @@ public class PlayerActionHandler : MonoBehaviour
 
         if (player1CannotAct)
         {
-            Debug.Log("Player1 cannot act this turn.");
+            Debug.Log("Player1 cannot act this turn."); // プレイヤー1はこのターン行動できない
             HandlePlayerCannotAct("Player1", player2Action);
             player1CannotAct = false;
             if (playerBalanceAndHP.player1HP > 0)
@@ -210,7 +210,7 @@ public class PlayerActionHandler : MonoBehaviour
         }
         else if (player2CannotAct)
         {
-            Debug.Log("Player2 cannot act this turn.");
+            Debug.Log("Player2 cannot act this turn."); // プレイヤー2はこのターン行動できない
             HandlePlayerCannotAct("Player2", player1Action);
             player2CannotAct = false;
             if (playerBalanceAndHP.player2HP > 0)
@@ -223,7 +223,7 @@ public class PlayerActionHandler : MonoBehaviour
             if (actionHandlers.ContainsKey(player1Action) && actionHandlers[player1Action].ContainsKey(player2Action))
             {
                 actionHandlers[player1Action][player2Action].Invoke();
-                // 添加动画播放
+                // アニメーション再生を追加
                 PlayActionAnimation(player1Action, true);
                 PlayActionAnimation(player2Action, false);
             }
@@ -236,14 +236,14 @@ public class PlayerActionHandler : MonoBehaviour
             {
                 if (playerBalanceAndHP.player1Balance == 0 && playerBalanceAndHP.player2Balance == 0)
                 {
-                    // 双方平衡同时为0的特殊处理逻辑
+                    // 両者のバランスが同時に0になる特別な処理ロジック
                     player1CannotAct = true;
                     player2CannotAct = true;
                     battleInfoManager.battleInfoText.text = "自分: " + battleInfoManager.submitText + "\n相手: " + battleInfoManager.player2ActionText + "\n↑双方次回行動不可";
                     battleInfoManager.player1CannotMoveText = "失敗";
                     battleInfoManager.player2CannotMoveText = "失敗";
-                    battleAnimationManager.SetAnimatorEnabled(false, true); // 禁用双方的动画器
-                    battleAnimationManager.SetAnimatorEnabled(false, false); // 禁用双方的动画器
+                    battleAnimationManager.SetAnimatorEnabled(false, true); // 両者のアニメーターを無効化
+                    battleAnimationManager.SetAnimatorEnabled(false, false); // 両者のアニメーターを無効化
                 }
                 else
                 {
@@ -252,7 +252,7 @@ public class PlayerActionHandler : MonoBehaviour
                         player1CannotAct = true;
                         battleInfoManager.battleInfoText.text = "自分: " + battleInfoManager.submitText + "\n↑次回行動不可" + "\n相手: " + battleInfoManager.player2ActionText;
                         battleInfoManager.player1CannotMoveText = "失敗";
-                        battleAnimationManager.SetAnimatorEnabled(false, true); // 禁用Player1的动画器
+                        battleAnimationManager.SetAnimatorEnabled(false, true); // Player1のアニメーターを無効化
                     }
 
                     if (playerBalanceAndHP.player2Balance == 0)
@@ -260,7 +260,7 @@ public class PlayerActionHandler : MonoBehaviour
                         player2CannotAct = true;
                         battleInfoManager.battleInfoText.text = "自分: " + battleInfoManager.submitText  + "\n相手: " + battleInfoManager.player2ActionText + "\n↑次回行動不可";
                         battleInfoManager.player2CannotMoveText = "失敗";
-                        battleAnimationManager.SetAnimatorEnabled(false, false); // 禁用Player2的动画器
+                        battleAnimationManager.SetAnimatorEnabled(false, false); // Player2のアニメーターを無効化
                     }
                 }
             }
@@ -268,8 +268,8 @@ public class PlayerActionHandler : MonoBehaviour
             {
                 battleInfoManager.player1CannotMoveText = null;
                 battleInfoManager.player2CannotMoveText = null;
-                battleAnimationManager.SetAnimatorEnabled(true, true); // 启用Player1的动画器
-                battleAnimationManager.SetAnimatorEnabled(true, false); // 启用Player2的动画器
+                battleAnimationManager.SetAnimatorEnabled(true, true); // Player1のアニメーターを有効化
+                battleAnimationManager.SetAnimatorEnabled(true, false); // Player2のアニメーターを有効化
             }
 
         }
@@ -277,8 +277,8 @@ public class PlayerActionHandler : MonoBehaviour
         Debug.Log("Player1 HP: 【" + playerBalanceAndHP.player1HP + "】, Player2 HP: 【" + playerBalanceAndHP.player2HP + "】");
         Debug.Log("Player1 Balance: 【" + playerBalanceAndHP.player1Balance + "】, Player2 Balance: 【" + playerBalanceAndHP.player2Balance + "】");
 
-        playerBalanceAndHP.UpdateHPSliders();
-        playerBalanceAndHP.UpdateBalance();
+        playerBalanceAndHP.UpdateHPSliders(); // HPスライダーを更新
+        playerBalanceAndHP.UpdateBalance(); // バランスを更新
     }
 
     private void PlayActionAnimation(string action, bool isPlayer)
@@ -289,9 +289,9 @@ public class PlayerActionHandler : MonoBehaviour
             animator.enabled = true;
         }
 
-        battleAnimationManager.ResetTriggers(animator); // 确保重置触发器
+        battleAnimationManager.ResetTriggers(animator); // トリガーをリセット
 
-        // 检查 player1CannotAct 状态，如果 player1 不能行动且是 player1 的动画，则跳过震动和音效
+        // player1CannotAct 状態をチェックし、player1 が行動できない場合はアニメーションと音声をスキップ
         if (player1CannotAct && isPlayer)
         {
             Debug.Log("Player1 cannot act, skipping animation and sound.");
@@ -317,7 +317,6 @@ public class PlayerActionHandler : MonoBehaviour
                 break;
         }
     }
-
 
     private void CheckGameOver()
     {

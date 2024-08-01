@@ -1,18 +1,17 @@
-
 using UnityEngine;
 using Photon.Pun;
 
 public class FollowMouse : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private Vector3 targetPosition;
-    private ScoreManager scoreManager;
+    private Vector3 targetPosition; // 同期する位置
+    private ScoreManager scoreManager; // スコアマネージャー
 
     void Start()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
+        scoreManager = FindObjectOfType<ScoreManager>(); // シーンから ScoreManager を探す
         if (scoreManager == null)
         {
-            Debug.LogError("ScoreManager not found in the scene.");
+            Debug.LogError("シーン内に ScoreManager が見つかりません。");
         }
     }
 
@@ -23,16 +22,16 @@ public class FollowMouse : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        int currentPlayer = scoreManager.CurrentPlayer; // 获取当前玩家
+        int currentPlayer = scoreManager.CurrentPlayer; // 現在のプレイヤーを取得
 
-        // 判断对象由谁控制
+        // オブジェクトの制御権を持っているかを判断
         if (ShouldControlObject(currentPlayer))
         {
-            FollowMouseMovement();
+            FollowMouseMovement(); // マウスの動きに追従
         }
         else
         {
-            // 平滑移动到同步的位置
+            // 同期された位置にスムーズに移動
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10);
         }
     }
@@ -44,18 +43,18 @@ public class FollowMouse : MonoBehaviourPunCallbacks, IPunObservable
             return false;
         }
 
-        // 在离线模式下始终允许控制对象
+        // オフラインモードでは常にオブジェクトを制御可能
         if (scoreManager.IsOfflineMode)
         {
             return true;
         }
 
-        // currentPlayer == 1 时对象由主机控制
+        // currentPlayer == 1 でオブジェクトはマスタークライアントによって制御
         if (currentPlayer == 1 && PhotonNetwork.IsMasterClient)
         {
             return true;
         }
-        // currentPlayer == 2 时对象由客户端控制
+        // currentPlayer == 2 でオブジェクトはクライアントによって制御
         else if (currentPlayer == 2 && !PhotonNetwork.IsMasterClient)
         {
             return true;
@@ -66,39 +65,39 @@ public class FollowMouse : MonoBehaviourPunCallbacks, IPunObservable
     void FollowMouseMovement()
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Camera.main.nearClipPlane; // 设置适当的Z值
+        mousePosition.z = Camera.main.nearClipPlane; // 適切なZ値を設定
 
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        // 添加偏移量
+        // オフセットを追加
         Vector3 offset = new Vector3(0.2f, -0.5f, 0f);
         worldPosition += offset;
         
         transform.position = worldPosition;
 
-         // 如果连接到Photon服务器并且不是离线模式，才发送RPC
+        // Photonサーバーに接続されており、オフラインモードでない場合にのみRPCを送信
         if (PhotonNetwork.IsConnected && !PhotonNetwork.OfflineMode)
         {
-            photonView.RPC("SyncPosition", RpcTarget.Others, worldPosition);
+            photonView.RPC("SyncPosition", RpcTarget.Others, worldPosition); // 位置を同期
         }
     }
 
     [PunRPC]
     void SyncPosition(Vector3 position)
     {
-        targetPosition = position;
+        targetPosition = position; // 他のクライアントから受信した位置を設定
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            // 发送数据到其他客户端
+            // 他のクライアントにデータを送信
             stream.SendNext(transform.position);
         }
         else
         {
-            // 接收数据并更新
+            // データを受信して更新
             targetPosition = (Vector3)stream.ReceiveNext();
         }
     }

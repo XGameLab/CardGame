@@ -7,58 +7,72 @@ using TMPro;
 
 public class SoundAd : MonoBehaviour
 {
-     //Audioミキサーを入れるとこです
-    [SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioMixer audioMixer; // オーディオミキサーの参照
+    [SerializeField] Slider BgmSlider; // BGM用のスライダー
+    // [SerializeField] Slider SeSlider; // SE用のスライダー（コメントアウトされている）
 
-    //それぞれのスライダーを入れるとこです。。
-    [SerializeField] Slider BgmSlider;
-    // [SerializeField] Slider SeSlider;
-    
-    public TextMeshProUGUI BgmVolumeText;
-    // public TextMeshProUGUI SeVolumeText;
-    private AudioSource audioSource;
-    public GameObject eventsystem;//消したくないオブジェクト
+    public TextMeshProUGUI BgmVolumeText; // BGMのボリューム表示用のテキスト
+    // public TextMeshProUGUI SeVolumeText; // SEのボリューム表示用のテキスト（コメントアウトされている）
+    private AudioSource audioSource; // AudioSourceコンポーネント
+    public GameObject eventsystem; // イベントシステムの参照
+
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-	}
+        audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
+    }
+
     void Start()
     {
-        //ミキサーのvolumeにスライダーのvolumeを入れてます。
-
-        //BGM
-        audioMixer.GetFloat("BGM", out float bgmVolume);
-        // //SE
-        // audioMixer.GetFloat("SE", out float seVolume);
+        // BGMの初期ボリュームを設定
+        if (audioMixer != null)
+        {
+            audioMixer.GetFloat("BGM", out float bgmVolume); // AudioMixerからBGMのボリュームを取得
+        }
+        else
+        {
+            Debug.LogWarning("AudioMixer is not assigned."); // AudioMixerが割り当てられていない場合の警告
+        }
 
         // スライダーのイベントリスナーを追加
-        BgmSlider.onValueChanged.AddListener(SetBGMVolume);
-        // SeSlider.onValueChanged.AddListener(SetSEVolume);
+        if (BgmSlider != null)
+        {
+            BgmSlider.onValueChanged.AddListener(SetBGMVolume); // スライダーの値が変化したときにSetBGMVolumeメソッドを呼び出す
+        }
+        else
+        {
+            Debug.LogWarning("BgmSlider is not assigned."); // BgmSliderが割り当てられていない場合の警告
+        }
 
-        SetBGMVolume(audioSource.volume);
+        // 初期のBGMボリュームを設定
+        if (audioSource != null)
+        {
+            SetBGMVolume(audioSource.volume); // AudioSourceのボリュームを設定
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource component is missing."); // AudioSourceコンポーネントが見つからない場合の警告
+        }
     }
 
     void Update()
     {
-        //BGNのパーセント表示
-        float BgmVolume = BgmSlider.value * 100;
-        BgmVolumeText.text = Mathf.RoundToInt(BgmVolume).ToString() + "%";
-        
-        // //SEのパーセント表示
-        // float SeVolume = SeSlider.value * 100;
-        // SeVolumeText.text = "Volume: " + Mathf.RoundToInt(SeVolume).ToString() + "%";
-        
+        if (BgmSlider != null && BgmVolumeText != null)
+        {
+            float BgmVolume = BgmSlider.value * 100; // スライダーの値を百分率に変換
+            BgmVolumeText.text = Mathf.RoundToInt(BgmVolume).ToString() + "%"; // テキストに表示
+        }
     }
 
     public void SetBGMVolume(float volume)
     {
-        audioSource.volume = volume ; // スライダーの値を0-1の範囲に変換
-        audioMixer.SetFloat("BGM", volume);
+        if (audioSource != null)
+        {
+            audioSource.volume = volume; // AudioSourceのボリュームを設定
+        }
+        
+        if (audioMixer != null)
+        {
+            audioMixer.SetFloat("BGM", volume); // AudioMixerのBGMボリュームを設定
+        }
     }
-
-    // public void SetSEVolume(float volume)
-    // {
-    //     audioMixer.SetFloat("SE", volume);
-    // }
-
 }

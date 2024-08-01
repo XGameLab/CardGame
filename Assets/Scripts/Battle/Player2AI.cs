@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Player2AI : MonoBehaviour
 {
-    private List<GameObject> player2Cards; // Player2的卡牌列表
-    public BattleAnimationManager battleAnimationManager; 
+    private List<GameObject> player2Cards; // Player2のカードリスト
+    public BattleAnimationManager battleAnimationManager; // バトルアニメーション管理の参照
 
     public void InitializePlayer2Cards(List<int> remainingCardIndices, GameObject[] cardPrefabs)
     {
@@ -12,7 +12,7 @@ public class Player2AI : MonoBehaviour
 
         foreach (int index in remainingCardIndices)
         {
-            player2Cards.Add(cardPrefabs[index]);
+            player2Cards.Add(cardPrefabs[index]); // Player2のカードリストにカードを追加
         }
     }
 
@@ -20,13 +20,13 @@ public class Player2AI : MonoBehaviour
     {
         if (player2Cards == null || player2Cards.Count == 0)
         {
-            Debug.LogWarning("Player2 has no cards to choose from.");
+            Debug.LogWarning("Player2 has no cards to choose from."); // Player2に選べるカードがない場合の警告
             return null;
         }
 
-        int randomIndex = Random.Range(0, player2Cards.Count);
+        int randomIndex = Random.Range(0, player2Cards.Count); // ランダムにカードを選択
         GameObject chosenCard = player2Cards[randomIndex];
-        ButtonHandler buttonHandler = chosenCard.GetComponent<ButtonHandler>();
+        ButtonHandler buttonHandler = chosenCard.GetComponent<ButtonHandler>(); // 選択されたカードのButtonHandlerを取得
 
         if (buttonHandler != null)
         {
@@ -39,12 +39,12 @@ public class Player2AI : MonoBehaviour
 
             if (action != null)
             {
-                battleAnimationManager.PlayAnimation(action, false); // 播放Player2的动画
+                battleAnimationManager.PlayAnimation(action, false); // Player2のアニメーションを再生
             }
             
             return action;
         }
 
-        return null;
+        return null; // 適切なアクションが見つからなかった場合
     }
 }

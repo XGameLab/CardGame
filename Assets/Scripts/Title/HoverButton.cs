@@ -6,19 +6,19 @@ using System.Collections;
 
 public class HoverButton : MonoBehaviour
 {
-    public Button[] buttons; // 按钮数组
-    public string startSceneName;  // Start按钮对应的场景名称
-    public string miniGameSceneName;
-    public GameObject optionPanel; // Option按钮对应的面板
-    public RawImage creditsImage; // Credits按钮对应的Raw Image
+    public Button[] buttons; // ボタン配列
+    public string startSceneName; // Startボタンに対応するシーン名
+    public string miniGameSceneName; // MiniGameボタンに対応するシーン名
+    public GameObject optionPanel; // Optionボタンに対応するパネル
+    public RawImage creditsImage; // Creditsボタンに対応するRaw Image
 
-    public float hoverAlpha = 1f; // 悬浮时的Alpha值
-    public float hoverScale = 1.2f; // 悬浮时的缩放比例
-    public float scaleDuration = 0.2f; // 缩放持续时间
+    public float hoverAlpha = 1f; // ホバー時のAlpha値
+    public float hoverScale = 1.2f; // ホバー時のスケール
+    public float scaleDuration = 0.2f; // スケールの変化にかかる時間
 
-    private Color[] originalColors;
-    private Vector3[] originalScales;
-    private Coroutine[] scaleCoroutines;
+    private Color[] originalColors; // ボタンの元の色を保持
+    private Vector3[] originalScales; // ボタンの元のスケールを保持
+    private Coroutine[] scaleCoroutines; // スケールの変更を行うためのコルーチン
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class HoverButton : MonoBehaviour
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            int index = i; // 将索引存储在局部变量中
+            int index = i; // インデックスをローカル変数に保存
             Image buttonImage = buttons[index].GetComponent<Image>();
             if (buttonImage != null)
             {
@@ -41,29 +41,29 @@ public class HoverButton : MonoBehaviour
                 originalScales[index] = rectTransform.localScale;
             }
 
-            // 添加事件监听器
+            // イベントトリガーを追加
             EventTrigger trigger = buttons[index].gameObject.AddComponent<EventTrigger>();
 
-            // 鼠标进入事件
+            // マウスオーバーイベント
             EventTrigger.Entry entryEnter = new EventTrigger.Entry();
             entryEnter.eventID = EventTriggerType.PointerEnter;
             entryEnter.callback.AddListener((eventData) => { OnPointerEnter(index); });
             trigger.triggers.Add(entryEnter);
 
-            // 鼠标离开事件
+            // マウスアウトイベント
             EventTrigger.Entry entryExit = new EventTrigger.Entry();
             entryExit.eventID = EventTriggerType.PointerExit;
             entryExit.callback.AddListener((eventData) => { OnPointerExit(index); });
             trigger.triggers.Add(entryExit);
 
-            // 按钮点击事件
+            // ボタンクリックイベント
             buttons[index].onClick.AddListener(() => OnButtonClick(index));
         }
     }
 
     private void OnDisable()
     {
-        // 场景切换或对象销毁时清理协程和事件
+        // シーン切り替えやオブジェクト破棄時にコルーチンとイベントをクリア
         for (int i = 0; i < buttons.Length; i++)
         {
             if (scaleCoroutines[i] != null)
@@ -84,7 +84,7 @@ public class HoverButton : MonoBehaviour
         Image buttonImage = buttons[index].GetComponent<Image>();
         if (buttonImage != null)
         {
-            // 设置Alpha为指定的hoverAlpha
+            // Alphaを指定のhoverAlphaに設定
             Color newColor = originalColors[index];
             newColor.a = hoverAlpha;
             buttonImage.color = newColor;
@@ -93,13 +93,13 @@ public class HoverButton : MonoBehaviour
         RectTransform rectTransform = buttons[index].GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            // 停止当前缩放协程
+            // 現在のスケールコルーチンを停止
             if (scaleCoroutines[index] != null)
             {
                 StopCoroutine(scaleCoroutines[index]);
-                scaleCoroutines[index] = null; // 确保协程被正确停止
+                scaleCoroutines[index] = null;
             }
-            // 启动新的缩放协程
+            // 新しいスケールコルーチンを開始
             scaleCoroutines[index] = StartCoroutine(ScaleButton(rectTransform, originalScales[index], originalScales[index] * hoverScale, scaleDuration));
         }
     }
@@ -109,60 +109,73 @@ public class HoverButton : MonoBehaviour
         Image buttonImage = buttons[index].GetComponent<Image>();
         if (buttonImage != null)
         {
-            // 还原原始颜色
+            // 元の色に戻す
             buttonImage.color = originalColors[index];
         }
 
         RectTransform rectTransform = buttons[index].GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            // 停止当前缩放协程
+            // 現在のスケールコルーチンを停止
             if (scaleCoroutines[index] != null)
             {
                 StopCoroutine(scaleCoroutines[index]);
-                scaleCoroutines[index] = null; // 确保协程被正确停止
+                scaleCoroutines[index] = null;
             }
-            // 启动新的缩放协程
+            // 新しいスケールコルーチンを開始
             scaleCoroutines[index] = StartCoroutine(ScaleButton(rectTransform, rectTransform.localScale, originalScales[index], scaleDuration));
         }
     }
 
     public void OnButtonClick(int index)
     {
-        // 点击 Start 按钮（索引为0）时跳转场景
-        if (index == 0 && !string.IsNullOrEmpty(startSceneName))
+        // 各ボタンの機能を実装
+        switch (index)
         {
-            SceneManager.LoadScene(startSceneName);
-        }
-        else if (index == 1 && !string.IsNullOrEmpty(miniGameSceneName)) // 点击 MiniGame 按钮时进入迷你游戏
-        {
-            SceneManager.LoadScene(miniGameSceneName);
-        }
-        else if (index == 2 && optionPanel != null) // 点击 Option 按钮时打开面板
-        {
-            optionPanel.SetActive(true);
-        }
-        else if (index == 3 && creditsImage != null) // 点击 Credits 按钮时显示Raw Image
-        {
-            creditsImage.gameObject.SetActive(true);
-            GameStateManager.Instance.AudioSource.mute = true;
-        }
-        else if (index == 4) // 点击 Exit 按钮时退出游戏
-        {
-            Application.Quit();
-        }
-        else if (index == 5) // 点击 Back 按钮
-        {
-            optionPanel.SetActive(false);
-        }
-        else if (index == 6) // 点击 Credits 按钮时显示Raw Image
-        {
-            creditsImage.gameObject.SetActive(false);
-            GameStateManager.Instance.AudioSource.mute = false;
-        }
-        else
-        {
-            Debug.Log("Button clicked: " + buttons[index].name);
+            case 0: // Startボタン
+                if (!string.IsNullOrEmpty(startSceneName))
+                {
+                    SceneManager.LoadScene(startSceneName);
+                }
+                break;
+            case 1: // MiniGameボタン
+                if (!string.IsNullOrEmpty(miniGameSceneName))
+                {
+                    SceneManager.LoadScene(miniGameSceneName);
+                }
+                break;
+            case 2: // Optionボタン
+                if (optionPanel != null)
+                {
+                    optionPanel.SetActive(true);
+                }
+                break;
+            case 3: // Creditsボタン
+                if (creditsImage != null)
+                {
+                    creditsImage.gameObject.SetActive(true);
+                    GameStateManager.Instance.AudioSource.mute = true;
+                }
+                break;
+            case 4: // Exitボタン
+                Application.Quit();
+                break;
+            case 5: // Backボタン
+                if (optionPanel != null)
+                {
+                    optionPanel.SetActive(false);
+                }
+                break;
+            case 6: // Creditsボタンで表示されたRaw Imageを非表示にする
+                if (creditsImage != null)
+                {
+                    creditsImage.gameObject.SetActive(false);
+                    GameStateManager.Instance.AudioSource.mute = false;
+                }
+                break;
+            default:
+                Debug.Log("Button clicked: " + buttons[index].name);
+                break;
         }
     }
 
@@ -171,10 +184,17 @@ public class HoverButton : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
+            if (rectTransform == null)
+            {
+                yield break; // コルーチン中にオブジェクトが破棄された場合、処理を中止
+            }
             rectTransform.localScale = Vector3.Lerp(fromScale, toScale, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        rectTransform.localScale = toScale;
+        if (rectTransform != null)
+        {
+            rectTransform.localScale = toScale;
+        }
     }
 }

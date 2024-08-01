@@ -6,41 +6,41 @@ using Photon.Pun;
 public class ScoreManager : MonoBehaviourPunCallbacks
 {
     public static ScoreManager Instance { get; private set; }
-    public TextMeshProUGUI gameModeText;
-    public TextMeshProUGUI p1ScoreText;
-    public TextMeshProUGUI p2ScoreText;
-    public TextMeshProUGUI winnerText;
-    public GameObject winnerObj;
-    public GameObject exitObj; 
-    public GameObject p1Panel;
-    public GameObject p2Panel;
-    public Button retryButton;
-    public Button exitButton;
+    public TextMeshProUGUI gameModeText; // ゲームモードのテキスト表示
+    public TextMeshProUGUI p1ScoreText; // プレイヤー1のスコア表示
+    public TextMeshProUGUI p2ScoreText; // プレイヤー2のスコア表示
+    public TextMeshProUGUI winnerText; // 勝者のテキスト表示
+    public GameObject winnerObj; // 勝者オブジェクト
+    public GameObject exitObj; // 終了オブジェクト
+    public GameObject p1Panel; // プレイヤー1のパネル
+    public GameObject p2Panel; // プレイヤー2のパネル
+    public Button retryButton; // リトライボタン
+    public Button exitButton; // 終了ボタン
 
-    private int player1Score = 0;
-    private int player2Score = 0;
-    private int currentPlayer = 1;
+    private int player1Score = 0; // プレイヤー1のスコア
+    private int player2Score = 0; // プレイヤー2のスコア
+    private int currentPlayer = 1; // 現在のプレイヤー
     public int CurrentPlayer
     {
         get { return currentPlayer; }
-        private set { currentPlayer = value; } // 设置为 private 来保护
+        private set { currentPlayer = value; } // プライベートに設定して保護
     }
-    private bool isOfflineMode = false;
+    private bool isOfflineMode = false; // オフラインモードフラグ
     public bool IsOfflineMode => isOfflineMode;
-    private Outline player1Outline;
-    private Outline player2Outline;
+    private Outline player1Outline; // プレイヤー1のアウトライン
+    private Outline player2Outline; // プレイヤー2のアウトライン
 
-    public static event System.Action OnRetryGame;
+    public static event System.Action OnRetryGame; // リトライイベント
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); // インスタンスが既に存在する場合、現在のオブジェクトを破棄
         }
         else
         {
-            Instance = this;
+            Instance = this; // シングルトンインスタンスの設定
         }
     }
 
@@ -52,31 +52,31 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         retryButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
 
-        retryButton.onClick.AddListener(RetryGame);
-        exitButton.onClick.AddListener(OnExitButtonClicked);
+        retryButton.onClick.AddListener(RetryGame); // リトライボタンのクリックイベントを追加
+        exitButton.onClick.AddListener(OnExitButtonClicked); // 終了ボタンのクリックイベントを追加
 
         player1Outline = p1Panel.GetComponent<Outline>();
         player2Outline = p2Panel.GetComponent<Outline>();
 
-        UpdatePlayerOutline();
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
     }
 
     void OnEnable()
     {
-        CardPressed.OnSameTypeCardsMatched += OnCardMatch;
-        CardPressed.OnDifferentTypeCardsMatched += OnCardMismatch;
-        ChooseGameMode.OnGameOffline += SetOfflineMode;
-        ChooseGameMode.OnGameOnline += SetOnlineMode;
-        ChooseGameMode.OnGameStart += SetCurrentPlayer;
+        CardPressed.OnSameTypeCardsMatched += OnCardMatch; // カード一致時のイベントリスナーを追加
+        CardPressed.OnDifferentTypeCardsMatched += OnCardMismatch; // カード不一致時のイベントリスナーを追加
+        ChooseGameMode.OnGameOffline += SetOfflineMode; // オフラインモード設定のイベントリスナーを追加
+        ChooseGameMode.OnGameOnline += SetOnlineMode; // オンラインモード設定のイベントリスナーを追加
+        ChooseGameMode.OnGameStart += SetCurrentPlayer; // 現在のプレイヤー設定のイベントリスナーを追加
     }
 
     void OnDisable()
     {
-        CardPressed.OnSameTypeCardsMatched -= OnCardMatch;
-        CardPressed.OnDifferentTypeCardsMatched -= OnCardMismatch;
-        ChooseGameMode.OnGameOffline -= SetOfflineMode;
-        ChooseGameMode.OnGameOnline -= SetOnlineMode;
-        ChooseGameMode.OnGameStart -= SetCurrentPlayer;
+        CardPressed.OnSameTypeCardsMatched -= OnCardMatch; // イベントリスナーを削除
+        CardPressed.OnDifferentTypeCardsMatched -= OnCardMismatch; // イベントリスナーを削除
+        ChooseGameMode.OnGameOffline -= SetOfflineMode; // イベントリスナーを削除
+        ChooseGameMode.OnGameOnline -= SetOnlineMode; // イベントリスナーを削除
+        ChooseGameMode.OnGameStart -= SetCurrentPlayer; // イベントリスナーを削除
     }
 
     void OnCardMatch()
@@ -85,22 +85,22 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         {
             player1Score += 1;
             p1ScoreText.text = player1Score.ToString();
-            Debug.Log("Player 1 Score: " + player1Score);
+            Debug.Log("プレイヤー1のスコア: " + player1Score);
         }
         else
         {
             player2Score += 1;
             p2ScoreText.text = player2Score.ToString();
-            Debug.Log("Player 2 Score: " + player2Score);
+            Debug.Log("プレイヤー2のスコア: " + player2Score);
         }
 
-        // 同步分数到所有客户端
+        // スコアをすべてのクライアントに同期
         if (!isOfflineMode)
         {
             photonView.RPC("UpdateScore", RpcTarget.Others, player1Score, player2Score);
         }
 
-        // 检查胜利条件
+        // 勝利条件をチェック
         if ((isOfflineMode && player1Score + player2Score >= 10) || (!isOfflineMode && (player1Score >= 10 || player2Score >= 10)))
         {
             string winnerMessage;
@@ -117,16 +117,15 @@ public class ScoreManager : MonoBehaviourPunCallbacks
                 winnerMessage = "Tie Game!";
             }
 
-            // 显示胜利信息
+            // 勝者のメッセージを表示
             winnerText.text = winnerMessage;
-            // 仅在在线模式下调用RPC显示胜利信息
             if (!isOfflineMode)
             {
-                photonView.RPC("ShowWinner", RpcTarget.All, winnerMessage);
+                photonView.RPC("ShowWinner", RpcTarget.All, winnerMessage); // 勝者の表示をすべてのクライアントに同期
             }
             else
             {
-                ShowWinner(winnerMessage); // 在离线模式下直接调用本地方法
+                ShowWinner(winnerMessage); // オフラインモードの場合はローカルで表示
             }
         }
     }
@@ -139,9 +138,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         retryButton.gameObject.SetActive(true);
         exitButton.gameObject.SetActive(true);
 
-        Cursor.visible = true; // 隐藏光标
+        Cursor.visible = true; // 光标を表示
     }
-
 
     [PunRPC]
     void UpdateScore(int p1Score, int p2Score)
@@ -152,26 +150,24 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         p1ScoreText.text = player1Score.ToString();
         p2ScoreText.text = player2Score.ToString();
         
-        Debug.Log("Scores updated. Player 1: " + player1Score + ", Player 2: " + player2Score);
+        Debug.Log("スコアが更新されました。プレイヤー1: " + player1Score + ", プレイヤー2: " + player2Score);
     }
 
     void OnCardMismatch()
     {
         if (isOfflineMode)
         {
-            // 直接切换玩家
-            SwitchPlayer();
+            SwitchPlayer(); // オフラインモードではプレイヤーを切り替える
         }
         else
         {
-            // 客户端请求切换玩家
             if (!PhotonNetwork.IsMasterClient)
             {
-                photonView.RPC("RequestPlayerSwitch", RpcTarget.MasterClient);
+                photonView.RPC("RequestPlayerSwitch", RpcTarget.MasterClient); // マスタークライアントにプレイヤー切り替えをリクエスト
             }
             else
             {
-                SwitchPlayer();
+                SwitchPlayer(); // マスタークライアントの場合は直接プレイヤーを切り替える
             }
         }
     }
@@ -191,14 +187,12 @@ public class ScoreManager : MonoBehaviourPunCallbacks
 
         if (isOfflineMode)
         {
-            // 直接调用本地更新方法
-            UpdatePlayerOutline();
-            Debug.Log("Switching to Player " + currentPlayer);
+            UpdatePlayerOutline(); // オフラインモードではローカルでプレイヤーを更新
+            Debug.Log("プレイヤーを切り替え: " + currentPlayer);
         }
         else
         {
-            // 使用RPC同步给所有客户端
-            photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, currentPlayer);
+            photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, currentPlayer); // プレイヤー切り替えをすべてのクライアントに同期
         }
     }
 
@@ -206,33 +200,33 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     void UpdateCurrentPlayer(int player)
     {
         currentPlayer = player;
-        UpdatePlayerOutline();
-        Debug.Log("Switching to Player " + currentPlayer);
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
+        Debug.Log("プレイヤーを切り替え: " + currentPlayer);
     }
 
     void SetOfflineMode()
     {
         isOfflineMode = true;
         currentPlayer = 1;
-        UpdatePlayerOutline();
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
         gameModeText.text = "オフライン モード";
-        Debug.Log("Offline mode activated.");
+        Debug.Log("オフラインモードが有効になりました。");
     }
 
     void SetOnlineMode()
     {
         isOfflineMode = false;
         currentPlayer = 1;
-        UpdatePlayerOutline();
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
         gameModeText.text = "オンライン モード";
-        Debug.Log("Online mode activated.");
+        Debug.Log("オンラインモードが有効になりました。");
     }
 
     void SetCurrentPlayer(int player)
     {
         currentPlayer = player;
-        UpdatePlayerOutline();
-        Debug.Log("Current Player set to: " + currentPlayer);
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
+        Debug.Log("現在のプレイヤー: " + currentPlayer);
     }
 
     void UpdatePlayerOutline()
@@ -246,7 +240,7 @@ public class ScoreManager : MonoBehaviourPunCallbacks
 
     void RetryGame()
     {
-        Cursor.visible = false; // 隐藏光标
+        Cursor.visible = false; // 光标を非表示
 
         player1Score = 0;
         player2Score = 0;
@@ -258,32 +252,29 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         retryButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
 
-        UpdatePlayerOutline();
+        UpdatePlayerOutline(); // プレイヤーのアウトラインを更新
 
-        Debug.Log("Game Reset!");
+        Debug.Log("ゲームがリセットされました。");
 
-        OnRetryGame?.Invoke();
+        OnRetryGame?.Invoke(); // リトライイベントを発行
     }
 
     void OnExitButtonClicked()
     {
         if (isOfflineMode)
         {
-            ShowExit();
+            ShowExit(); // オフラインモードではローカルで終了を表示
         }
         else
         {
-            photonView.RPC("ShowExit", RpcTarget.All);
+            photonView.RPC("ShowExit", RpcTarget.All); // オンラインモードではRPCで終了を表示
         }
     }
 
     [PunRPC]
     void ShowExit()
-    {   
-        if(!isOfflineMode)
-        {
-            exitObj.SetActive(true);  // 使 exitObj 可见
-            Debug.Log("Exit Object is now visible.");
-        }  
+    {
+        exitObj.SetActive(true); // exitObjを表示
+        Debug.Log("Exitオブジェクトが表示されました。");
     }
 }

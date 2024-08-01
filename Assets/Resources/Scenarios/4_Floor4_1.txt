@@ -33,7 +33,7 @@ NPC:ビル４階
 Wata:はぁはぁ...
 Wata:もうすぐ！
 #WalkSE
-NPC:【Floor4Classroom1BG】
+*Floor4Classroom1BG
 NPC:教室に着いたWata
 #OmgSE
 Wata:誰もいないじゃん！

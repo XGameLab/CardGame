@@ -7,12 +7,12 @@ public class ButtonArrayHandler : MonoBehaviour
     public Button[] buttons;
     public RawImage[] images;
     public RawImage[] stageIMG;
-    public RawImage[] clearedIMG; // 新增
+    public RawImage[] clearedIMG; // ステージクリアの画像
     public RawImage littleBar;
     public RawImage bigBar;
     public RawImage circle;
     public GameObject targetObject;
-    public GameObject[] startButtons; // 修改这里
+    public GameObject[] startButtons; // ステージ開始ボタン
     public GameObject buttonBG;
     public float moveSpeed = 5f;
     public float sizeChangeSpeed = 10f;
@@ -31,25 +31,25 @@ public class ButtonArrayHandler : MonoBehaviour
     public TextMeshProUGUI titleText;
 
     private Vector3 targetPosition;
-    private Color targetColor = new Color(1f, 0.933f, 0.396f, 1f); // #FFEE65
+    private Color targetColor = new Color(1f, 0.933f, 0.396f, 1f); // ボタンのハイライト色
     private Vector2 defaultSize = new Vector2(60f, 60f);
     private Vector2 clickedSize = new Vector2(100f, 100f);
     private Button lastClickedButton;
     private Vector2[] buttonTargetPositions;
     private Vector2[] imageTargetPositions;
-    private Vector2[] clearedImageTargetPositions; // 新增
+    private Vector2[] clearedImageTargetPositions; // クリア済み画像のターゲット位置
 
     private SceneTransition sceneTransition;
-    private float scrollCooldown = 0.15f; // 滚动延迟时间
-    private float scrollTimer = 0f; // 滚动计时器
+    private float scrollCooldown = 0.15f; // スクロール遅延
+    private float scrollTimer = 0f; // スクロールタイマー
 
-    private bool isEnterStage = false;
+    private bool isEnterStage = false; // ステージに入るフラグ
 
     void Start()
     {
         foreach (Button button in buttons)
         {
-            button.onClick.AddListener(() => OnButtonClick(button));
+            button.onClick.AddListener(() => OnButtonClick(button)); // 各ボタンにクリックリスナーを追加
         }
 
         buttonL.onClick.AddListener(MoveLeft);
@@ -63,18 +63,19 @@ public class ButtonArrayHandler : MonoBehaviour
 
         if (initialButton != null)
         {
-            SetButtonColorAndSize(initialButton, targetColor, clickedSize);
+            SetButtonColorAndSize(initialButton, targetColor, clickedSize); // 初期ボタンの色とサイズを設定
             lastClickedButton = initialButton;
         }
 
         buttonTargetPositions = new Vector2[buttons.Length];
         imageTargetPositions = new Vector2[images.Length];
-        clearedImageTargetPositions = new Vector2[clearedIMG.Length]; // 新增
+        clearedImageTargetPositions = new Vector2[clearedIMG.Length]; // クリア済み画像のターゲット位置を初期化
 
-        // 设置初始位置
+        // 初期位置を設定
         int initialIndex = GameStateManager.lastSelectedIndex;
-        OnButtonClick(buttons[initialIndex]);  // 更新为OnButtonClick
+        OnButtonClick(buttons[initialIndex]);  // 初期のボタンをクリック
 
+        // 配列の長さの一致を確認
         if (buttonTexts.Length != buttons.Length)
         {
             Debug.LogError("buttonTexts 数组的长度必须与 buttons 数组的长度一致！");
@@ -86,7 +87,7 @@ public class ButtonArrayHandler : MonoBehaviour
         }
 
         buttonQuit.gameObject.SetActive(false);
-        foreach (var startButton in startButtons) // 修改这里
+        foreach (var startButton in startButtons) // スタートボタンを非表示
         {
             startButton.gameObject.SetActive(false);
         }
@@ -105,7 +106,7 @@ public class ButtonArrayHandler : MonoBehaviour
             sceneTransition = transitionCanvas.GetComponent<SceneTransition>();
         }
 
-        // 初始化clearedIMG的显示状态
+        // クリア済み画像の初期表示状態を設定
         for (int i = 0; i < clearedIMG.Length; i++)
         {
             clearedIMG[i].gameObject.SetActive(GameStateManager.Instance.isStageCleared[i]);
@@ -114,6 +115,7 @@ public class ButtonArrayHandler : MonoBehaviour
 
     void Update()
     {
+        // ターゲットオブジェクトの位置を補間
         targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
         foreach (Button button in buttons)
@@ -139,7 +141,7 @@ public class ButtonArrayHandler : MonoBehaviour
             rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, imageTargetPositions[index], moveSpeed * Time.deltaTime);
         }
 
-        foreach (RawImage image in clearedIMG) // 新增
+        foreach (RawImage image in clearedIMG) // クリア済み画像の位置を補間
         {
             RectTransform rectTransform = image.GetComponent<RectTransform>();
             int index = System.Array.IndexOf(clearedIMG, image);
@@ -148,7 +150,7 @@ public class ButtonArrayHandler : MonoBehaviour
 
         if(!isEnterStage)
         {
-            // 检测鼠标滚轮输入并更新按钮和图片位置
+            // マウスホイールの入力を検出してボタンと画像の位置を更新
             scrollTimer += Time.deltaTime;
             if (scrollTimer >= scrollCooldown)
             {
@@ -159,7 +161,7 @@ public class ButtonArrayHandler : MonoBehaviour
                     if (newIndex >= 0 && newIndex < buttons.Length)
                     {
                         OnButtonClick(buttons[newIndex]);
-                        scrollTimer = 0f; // 重置计时器
+                        scrollTimer = 0f; // タイマーをリセット
                     }
                 }
             }
@@ -168,14 +170,14 @@ public class ButtonArrayHandler : MonoBehaviour
 
     void OnButtonClick(Button clickedButton)
     {
-        UpdateButtonAndImagePositions(clickedButton, false);
+        UpdateButtonAndImagePositions(clickedButton, false); // ボタンと画像の位置を更新
 
         int clickedIndex = System.Array.IndexOf(buttons, clickedButton);
         GameStateManager.lastSelectedIndex = clickedIndex;
 
         if (clickedIndex >= 0 && clickedIndex < buttonTexts.Length)
         {
-            tmpText.text = buttonTexts[clickedIndex];
+            tmpText.text = buttonTexts[clickedIndex]; // テキストを更新
         }
 
         foreach (Button button in buttons)
@@ -220,7 +222,7 @@ public class ButtonArrayHandler : MonoBehaviour
         }
         buttonQuit.gameObject.SetActive(true);
         buttonM.gameObject.SetActive(false);
-        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(true); // 修改这里
+        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(true); // ステージ開始ボタンを表示
         buttonBG.gameObject.SetActive(true);
 
         foreach (RawImage image in images)
@@ -238,7 +240,7 @@ public class ButtonArrayHandler : MonoBehaviour
         bigBar.gameObject.SetActive(false);
         circle.gameObject.SetActive(true);
 
-        foreach (RawImage img in clearedIMG) // 修改此部分
+        foreach (RawImage img in clearedIMG)
         {
             img.gameObject.SetActive(false);
         }
@@ -255,7 +257,7 @@ public class ButtonArrayHandler : MonoBehaviour
     {
         isEnterStage = false;
 
-        // 确保在退出阶段时禁用所有stageIMG, stageTexts和startButtons
+        // ステージから出る際にすべてのstageIMG, stageTextsとstartButtonsを非表示にする
         foreach (var img in stageIMG)
         {
             img.gameObject.SetActive(false);
@@ -277,7 +279,7 @@ public class ButtonArrayHandler : MonoBehaviour
         }
         buttonQuit.gameObject.SetActive(false);
         buttonM.gameObject.SetActive(true);
-        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(false); // 修改这里
+        startButtons[GameStateManager.lastSelectedIndex].gameObject.SetActive(false); // ステージ開始ボタンを非表示
         buttonBG.gameObject.SetActive(false);
 
         foreach (RawImage image in images)
@@ -295,7 +297,7 @@ public class ButtonArrayHandler : MonoBehaviour
         bigBar.gameObject.SetActive(true);
         circle.gameObject.SetActive(false);
 
-        // 新增，退出阶段时根据isStageCleared设置clearedIMG的状态
+        // ステージクリア状況に応じてclearedIMGの状態を設定
         for (int i = 0; i < clearedIMG.Length; i++)
         {
             clearedIMG[i].gameObject.SetActive(GameStateManager.Instance.isStageCleared[i]);
@@ -359,7 +361,7 @@ public class ButtonArrayHandler : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < clearedIMG.Length; i++) // 修改此部分
+        for (int i = 0; i < clearedIMG.Length; i++) // クリア済み画像の位置を更新
         {
             float initialX = -400f + i * imageSpacing;
             float newX = initialX + (i - clickedIndex) * imageSpacing - i * imageSpacing;

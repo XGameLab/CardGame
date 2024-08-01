@@ -4,26 +4,26 @@ using System.Collections;
 
 public class ButtonHandler : MonoBehaviour
 {
-    public bool isATK;
-    public bool isDEF;
-    public bool isHeal;
-    public bool isThrow;
-    public bool isCNT;
+    public bool isATK; // 攻撃ボタンかどうか
+    public bool isDEF; // 防御ボタンかどうか
+    public bool isHeal; // 回復ボタンかどうか
+    public bool isThrow; // 投げ技ボタンかどうか
+    public bool isCNT; // 反撃ボタンかどうか
 
-    public Texture atkTexture;
-    public Texture defTexture;
-    public Texture healTexture;
-    public Texture throwTexture;
-    public Texture cntTexture;
+    public Texture atkTexture; // 攻撃時のテクスチャ
+    public Texture defTexture; // 防御時のテクスチャ
+    public Texture healTexture; // 回復時のテクスチャ
+    public Texture throwTexture; // 投げ技時のテクスチャ
+    public Texture cntTexture; // 反撃時のテクスチャ
 
-    public float resetTime = 2.0f; // 指定时间（秒）
+    public float resetTime = 2.0f; // リセット時間（秒）
 
     public delegate void ButtonPressedHandler(string buttonType);
     public static event ButtonPressedHandler OnButtonPressed;
 
-    private Button button;
-    private RawImage rawImage;
-    private Texture originalTexture; // 用于存储原先的纹理
+    private Button button; // ボタンコンポーネント
+    private RawImage rawImage; // RawImageコンポーネント
+    private Texture originalTexture; // 元のテクスチャ
 
     void Start()
     {
@@ -32,12 +32,12 @@ public class ButtonHandler : MonoBehaviour
         
         if (button != null)
         {
-            button.onClick.AddListener(NotifyButtonPressed);
+            button.onClick.AddListener(NotifyButtonPressed); // ボタン押下時のイベントリスナーを追加
         }
 
         if (rawImage != null)
         {
-            originalTexture = rawImage.texture; // 保存初始纹理
+            originalTexture = rawImage.texture; // 初期テクスチャを保存
         }
     }
 
@@ -79,8 +79,8 @@ public class ButtonHandler : MonoBehaviour
             {
                 Debug.Log("Something is going wrong...");
             }
-            button.interactable = false; // 禁用按钮
-            StartCoroutine(ResetTextureAfterTime(resetTime)); // 启动协程来恢复原先的纹理
+            button.interactable = false; // ボタンを無効化
+            StartCoroutine(ResetTextureAfterTime(resetTime)); // 指定時間後に元のテクスチャに戻すコルーチンを開始
         }
     }
 
@@ -89,8 +89,8 @@ public class ButtonHandler : MonoBehaviour
         yield return new WaitForSeconds(time);
         if (rawImage != null)
         {
-            rawImage.texture = originalTexture;
-            button.interactable = true; // 禁用按钮
+            rawImage.texture = originalTexture; // 元のテクスチャに戻す
+            button.interactable = true; // ボタンを有効化
         }
     }
 }

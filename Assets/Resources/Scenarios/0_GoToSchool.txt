@@ -1,4 +1,4 @@
-NPC:【通学路BG】
+*WayToSchoolBG
 @DefaultBGM
 NPC:通学路
 Wata:遅刻遅刻...

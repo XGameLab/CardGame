@@ -7,28 +7,28 @@ public class PlayerBalanceAndHP : MonoBehaviour
     private int _player2HP;
     private int _player1Balance;
     private int _player2Balance;
-    private const int maxHP = 11;
-    private const int maxBalance = 3;
+    private const int maxHP = 11; // 最大HP
+    private const int maxBalance = 3; // 最大バランス
 
     public int MaxHP => maxHP;
     public int MaxBalance => maxBalance;
     
-    public Slider player1HPSlider;
-    public Slider player2HPSlider;
-    public Slider player1HealPreviewSlider;
-    public Slider player1DamagePreviewSlider;
+    public Slider player1HPSlider; // プレイヤー1のHPスライダー
+    public Slider player2HPSlider; // プレイヤー2のHPスライダー
+    public Slider player1HealPreviewSlider; // プレイヤー1の回復プレビュースライダー
+    public Slider player1DamagePreviewSlider; // プレイヤー1のダメージプレビュースライダー
 
-    public GameObject[] player1BalanceIMG = new GameObject[maxBalance];
-    public GameObject[] player2BalanceIMG = new GameObject[maxBalance];
+    public GameObject[] player1BalanceIMG = new GameObject[maxBalance]; // プレイヤー1のバランス画像
+    public GameObject[] player2BalanceIMG = new GameObject[maxBalance]; // プレイヤー2のバランス画像
 
-    public GameObject player1Heart;
-    public GameObject player2Heart;
+    public GameObject player1Heart; // プレイヤー1のハートオブジェクト
+    public GameObject player2Heart; // プレイヤー2のハートオブジェクト
 
-    public GameObject player1NoBalance;
-    public GameObject player2NoBalance;
+    public GameObject player1NoBalance; // プレイヤー1のバランスがない場合の表示オブジェクト
+    public GameObject player2NoBalance; // プレイヤー2のバランスがない場合の表示オブジェクト
 
-    public int damagePreview;
-    public int healPreview;
+    public int damagePreview; // ダメージプレビュー
+    public int healPreview; // 回復プレビュー
 
     public int player1HP
     {
@@ -122,7 +122,7 @@ public class PlayerBalanceAndHP : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Slider is not assigned.");
+            Debug.LogError("Slider is not assigned."); // スライダーが割り当てられていない場合のエラーメッセージ
         }
     }
 
@@ -132,7 +132,7 @@ public class PlayerBalanceAndHP : MonoBehaviour
         {
             if (balanceIMG[i] != null)
             {
-                balanceIMG[i].SetActive(i < balance);
+                balanceIMG[i].SetActive(i < balance); // バランスに応じて画像を表示/非表示
             }
             else
             {
@@ -146,18 +146,18 @@ public class PlayerBalanceAndHP : MonoBehaviour
         if (heart != null)
         {
             float scale = hp > 0 ? (1.0f - (maxHP - hp) * 0.05f) * 70 : 0f;
-            heart.transform.localScale = new Vector3(scale, scale, scale);
+            heart.transform.localScale = new Vector3(scale, scale, scale); // HPに基づいてハートのスケールを変更
         }
         else
         {
-            Debug.LogError("Heart GameObject is not assigned.");
+            Debug.LogError("Heart GameObject is not assigned."); // ハートオブジェクトが割り当てられていない場合のエラーメッセージ
         }
     }
 
     public void UpdatePreview(int damage, int heal)
     {
-        damagePreview = Mathf.Clamp(player2HP - damage, 0, maxHP);
-        healPreview = Mathf.Clamp(player1HP + heal, 0, maxHP);
+        damagePreview = Mathf.Clamp(player2HP - damage, 0, maxHP); // ダメージプレビューを更新
+        healPreview = Mathf.Clamp(player1HP + heal, 0, maxHP); // 回復プレビューを更新
 
         UpdateHPSlider(player1HealPreviewSlider, healPreview);
         UpdateHPSlider(player1DamagePreviewSlider, damagePreview);

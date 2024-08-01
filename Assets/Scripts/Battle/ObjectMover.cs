@@ -4,29 +4,29 @@ using System.Collections;
 
 public class ObjectMover : MonoBehaviour
 {
-    public GameObject[] objectsToMove; // 在编辑器中拖入需要移动的物体
-    public Transform[] targetPositions; // 在编辑器中拖入目标位置的Transform
-    public GameObject[] startObjectsToMove; // 在编辑器中拖入游戏开始时移动的物体
-    public Transform[] startObjPositions; // 在编辑器中拖入游戏开始时的目标位置的Transform
-    public GameObject[] controllableObjects; // 在编辑器中拖入需要控制显示/隐藏的物体
-    public float moveDuration = 1f; // 移动时长
-    public float startMoveDuration = 1f; // 游戏开始时的移动时长
-    public float stayDuration = 2f; // 停留2秒
-    public float waitSec = 3f;
-    public BattleInfoManager battleInfoManager;
-    public PlayerActionHandler playerActionHandler; // 引用PlayerActionHandler脚本
+    public GameObject[] objectsToMove; // 移動させるオブジェクトの配列（エディタで設定）
+    public Transform[] targetPositions; // ターゲット位置のTransform配列（エディタで設定）
+    public GameObject[] startObjectsToMove; // ゲーム開始時に移動させるオブジェクトの配列（エディタで設定）
+    public Transform[] startObjPositions; // ゲーム開始時のターゲット位置のTransform配列（エディタで設定）
+    public GameObject[] controllableObjects; // 表示/非表示を制御するオブジェクトの配列（エディタで設定）
+    public float moveDuration = 1f; // 移動時間
+    public float startMoveDuration = 1f; // ゲーム開始時の移動時間
+    public float stayDuration = 2f; // 2秒間停留
+    public float waitSec = 3f; // 待機時間
+    public BattleInfoManager battleInfoManager; // BattleInfoManager スクリプトの参照
+    public PlayerActionHandler playerActionHandler; // PlayerActionHandler スクリプトの参照
 
-    public GameObject hintObj; // 提示物体
-    public Transform hintPosition; // 提示物体目标位置
-    public Button submitButton; // 提交按钮
-    private Vector3 hintObjInitialPosition; // 提示物体初始位置
+    public GameObject hintObj; // ヒントオブジェクト
+    public Transform hintPosition; // ヒントオブジェクトのターゲット位置
+    public Button submitButton; // 提出ボタン
+    private Vector3 hintObjInitialPosition; // ヒントオブジェクトの初期位置
 
-    private Vector3[] initialPositions; // 用于存储初始位置
-    private Vector3[] startObjInitialPositions; // 存储startObjectsToMove初始位置
-    private bool isAtInitialPositions = true; // 标记物体是否在初始位置
-    private bool isAtTargetPositions = false; // 标记物体是否在目标位置
-    private Coroutine hintCoroutine;
-    private bool hintDismissed = false; // 标记提示是否已被关闭
+    private Vector3[] initialPositions; // 初期位置を保存するための配列
+    private Vector3[] startObjInitialPositions; // startObjectsToMoveの初期位置を保存する配列
+    private bool isAtInitialPositions = true; // オブジェクトが初期位置にいるかどうかを示すフラグ
+    private bool isAtTargetPositions = false; // オブジェクトがターゲット位置にいるかどうかを示すフラグ
+    private Coroutine hintCoroutine; // ヒントのコルーチン
+    private bool hintDismissed = false; // ヒントが非表示になったかどうかを示すフラグ
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class ObjectMover : MonoBehaviour
             return;
         }
 
-        // 存储objectsToMove的初始位置
+        // objectsToMoveの初期位置を保存
         initialPositions = new Vector3[objectsToMove.Length];
         for (int i = 0; i < objectsToMove.Length; i++)
         {
@@ -46,7 +46,7 @@ public class ObjectMover : MonoBehaviour
             }
         }
 
-        // 存储startObjectsToMove的初始位置
+        // startObjectsToMoveの初期位置を保存
         startObjInitialPositions = new Vector3[startObjectsToMove.Length];
         for (int i = 0; i < startObjectsToMove.Length; i++)
         {
@@ -56,24 +56,25 @@ public class ObjectMover : MonoBehaviour
             }
         }
 
-        // 存储提示物体的初始位置
+        // ヒントオブジェクトの初期位置を保存
         if (hintObj != null)
         {
             hintObjInitialPosition = hintObj.transform.position;
         }
 
-        // 为提交按钮添加点击事件监听器
+        // 提出ボタンのクリックイベントリスナーを追加
         if (submitButton != null)
         {
             submitButton.onClick.AddListener(OnSubmitButtonClicked);
         }
 
-        // 开始时移动物体到目标位置然后返回
+        // 開始時にオブジェクトをターゲット位置に移動してから戻る
         MoveStartObjects();
     }
 
     private void Update()
     {
+        // Rキーが押されたときにオブジェクトを初期位置に移動
         if (Input.GetKey(KeyCode.R) && !isAtInitialPositions)
         {
             MoveObjectsToInitialPositions();
@@ -81,12 +82,13 @@ public class ObjectMover : MonoBehaviour
 
         if (battleInfoManager != null)
         {
+            // ゲームオーバー時にオブジェクトをターゲット位置に移動
             if (battleInfoManager.isGameOver && !isAtTargetPositions)
             {
                 MoveObjectsToTargetPositions();
             }
 
-            // 当游戏结束时停止计时并清零
+            // ゲームオーバー時にヒントのタイマーを停止
             if (battleInfoManager.isGameOver)
             {
                 if (hintCoroutine != null)
@@ -97,7 +99,7 @@ public class ObjectMover : MonoBehaviour
             }
             else
             {
-                // 游戏未结束时恢复计时
+                // ゲームが終了していない場合にヒントのタイマーを再開
                 if (hintCoroutine == null && !hintDismissed)
                 {
                     hintCoroutine = StartCoroutine(WaitForDKeyOrMoveHint());
@@ -105,7 +107,22 @@ public class ObjectMover : MonoBehaviour
             }
         }
 
-        ControlObjectVisibility();
+        // Enterキーが押されたときにヒントの動きをリセット
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            if (hintCoroutine != null)
+            {
+                StopCoroutine(hintCoroutine);
+                hintCoroutine = null;
+            }
+
+            hintDismissed = false; // ヒントが非表示になった状態をリセット
+
+            // 新しいヒントの動きタイマーを開始
+            hintCoroutine = StartCoroutine(WaitForDKeyOrMoveHint());
+        }
+
+        ControlObjectVisibility(); // オブジェクトの表示/非表示を制御
     }
 
     private void MoveObjectsToTargetPositions()
@@ -161,12 +178,12 @@ public class ObjectMover : MonoBehaviour
     {
         if (playerActionHandler != null)
         {
-            bool shouldShow = playerActionHandler.isPlayer1Win;
+            bool shouldShow = playerActionHandler.isPlayer1Win; // プレイヤー1が勝利したかどうかを確認
             foreach (var obj in controllableObjects)
             {
                 if (obj != null)
                 {
-                    obj.SetActive(shouldShow);
+                    obj.SetActive(shouldShow); // オブジェクトの表示/非表示を設定
                 }
             }
         }
@@ -174,16 +191,16 @@ public class ObjectMover : MonoBehaviour
 
     private void OnSubmitButtonClicked()
     {
-        // 如果正在计时，则停止并清除计时
+        // ヒントのタイマーを停止してリセット
         if (hintCoroutine != null)
         {
             StopCoroutine(hintCoroutine);
             hintCoroutine = null;
         }
 
-        hintDismissed = false; // 重置提示已关闭状态
+        hintDismissed = false; // ヒントが非表示になった状態をリセット
 
-        // 开始新的计时
+        // 新しいヒントの動きタイマーを開始
         hintCoroutine = StartCoroutine(WaitForDKeyOrMoveHint());
     }
 
@@ -192,7 +209,7 @@ public class ObjectMover : MonoBehaviour
         float timer = 0f;
         bool dKeyPressed = false;
 
-        // 等待7秒或按下D键
+        // 7秒間待つかDキーが押されるのを待つ
         while (timer < waitSec)
         {
             if (Input.GetKeyDown(KeyCode.D))
@@ -206,16 +223,16 @@ public class ObjectMover : MonoBehaviour
 
         if (dKeyPressed)
         {
-            // 如果按下了D键，移动回初始位置并停止计时
+            // Dキーが押された場合、ヒントを初期位置に戻し、タイマーを停止
             LeanTween.move(hintObj, hintObjInitialPosition, moveDuration).setEase(LeanTweenType.easeInOutQuad);
-            hintDismissed = true; // 标记提示已被关闭
+            hintDismissed = true; // ヒントが非表示になったことを示す
         }
         else if (!hintDismissed)
         {
-            // 如果没有按下D键，移动到目标位置但不返回
+            // Dキーが押されなかった場合、ヒントをターゲット位置に移動
             LeanTween.move(hintObj, hintPosition.position, moveDuration).setEase(LeanTweenType.easeInOutQuad);
         }
 
-        hintCoroutine = null; // 重置协程变量
+        hintCoroutine = null; // コルーチン変数をリセット
     }
 }

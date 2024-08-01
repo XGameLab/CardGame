@@ -6,184 +6,184 @@ using Photon.Realtime;
 
 public class ChooseGameMode : MonoBehaviourPunCallbacks
 {
-    public Toggle toggleOffline;
-    public Toggle toggleOnline;
-    public Button startButton;
-    public Canvas canvasStart;
-    public RawImage hostIMG;
-    public RawImage clientIMG;
-    public TMP_Text statusText;
+    public Toggle toggleOffline; // オフラインモードの切り替えトグル
+    public Toggle toggleOnline; // オンラインモードの切り替えトグル
+    public Button startButton; // ゲーム開始ボタン
+    public Canvas canvasStart; // ゲーム開始のキャンバス
+    public RawImage hostIMG; // ホストプレイヤーの画像
+    public RawImage clientIMG; // クライアントプレイヤーの画像
+    public TMP_Text statusText; // ステータステキスト
 
-    public static event System.Action OnGameOffline;
-    public static event System.Action OnGameOnline;
-    public static event System.Action<int> OnGameStart;
+    public static event System.Action OnGameOffline; // オフラインゲームのイベント
+    public static event System.Action OnGameOnline; // オンラインゲームのイベント
+    public static event System.Action<int> OnGameStart; // ゲーム開始時のイベント
 
-    [SerializeField] private TMP_Dropdown dropdown;
+    [SerializeField] private TMP_Dropdown dropdown; // ドロップダウンメニュー
 
-    private bool isConnecting;
+    private bool isConnecting; // サーバー接続中フラグ
 
     void Start()
     {
-        hostIMG.gameObject.SetActive(false);
-        clientIMG.gameObject.SetActive(false);
+        hostIMG.gameObject.SetActive(false); // 初期状態でホスト画像を非表示
+        clientIMG.gameObject.SetActive(false); // 初期状態でクライアント画像を非表示
 
-        UpdateStatusText();
+        UpdateStatusText(); // ステータステキストを更新
 
-        SetOppositeState(toggleOffline.isOn);
+        SetOppositeState(toggleOffline.isOn); // 初期状態に基づいてトグル状態を設定
         toggleOffline.onValueChanged.AddListener((value) => SetOppositeState(value));
         toggleOnline.onValueChanged.AddListener((value) => SetOppositeState(!value));
-        startButton.onClick.AddListener(OnStartButtonClick);
-        dropdown.gameObject.SetActive(false);
+        startButton.onClick.AddListener(OnStartButtonClick); // 開始ボタンにイベントを追加
+        dropdown.gameObject.SetActive(false); // 初期状態でドロップダウンメニューを非表示
     }
 
     void Update()
     {
-        OnToggleSelected();
-        UpdateStatusText();
+        OnToggleSelected(); // トグルの選択状態を監視
+        UpdateStatusText(); // ステータステキストを更新
     }
 
     void OnToggleValueChanged()
     {
-        UpdateStatusText();
+        UpdateStatusText(); // トグルが変更されたときにステータステキストを更新
     }
 
     void UpdateStatusText()
     {
         if (toggleOffline.isOn)
         {
-            statusText.text = "合計10点で終了";
+            statusText.text = "合計10点で終了"; // オフラインモードのステータス表示
         }
         else if (toggleOnline.isOn)
         {
-            statusText.text = "先に10点取ろう！";
+            statusText.text = "先に10点取ろう！"; // オンラインモードのステータス表示
         }
     }
 
     void SetOppositeState(bool state)
     {
-        canvasStart.gameObject.SetActive(true);
-        toggleOffline.onValueChanged.RemoveAllListeners();
+        canvasStart.gameObject.SetActive(true); // ゲーム開始キャンバスを表示
+        toggleOffline.onValueChanged.RemoveAllListeners(); // トグルのリスナーを削除
         toggleOnline.onValueChanged.RemoveAllListeners();
 
-        toggleOffline.isOn = state;
+        toggleOffline.isOn = state; // トグルの状態を設定
         toggleOnline.isOn = !state;
 
-        toggleOffline.onValueChanged.AddListener((value) => SetOppositeState(value));
+        toggleOffline.onValueChanged.AddListener((value) => SetOppositeState(value)); // 再度リスナーを追加
         toggleOnline.onValueChanged.AddListener((value) => SetOppositeState(!value));
     }
 
     void OnStartButtonClick()
     {
-        Cursor.visible = false; // 隐藏光标
+        Cursor.visible = false; // カーソルを非表示にする
         
         if (toggleOffline.isOn)
         {
-            Debug.Log("Starting offline game...");
-            OnGameOffline?.Invoke();
-            dropdown.gameObject.SetActive(false);
+            Debug.Log("オフラインゲームを開始...");
+            OnGameOffline?.Invoke(); // オフラインゲームのイベントを発火
+            dropdown.gameObject.SetActive(false); // ドロップダウンメニューを非表示
         }
         else if (toggleOnline.isOn)
         {
-            Debug.Log("Starting online game...");
-            OnGameOnline?.Invoke();
-            dropdown.gameObject.SetActive(true);
+            Debug.Log("オンラインゲームを開始...");
+            OnGameOnline?.Invoke(); // オンラインゲームのイベントを発火
+            dropdown.gameObject.SetActive(true); // ドロップダウンメニューを表示
 
             int currentPlayer = 1;
-            OnGameStart?.Invoke(currentPlayer);
+            OnGameStart?.Invoke(currentPlayer); // ゲーム開始イベントを発火
 
             if (PhotonNetwork.IsConnectedAndReady)
             {
                 if (dropdown.value == 0)
                 {
-                    CreateRoom();
+                    CreateRoom(); // ルームを作成
                 }
                 else
                 {
-                    JoinRoom();
+                    JoinRoom(); // ルームに参加
                 }
             }
             else
             {
                 isConnecting = true;
-                PhotonNetwork.ConnectUsingSettings(); // 连接到Photon服务器
-                Debug.Log("Connecting to Photon server...");
+                PhotonNetwork.ConnectUsingSettings(); // Photonサーバーに接続
+                Debug.Log("Photonサーバーに接続中...");
             }
         }
 
-        canvasStart.gameObject.SetActive(false);
+        canvasStart.gameObject.SetActive(false); // ゲーム開始キャンバスを非表示
     }
 
     void OnToggleSelected()
     {
-        dropdown.gameObject.SetActive(!toggleOffline.isOn);
+        dropdown.gameObject.SetActive(!toggleOffline.isOn); // オフラインモードの場合はドロップダウンメニューを非表示
     }
 
     void CreateRoom()
     {
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
-        Debug.Log("Creating a room...");
+        Debug.Log("ルームを作成中...");
     }
 
     void JoinRoom()
     {
         PhotonNetwork.JoinRandomRoom();
-        Debug.Log("Joining a random room...");
+        Debug.Log("ランダムルームに参加中...");
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Photon Master Server.");
+        Debug.Log("Photon マスターサーバーに接続されました。");
         if (isConnecting)
         {
             isConnecting = false;
             if (dropdown.value == 0)
             {
-                CreateRoom();
+                CreateRoom(); // ルームを作成
             }
             else
             {
-                JoinRoom();
+                JoinRoom(); // ルームに参加
             }
         }
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joined lobby.");
+        Debug.Log("ロビーに参加しました。");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("ルームに参加しました: " + PhotonNetwork.CurrentRoom.Name);
         if (PhotonNetwork.IsMasterClient)
         {
-            hostIMG.gameObject.SetActive(true); // 显示主机图像
+            hostIMG.gameObject.SetActive(true); // ホスト画像を表示
         }
         else
         {
-            clientIMG.gameObject.SetActive(true); // 显示客户端图像
+            clientIMG.gameObject.SetActive(true); // クライアント画像を表示
         }
     }
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("Room created successfully.");
-        hostIMG.gameObject.SetActive(true); // 在房间成功创建后显示 hostIMG
+        Debug.Log("ルームが正常に作成されました。");
+        hostIMG.gameObject.SetActive(true); // ルーム作成後にホスト画像を表示
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogError($"Failed to join room: {message}");
+        Debug.LogError($"ルーム参加に失敗しました: {message}");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.LogError($"Failed to create room: {message}");
+        Debug.LogError($"ルーム作成に失敗しました: {message}");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("Failed to join random room. Creating a new room...");
-        CreateRoom();
+        Debug.Log("ランダムルームへの参加に失敗しました。新しいルームを作成します...");
+        CreateRoom(); // ルームを作成
     }
 }

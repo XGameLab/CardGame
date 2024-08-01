@@ -3,24 +3,24 @@ using UnityEngine.UI;
 
 public class ObjectShake : MonoBehaviour
 {
-    public RectTransform[] targetRectTransforms; // 要震动的对象数组
-    public float shakeDuration = 0.5f; // 震动持续时间
-    public float shakeAmount = 0.7f; // 震动强度
-    public float shakeDelay = 0f; // 震动开始的延迟时间
-    public Button submitButton; // 提交按钮
+    public RectTransform[] targetRectTransforms; // 震動させるオブジェクトの配列
+    public float shakeDuration = 0.5f; // 震動の持続時間
+    public float shakeAmount = 0.7f; // 震動の強度
+    public float shakeDelay = 0f; // 震動開始の遅延時間
+    public Button submitButton; // 提出ボタン
 
-    private Vector2[] originalPositions;
+    private Vector2[] originalPositions; // オリジナルの位置を保存するための配列
 
     void OnEnable()
     {
-        // 初始化原始位置数组
+        // オリジナルの位置配列を初期化
         originalPositions = new Vector2[targetRectTransforms.Length];
         
         for (int i = 0; i < targetRectTransforms.Length; i++)
         {
             if (targetRectTransforms[i] != null)
             {
-                originalPositions[i] = targetRectTransforms[i].anchoredPosition;
+                originalPositions[i] = targetRectTransforms[i].anchoredPosition; // 元の位置を保存
             }
         }
     }
@@ -32,23 +32,23 @@ public class ObjectShake : MonoBehaviour
             if (targetRectTransforms[i] != null)
             {
                 RectTransform target = targetRectTransforms[i];
-                Vector2 originalPosition = originalPositions[i]; // 捕获当前的原始位置
+                Vector2 originalPosition = originalPositions[i]; // 現在の元の位置をキャプチャ
                 
-                // 停止当前的所有动画，防止叠加
+                // 現在のすべてのアニメーションをキャンセルして重複を防ぐ
                 LeanTween.cancel(target.gameObject);
 
-                // 还原到原始位置
+                // 元の位置にリセット
                 target.anchoredPosition = originalPosition;
 
-                // 创建震动效果并延迟执行
+                // 震動効果を作成し、遅延実行
                 LeanTween.delayedCall(shakeDelay, () => 
                 {
                     LeanTween.move(target, originalPosition + (Vector2)Random.insideUnitCircle * shakeAmount, shakeDuration)
                             .setEase(LeanTweenType.easeShake)
-                            .setLoopPingPong(1)
+                            .setLoopPingPong(1) // ピンポンループを1回設定
                             .setOnComplete(() => 
                             {
-                                // 确保回到初始位置
+                                // 初期位置に戻ることを確認
                                 target.anchoredPosition = originalPosition;
                             });
                 });

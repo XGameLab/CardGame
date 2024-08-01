@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip attackSound;
-    public AudioClip defendSound;
-    public AudioClip healSound;
-    public AudioClip throwSound;
-    public AudioClip counterSound;
-    public AudioClip[] BattleSE; // 战斗音效数组
-    public AudioSource backupAudioSource; // 备用的 AudioSource
-    public float playDelay = 0f; // 延迟时间（秒）
-    public Button submitButton; // 提交按钮
+    public AudioClip attackSound; // 攻撃音
+    public AudioClip defendSound; // 防御音
+    public AudioClip healSound; // 回復音
+    public AudioClip throwSound; // 投げる音
+    public AudioClip counterSound; // カウンター音
+    public AudioClip[] BattleSE; // 戦闘音効果の配列
+    public AudioSource backupAudioSource; // バックアップ用の AudioSource
+    public float playDelay = 0f; // 再生遅延（秒）
+    public Button submitButton; // 送信ボタン
 
     private void Start()
     {
-        // 绑定按钮点击事件
+        // ボタンクリックイベントのバインド
         if (submitButton != null)
         {
             submitButton.onClick.AddListener(PlayRandomBattleSE);
@@ -29,26 +29,26 @@ public class AudioManager : MonoBehaviour
         switch (action)
         {
             case "P1ATKTrigger":
-                clip = attackSound;
+                clip = attackSound; // 攻撃音
                 break;
             case "P1DEFTrigger":
-                clip = defendSound;
+                clip = defendSound; // 防御音
                 break;
             case "P1HealTrigger":
-                clip = healSound;
+                clip = healSound; // 回復音
                 break;
             case "P1ThrowTrigger":
-                clip = throwSound;
+                clip = throwSound; // 投げる音
                 break;
             case "P1CNTTrigger":
-                clip = counterSound;
+                clip = counterSound; // カウンター音
                 break;
             default:
-                Debug.LogWarning("No sound mapped for action: " + action);
+                Debug.LogWarning("アクションに対応するサウンドが設定されていません: " + action);
                 return;
         }
 
-        // 如果有延迟，则使用延迟播放
+        // 遅延がある場合、遅延再生を使用
         if (playDelay > 0)
         {
             LeanTween.delayedCall(playDelay, () => PlaySoundEffect(clip));
@@ -63,23 +63,23 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null)
         {
-            Debug.LogWarning("AudioClip is null, cannot play sound.");
+            Debug.LogWarning("AudioClip が null です。サウンドを再生できません。");
             return;
         }
 
-        // 尝试使用 GameStateManager 播放音效
+        // GameStateManager を使用して音を再生する
         if (GameStateManager.Instance != null)
         {
             GameStateManager.Instance.PlaySoundEffect(clip);
         }
-        // 如果 GameStateManager 不可用，使用备用的 AudioSource 播放音效
+        // GameStateManager が使用できない場合、バックアップの AudioSource を使用して音を再生する
         else if (backupAudioSource != null)
         {
             backupAudioSource.PlayOneShot(clip);
         }
         else
         {
-            Debug.LogWarning("No available method to play the sound.");
+            Debug.LogWarning("音を再生する方法がありません。");
         }
     }
 
@@ -87,7 +87,7 @@ public class AudioManager : MonoBehaviour
     {
         if (BattleSE == null || BattleSE.Length == 0)
         {
-            Debug.LogWarning("BattleSE array is empty or null.");
+            Debug.LogWarning("BattleSE の配列が空か null です。");
             return;
         }
 
@@ -100,7 +100,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Selected AudioClip is null.");
+            Debug.LogWarning("選択された AudioClip が null です。");
         }
     }
 }

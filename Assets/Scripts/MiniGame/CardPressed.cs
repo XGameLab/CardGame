@@ -5,24 +5,24 @@ using System.Collections;
 
 public class CardPressed : MonoBehaviourPunCallbacks
 {
-    public bool isATK;
-    public bool isDEF;
-    public bool isHeal;
-    public bool isThrow;
-    public bool isCNT;
+    public bool isATK; // 攻撃カードかどうかのフラグ
+    public bool isDEF; // 防御カードかどうかのフラグ
+    public bool isHeal; // 回復カードかどうかのフラグ
+    public bool isThrow; // 投げ技カードかどうかのフラグ
+    public bool isCNT; // カウンターカードかどうかのフラグ
 
-    public Texture atkTexture;
-    public Texture defTexture;
-    public Texture healTexture;
-    public Texture throwTexture;
-    public Texture cntTexture;
-    public Texture defaultTex;
+    public Texture atkTexture; // 攻撃カードのテクスチャ
+    public Texture defTexture; // 防御カードのテクスチャ
+    public Texture healTexture; // 回復カードのテクスチャ
+    public Texture throwTexture; // 投げ技カードのテクスチャ
+    public Texture cntTexture; // カウンターカードのテクスチャ
+    public Texture defaultTex; // デフォルトのテクスチャ
 
-    public static event System.Action OnSameTypeCardsMatched;
-    public static event System.Action OnDifferentTypeCardsMatched;
+    public static event System.Action OnSameTypeCardsMatched; // 同じタイプのカードが一致したときのイベント
+    public static event System.Action OnDifferentTypeCardsMatched; // 異なるタイプのカードが一致したときのイベント
 
-    private static CardPressed firstCard;
-    private static CardPressed secondCard;
+    private static CardPressed firstCard; // 最初にクリックされたカード
+    private static CardPressed secondCard; // 二番目にクリックされたカード
     private RawImage rawImage;
     private Button button;
 
@@ -33,12 +33,12 @@ public class CardPressed : MonoBehaviourPunCallbacks
 
         if (ScoreManager.Instance == null)
         {
-            Debug.LogError("ScoreManager instance not found.");
+            Debug.LogError("ScoreManager インスタンスが見つかりません。");
         }
 
         if (rawImage == null)
         {
-            Debug.LogError("RawImage component is missing.");
+            Debug.LogError("RawImage コンポーネントが不足しています。");
             return;
         }
 
@@ -48,7 +48,7 @@ public class CardPressed : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.LogError("Button component is missing.");
+            Debug.LogError("Button コンポーネントが不足しています。");
         }
     }
 
@@ -57,14 +57,14 @@ public class CardPressed : MonoBehaviourPunCallbacks
         int currentPlayer = ScoreManager.Instance.CurrentPlayer;
         bool isOfflineMode = ScoreManager.Instance.IsOfflineMode;
 
-        // 检查当前玩家和网络状态，决定是否允许点击
+        // 現在のプレイヤーとネットワーク状態をチェックし、クリックを許可するかどうかを決定
         if (isOfflineMode || (currentPlayer == 1 && PhotonNetwork.IsMasterClient) || (currentPlayer == 2 && !PhotonNetwork.IsMasterClient))
         {
             HandleCardClick();
         }
         else
         {
-            Debug.Log("Card click not allowed. CurrentPlayer: " + currentPlayer);
+            Debug.Log("カードクリックは許可されていません。CurrentPlayer: " + currentPlayer);
         }
     }
 
@@ -72,14 +72,14 @@ public class CardPressed : MonoBehaviourPunCallbacks
     {
         if (firstCard == null)
         {
-            firstCard = this;
-            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT);
+            firstCard = this; // 最初にクリックされたカードを保存
+            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT); // カードの画像を変更
         }
         else if (secondCard == null && firstCard != this)
         {
-            secondCard = this;
-            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT);
-            CompareCards();
+            secondCard = this; // 二番目にクリックされたカードを保存
+            ChangeCardImage(isATK, isDEF, isHeal, isThrow, isCNT); // カードの画像を変更
+            CompareCards(); // カードを比較
         }
     }
 
@@ -106,31 +106,32 @@ public class CardPressed : MonoBehaviourPunCallbacks
             rawImage.texture = cntTexture;
         }
 
-        Debug.Log($"Card clicked. Type: {GetCardType(this)}");
+        Debug.Log($"カードがクリックされました。タイプ: {GetCardType(this)}");
     }
 
     void CompareCards()
     {
         if (firstCard != null && secondCard != null)
         {
+            // カードのタイプを比較
             if ((firstCard.isATK && secondCard.isATK) ||
                 (firstCard.isDEF && secondCard.isDEF) ||
                 (firstCard.isHeal && secondCard.isHeal) ||
                 (firstCard.isThrow && secondCard.isThrow) ||
                 (firstCard.isCNT && secondCard.isCNT))
             {
-                Debug.Log("The two cards are of the same type.");
-                DisableCardInteractivity(firstCard);
+                Debug.Log("2枚のカードは同じタイプです。");
+                DisableCardInteractivity(firstCard); // カードのインタラクティビティを無効にする
                 DisableCardInteractivity(secondCard);
 
-                OnSameTypeCardsMatched?.Invoke();
+                OnSameTypeCardsMatched?.Invoke(); // 同じタイプのカードが一致したイベントを発火
                 ResetCards();
             }
             else
             {
-                Debug.Log("The two cards are of different types.");
-                OnDifferentTypeCardsMatched?.Invoke();
-                StartCoroutine(ResetCardsAfterDelay(1f));
+                Debug.Log("2枚のカードは異なるタイプです。");
+                OnDifferentTypeCardsMatched?.Invoke(); // 異なるタイプのカードが一致したイベントを発火
+                StartCoroutine(ResetCardsAfterDelay(1f)); // 遅延後にカードをリセット
             }
         }
     }
@@ -139,7 +140,7 @@ public class CardPressed : MonoBehaviourPunCallbacks
     {
         if (card.button != null)
         {
-            card.button.interactable = false;
+            card.button.interactable = false; // カードのインタラクティビティを無効にする
         }
     }
 

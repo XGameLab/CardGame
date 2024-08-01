@@ -5,26 +5,26 @@ using System.Collections.Generic;
 
 public class CardEffect : MonoBehaviour
 {
-    public GameObject[] cardPrefabs; // 卡牌种类预制体数组
-    public RectTransform drawPosition; // 抽牌位置
-    public RectTransform[] handPositions; // 手牌位置数组
-    public RectTransform[] selectedPositions; // 被选中卡牌的位置数组
-    public float drawDuration = 0.5f; // 动画持续时间
-    public float drawInterval = 0.5f; // 发牌间隔时间
-    public Canvas canvas; // 父 Canvas 对象
-    public int cardsToDraw = 5; // 要抽取的卡牌数量
-    public float moveDuration = 0.25f; // 移动动画的持续时间
-    public Button submitButton; // 提交按钮
+    public GameObject[] cardPrefabs; // カードプレハブの配列
+    public RectTransform drawPosition; // カードを引く位置
+    public RectTransform[] handPositions; // 手札の位置の配列
+    public RectTransform[] selectedPositions; // 選択されたカードの位置の配列
+    public float drawDuration = 0.5f; // アニメーションの持続時間
+    public float drawInterval = 0.5f; // カードを引く間隔時間
+    public Canvas canvas; // 親 Canvas オブジェクト
+    public int cardsToDraw = 5; // 引くカードの枚数
+    public float moveDuration = 0.25f; // 移動アニメーションの持続時間
+    public Button submitButton; // 提出ボタン
 
-    public Player2AI player2AI; // 引用Player2AI脚本
-    public BattleInfoManager battleInfoManager;
-    public AudioManager audioManager;
+    public Player2AI player2AI; // Player2AI スクリプトの参照
+    public BattleInfoManager battleInfoManager; // BattleInfoManager スクリプトの参照
+    public AudioManager audioManager; // AudioManager スクリプトの参照
 
-    private int currentHandPositionIndex = 0; // 当前手牌位置索引
-    private List<int> availableCardIndices; // 可用卡牌索引列表
-    private List<GameObject> currentHandCards; // 当前手牌中的卡牌
-    private List<GameObject> cardPool; // 卡牌对象池
-    private GameObject selectedCard; // 当前选中的卡牌
+    private int currentHandPositionIndex = 0; // 現在の手札位置インデックス
+    private List<int> availableCardIndices; // 使用可能なカードインデックスのリスト
+    private List<GameObject> currentHandCards; // 現在の手札のカードリスト
+    private List<GameObject> cardPool; // カードのオブジェクトプール
+    private GameObject selectedCard; // 現在選択されたカード
 
     string GetButtonType(ButtonHandler handler)
     {
@@ -38,18 +38,18 @@ public class CardEffect : MonoBehaviour
 
     void Start()
     {
-        InitializeCardIndices();
-        currentHandCards = new List<GameObject>();
-        cardPool = new List<GameObject>();
+        InitializeCardIndices(); // カードインデックスを初期化
+        currentHandCards = new List<GameObject>(); // 手札のカードリストを初期化
+        cardPool = new List<GameObject>(); // カードのオブジェクトプールを初期化
 
-        // 预加载卡牌对象池
+        // カードのオブジェクトプールを事前にロード
         foreach (GameObject prefab in cardPrefabs)
         {
             GameObject card = Instantiate(prefab, canvas.transform);
-            card.SetActive(false);
+            card.SetActive(false); // 初期状態で非アクティブ
             cardPool.Add(card);
 
-            // 添加按钮点击事件监听器
+            // ボタンクリックイベントリスナーを追加
             Button cardButton = card.GetComponent<Button>();
             if (cardButton != null)
             {
@@ -57,47 +57,48 @@ public class CardEffect : MonoBehaviour
             }
         }
 
-        // 为提交按钮添加点击事件监听器
+        // 提出ボタンのクリックイベントリスナーを追加
         if (submitButton != null)
         {
             submitButton.onClick.AddListener(OnSubmitButtonClicked);
-            submitButton.interactable = false; // 初始状态禁用提交按钮
+            submitButton.interactable = false; // 初期状態で無効化
         }
     }
 
     void Update()
     {
+        // Dキーが押された時にカードを引く
         if (Input.GetKeyDown(KeyCode.D) && !battleInfoManager.isGameOver)
         {
             StartCoroutine(DrawCards(cardsToDraw));
         }
 
-        // 检测数字键的按下
+        // 数字キーが押された時にカードを選択
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
-            SelectCardByIndex(0); // 选择第一张卡牌
+            SelectCardByIndex(0); // 最初のカードを選択
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
-            SelectCardByIndex(1); // 选择第二张卡牌
+            SelectCardByIndex(1); // 二番目のカードを選択
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
         {
-            SelectCardByIndex(2); // 选择第三张卡牌
+            SelectCardByIndex(2); // 三番目のカードを選択
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
         {
-            SelectCardByIndex(3); // 选择第四张卡牌
+            SelectCardByIndex(3); // 四番目のカードを選択
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
         {
-            SelectCardByIndex(4); // 选择第五张卡牌
+            SelectCardByIndex(4); // 五番目のカードを選択
         }
 
-        // 检测Enter键的按下
+        // Enterキーが押された時にカードを確定
         if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && selectedCard != null)
         {
-            OnEnterClicked(); // 调用提交按钮的点击处理函数
+            OnEnterClicked(); // 提出ボタンのクリック処理を実行
         }
     }
 
@@ -108,18 +109,18 @@ public class CardEffect : MonoBehaviour
         {
             availableCardIndices.Add(i);
         }
-        currentHandPositionIndex = 0;
+        currentHandPositionIndex = 0; // 現在の手札位置インデックスをリセット
     }
 
-    // 通过索引选择卡牌
+    // インデックスでカードを選択
     void SelectCardByIndex(int index)
     {
         if (index >= 0 && index < currentHandCards.Count)
         {
             GameObject card = currentHandCards[index];
-            OnCardClicked(card); // 调用卡牌点击处理函数
+            OnCardClicked(card); // カードクリック処理を実行
 
-            // 获取按钮类型并触发事件
+            // ボタンタイプを取得してイベントをトリガー
             ButtonHandler buttonHandler = card.GetComponent<ButtonHandler>();
             if (buttonHandler != null)
             {
@@ -134,10 +135,10 @@ public class CardEffect : MonoBehaviour
         for (int i = 0; i < numberOfCards && currentHandPositionIndex < handPositions.Length; i++)
         {
             DrawCard();
-            yield return new WaitForSeconds(drawInterval); // 等待指定的时间间隔
+            yield return new WaitForSeconds(drawInterval); // 指定した間隔時間を待つ
         }
 
-        // 初始化Player2的卡牌
+        // Player2のカードを初期化
         player2AI.InitializePlayer2Cards(availableCardIndices, cardPrefabs);
     }
 
@@ -155,15 +156,15 @@ public class CardEffect : MonoBehaviour
             return;
         }
 
-        // 获取当前手牌位置
+        // 現在の手札位置を取得
         RectTransform currentHandPosition = handPositions[currentHandPositionIndex];
 
-        // 随机选择一种未被抽取的卡牌
+        // ランダムにカードを選択
         int randomIndex = Random.Range(0, availableCardIndices.Count);
         int cardIndex = availableCardIndices[randomIndex];
-        availableCardIndices.RemoveAt(randomIndex); // 移除已抽取的卡牌索引
+        availableCardIndices.RemoveAt(randomIndex); // 選択したカードのインデックスをリストから削除
 
-        // 从对象池中获取卡牌
+        // オブジェクトプールからカードを取得
         GameObject newCard = cardPool[cardIndex];
         newCard.SetActive(true);
         RectTransform cardRectTransform = newCard.GetComponent<RectTransform>();
@@ -174,28 +175,28 @@ public class CardEffect : MonoBehaviour
             return;
         }
 
-        // 设置卡牌的初始位置
+        // カードの初期位置を設定
         cardRectTransform.anchoredPosition = drawPosition.anchoredPosition;
 
-        // 使用 LeanTween 移动卡牌到当前手牌位置
+        // LeanTweenを使用してカードを手札位置に移動
         LeanTween.move(cardRectTransform, currentHandPosition.anchoredPosition, drawDuration).setEase(LeanTweenType.easeOutQuad);
 
-        // 你可以在这里添加更多动画效果，比如旋转、缩放等
+        // その他のアニメーション効果を追加
         LeanTween.rotateZ(newCard, 0, drawDuration).setEase(LeanTweenType.easeOutQuad);
         LeanTween.scale(newCard, Vector3.one, drawDuration).setEase(LeanTweenType.easeOutQuad);
 
         // Debug.Log("Card is being moved to position: " + currentHandPositionIndex);
 
-        // 更新索引，指向下一个手牌位置
+        // 次の手札位置にインデックスを更新
         currentHandPositionIndex++;
 
-        // 将新卡牌加入当前手牌列表
+        // 新しいカードを現在の手札リストに追加
         currentHandCards.Add(newCard);
     }
 
     public void ResetHand()
     {
-        // 复位当前手牌中的所有卡牌
+        // 現在の手札のすべてのカードをリセット
         foreach (GameObject card in currentHandCards)
         {
             RectTransform cardRectTransform = card.GetComponent<RectTransform>();
@@ -203,19 +204,19 @@ public class CardEffect : MonoBehaviour
             {
                 LeanTween.move(cardRectTransform, drawPosition.anchoredPosition, moveDuration).setEase(LeanTweenType.easeOutQuad);
             }
-            card.SetActive(false); // 隐藏卡牌而不是销毁
+            card.SetActive(false); // カードを非表示にする
         }
 
-        // 清空当前手牌列表
+        // 現在の手札リストをクリア
         currentHandCards.Clear();
 
-        // 清除选中的卡牌
+        // 選択されたカードをクリア
         selectedCard = null;
 
-        // 重新初始化卡牌索引
+        // カードインデックスを再初期化
         InitializeCardIndices();
 
-        // 禁用提交按钮
+        // 提出ボタンを無効化
         if (submitButton != null)
         {
             submitButton.interactable = false;
@@ -228,7 +229,7 @@ public class CardEffect : MonoBehaviour
     {
         if (selectedCard != card && selectedCard != null)
         {
-            // 还原先前选中的卡牌位置
+            // 以前に選択されたカードの位置を復元
             int previousCardIndex = currentHandCards.IndexOf(selectedCard);
             if (previousCardIndex >= 0 && previousCardIndex < handPositions.Length)
             {
@@ -242,7 +243,7 @@ public class CardEffect : MonoBehaviour
 
         if (selectedCard != card)
         {
-            // 移动新选中的卡牌位置
+            // 新しく選択されたカードの位置を移動
             int cardIndex = currentHandCards.IndexOf(card);
             if (cardIndex >= 0 && cardIndex < selectedPositions.Length)
             {
@@ -252,7 +253,7 @@ public class CardEffect : MonoBehaviour
                     LeanTween.move(cardRectTransform, selectedPositions[cardIndex].anchoredPosition, moveDuration).setEase(LeanTweenType.easeOutQuad);
                     selectedCard = card;
 
-                    // 启用提交按钮
+                    // 提出ボタンを有効化
                     if (submitButton != null)
                     {
                         submitButton.interactable = true;
@@ -264,7 +265,7 @@ public class CardEffect : MonoBehaviour
 
     void OnSubmitButtonClicked()
     {
-        // 禁用提交按钮
+        // 提出ボタンを無効化
         if (submitButton != null)
         {
             submitButton.interactable = false;
@@ -276,7 +277,7 @@ public class CardEffect : MonoBehaviour
 
     void OnEnterClicked()
     {
-        // 禁用提交按钮
+        // 提出ボタンを無効化
         if (submitButton != null)
         {
             submitButton.interactable = false;
@@ -293,7 +294,7 @@ public class CardEffect : MonoBehaviour
 
     IEnumerator ResetCards()
     {
-        // 按倒序复位所有卡牌位置
+        // 逆順にすべてのカード位置をリセット
         for (int i = currentHandCards.Count - 1; i >= 0; i--)
         {
             GameObject card = currentHandCards[i];
@@ -305,17 +306,17 @@ public class CardEffect : MonoBehaviour
             yield return new WaitForSeconds(drawInterval);
         }
 
-        // 隐藏所有卡牌并清空当前手牌列表
+        // すべてのカードを非表示にして手札リストをクリア
         foreach (GameObject card in currentHandCards)
         {
-            card.SetActive(false); // 隐藏卡牌而不是销毁
+            card.SetActive(false); // カードを非表示にする
         }
         currentHandCards.Clear();
 
-        // 清除选中的卡牌
+        // 選択されたカードをクリア
         selectedCard = null;
 
-        // 重新初始化卡牌索引
+        // カードインデックスを再初期化
         InitializeCardIndices();
 
         Debug.Log("All cards have been reset.");

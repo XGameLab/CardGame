@@ -6,78 +6,78 @@ using ExitGames.Client.Photon;
 
 public class GameStart : MonoBehaviourPunCallbacks
 {
-    public RectTransform[] cardPos;
-    public GameObject[] cardPrefabs;
+    public RectTransform[] cardPos; // カードの位置配列
+    public GameObject[] cardPrefabs; // カードのプレハブ配列
 
-    private int maxPerPrefab = 4;
-    private int[] prefabCounts;
+    private int maxPerPrefab = 4; // 各プレハブの最大生成数
+    private int[] prefabCounts; // 各プレハブの生成数を追跡する配列
 
     [SerializeField]
-    private int seed; // 随机种子，公开到Inspector
+    private int seed; // ランダムシード、インスペクターで公開
 
-    private const string SeedProperty = "GameSeed";
-    private bool isGameStarted = false;
+    private const string SeedProperty = "GameSeed"; // シードのプロパティキー
+    private bool isGameStarted = false; // ゲームが開始されたかどうかのフラグ
 
     void Start()
     {
         prefabCounts = new int[cardPrefabs.Length];
-        PhotonNetwork.AddCallbackTarget(this);
+        PhotonNetwork.AddCallbackTarget(this); // コールバックターゲットを追加
     }
 
     void OnEnable()
     {
-        ScoreManager.OnRetryGame += RetrySpawnCards;
-        ChooseGameMode.OnGameOffline += StartOfflineGame;
-        ChooseGameMode.OnGameOnline += StartOnlineGame;
+        ScoreManager.OnRetryGame += RetrySpawnCards; // リトライイベントにリスナーを追加
+        ChooseGameMode.OnGameOffline += StartOfflineGame; // オフラインゲーム開始時のイベントリスナーを追加
+        ChooseGameMode.OnGameOnline += StartOnlineGame; // オンラインゲーム開始時のイベントリスナーを追加
     }
 
     void OnDisable()
     {
-        PhotonNetwork.RemoveCallbackTarget(this);
-        ScoreManager.OnRetryGame -= RetrySpawnCards;
-        ChooseGameMode.OnGameOffline -= StartOfflineGame;
-        ChooseGameMode.OnGameOnline -= StartOnlineGame;
+        PhotonNetwork.RemoveCallbackTarget(this); // コールバックターゲットを削除
+        ScoreManager.OnRetryGame -= RetrySpawnCards; // リトライイベントリスナーを削除
+        ChooseGameMode.OnGameOffline -= StartOfflineGame; // オフラインゲーム開始リスナーを削除
+        ChooseGameMode.OnGameOnline -= StartOnlineGame; // オンラインゲーム開始リスナーを削除
     }
 
     private void StartOfflineGame()
     {
         isGameStarted = true;
-        GenerateSeedForOfflineMode();
-        SpawnCards();
+        GenerateSeedForOfflineMode(); // オフラインモード用のシードを生成
+        SpawnCards(); // カードを生成
     }
 
     private void StartOnlineGame()
     {
         isGameStarted = true;
-        // 联机模式的处理逻辑将在OnJoinedRoom中完成
+        // オンラインモードの処理はOnJoinedRoomで行う
     }
 
     private void GenerateAndSetSeed()
     {
         seed = Random.Range(int.MinValue, int.MaxValue);
-        Debug.Log("Host Seed: " + seed);
+        Debug.Log("ホストのシード: " + seed);
 
         ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable
         {
             { SeedProperty, seed }
         };
-        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties); // シードをルームプロパティに設定
     }
 
     private void GenerateSeedForOfflineMode()
     {
         seed = Random.Range(int.MinValue, int.MaxValue);
-        Debug.Log("Offline Mode Seed: " + seed);
+        Debug.Log("オフラインモードのシード: " + seed);
     }
 
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            GenerateAndSetSeed();
+            GenerateAndSetSeed(); // シードを生成して設定
             if (isGameStarted)
             {
-                SpawnCards();
+                SpawnCards(); // カードを生成
             }
         }
         else
@@ -85,10 +85,10 @@ public class GameStart : MonoBehaviourPunCallbacks
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(SeedProperty, out object seedValue))
             {
                 seed = (int)seedValue;
-                Debug.Log("Client received Seed: " + seed);
+                Debug.Log("クライアントがシードを受信: " + seed);
                 if (isGameStarted)
                 {
-                    SpawnCards();
+                    SpawnCards(); // カードを生成
                 }
             }
         }
@@ -99,33 +99,33 @@ public class GameStart : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.ContainsKey(SeedProperty))
         {
             seed = (int)propertiesThatChanged[SeedProperty];
-            Debug.Log("Updated Seed from properties: " + seed);
+            Debug.Log("プロパティから更新されたシード: " + seed);
             if (isGameStarted)
             {
-                SpawnCards();
+                SpawnCards(); // カードを生成
             }
         }
     }
 
     private void SpawnCards()
     {
-        // 清理旧的卡牌
+        // 既存のカードをクリア
         ResetGame();
 
         if (cardPrefabs.Length != 5)
         {
-            Debug.LogError("Prefab array must contain exactly 5 elements.");
+            Debug.LogError("プレハブ配列には正確に5つの要素が必要です。");
             return;
         }
 
         if (cardPos.Length != 20)
         {
-            Debug.LogError("Spawn points array must contain exactly 20 elements.");
+            Debug.LogError("スポーンポイント配列には正確に20の要素が必要です。");
             return;
         }
 
         Random.InitState(seed);
-        Debug.Log("Using Seed: " + seed);
+        Debug.Log("使用されているシード: " + seed);
 
         foreach (var pos in cardPos)
         {
@@ -137,10 +137,10 @@ public class GameStart : MonoBehaviourPunCallbacks
 
                 if (prefabCounts[randomIndex] < maxPerPrefab)
                 {
-                    // 清理位置上已有的卡牌
+                    // 位置にある既存のカードをクリア
                     ClearPreviousCard(pos);
 
-                    // 使用PhotonNetwork.Instantiate在网络上创建卡牌
+                    // PhotonNetwork.Instantiateを使用してネットワーク上にカードを生成
                     GameObject card;
                     if (PhotonNetwork.IsConnected)
                     {
@@ -186,21 +186,21 @@ public class GameStart : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
-            GenerateAndSetSeed();
+            GenerateAndSetSeed(); // シードを生成して設定
         }
         else if (!PhotonNetwork.IsConnected)
         {
-            GenerateSeedForOfflineMode();
+            GenerateSeedForOfflineMode(); // オフラインモード用のシードを生成
         }
 
-        SpawnCards();
+        SpawnCards(); // カードを生成
     }
 
     private void OnValidate()
     {
         if (Application.isPlaying && isGameStarted)
         {
-            SpawnCards();
+            SpawnCards(); // カードを生成
         }
     }
 }

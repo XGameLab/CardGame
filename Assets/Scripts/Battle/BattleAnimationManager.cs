@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class BattleAnimationManager : MonoBehaviour
 {
-    public Animator playerAnimator;
-    public Animator[] enemyAnimators;
-    public ObjectShake objectShake;
-    public AudioManager audioManager;
+    public Animator playerAnimator; // プレイヤーのアニメーター
+    public Animator[] enemyAnimators; // 敵のアニメーターの配列
+    public ObjectShake objectShake; // 物体を揺らす効果
+    public AudioManager audioManager; // 音声管理
 
     private void Start()
     {
-        // 初始化角色的默认动画状态
+        // キャラクターのデフォルトのアニメーション状態を初期化
         SetDefaultAnimationStates();
     }
 
     public void SetDefaultAnimationStates()
     {
-        SetTriggerIfExists(playerAnimator, "P1IdleTrigger");
-        SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2IdleTrigger");
-        UpdateEnemyVisibility();
+        SetTriggerIfExists(playerAnimator, "P1IdleTrigger"); // プレイヤーのアイドル状態にトリガーを設定
+        SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2IdleTrigger"); // 敵のアイドル状態にトリガーを設定
+        UpdateEnemyVisibility(); // 敵の可視性を更新
     }
 
     public void PlayAnimation(string action, bool isPlayer)
@@ -25,19 +25,19 @@ public class BattleAnimationManager : MonoBehaviour
         switch (action)
         {
             case "ATK":
-                PlayAttackAnimation(isPlayer);
+                PlayAttackAnimation(isPlayer); // 攻撃アニメーションを再生
                 break;
             case "DEF":
-                PlayDefendAnimation(isPlayer);
+                PlayDefendAnimation(isPlayer); // 防御アニメーションを再生
                 break;
             case "Heal":
-                PlayHealAnimation(isPlayer);
+                PlayHealAnimation(isPlayer); // 回復アニメーションを再生
                 break;
             case "Throw":
-                PlayThrowAnimation(isPlayer);
+                PlayThrowAnimation(isPlayer); // 投げるアニメーションを再生
                 break;
             case "CNT":
-                PlayCounterAnimation(isPlayer);
+                PlayCounterAnimation(isPlayer); // カウンターアニメーションを再生
                 break;
         }
     }
@@ -46,26 +46,26 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            SetTriggerIfExists(playerAnimator, "P1ATKTrigger");
-            audioManager.PlaySound("P1ATKTrigger");
+            SetTriggerIfExists(playerAnimator, "P1ATKTrigger"); // プレイヤーの攻撃トリガーを設定
+            audioManager.PlaySound("P1ATKTrigger"); // 攻撃音を再生
         }
         else
         {
-            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ATKTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ATKTrigger"); // 敵の攻撃トリガーを設定
         }
-        objectShake.TriggerShake();
+        objectShake.TriggerShake(); // 物体を揺らす
     }
 
     public void PlayDefendAnimation(bool isPlayer)
     {
         if (isPlayer)
         {
-            SetTriggerIfExists(playerAnimator, "P1DEFTrigger");
-            audioManager.PlaySound("P1DEFTrigger");
+            SetTriggerIfExists(playerAnimator, "P1DEFTrigger"); // プレイヤーの防御トリガーを設定
+            audioManager.PlaySound("P1DEFTrigger"); // 防御音を再生
         }
         else
         {
-            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2DEFTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2DEFTrigger"); // 敵の防御トリガーを設定
         }
     }
 
@@ -73,12 +73,12 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            SetTriggerIfExists(playerAnimator, "P1HealTrigger");
-            audioManager.PlaySound("P1HealTrigger");
+            SetTriggerIfExists(playerAnimator, "P1HealTrigger"); // プレイヤーの回復トリガーを設定
+            audioManager.PlaySound("P1HealTrigger"); // 回復音を再生
         }
         else
         {
-            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2HealTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2HealTrigger"); // 敵の回復トリガーを設定
         }
     }
 
@@ -86,40 +86,40 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            SetTriggerIfExists(playerAnimator, "P1ThrowTrigger");
-            audioManager.PlaySound("P1ThrowTrigger");
+            SetTriggerIfExists(playerAnimator, "P1ThrowTrigger"); // プレイヤーの投げるトリガーを設定
+            audioManager.PlaySound("P1ThrowTrigger"); // 投げる音を再生
         }
         else
         {
-            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ThrowTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2ThrowTrigger"); // 敵の投げるトリガーを設定
         }
-        objectShake.TriggerShake();
+        objectShake.TriggerShake(); // 物体を揺らす
     }
 
     public void PlayCounterAnimation(bool isPlayer)
     {
         if (isPlayer)
         {
-            SetTriggerIfExists(playerAnimator, "P1CNTTrigger");
-            audioManager.PlaySound("P1CNTTrigger");
+            SetTriggerIfExists(playerAnimator, "P1CNTTrigger"); // プレイヤーのカウンタートリガーを設定
+            audioManager.PlaySound("P1CNTTrigger"); // カウンター音を再生
         }
         else
         {
-            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2CNTTrigger");
+            SetTriggerIfExists(GetCurrentEnemyAnimator(), "P2CNTTrigger"); // 敵のカウンタートリガーを設定
         }
-        objectShake.TriggerShake();
+        objectShake.TriggerShake(); // 物体を揺らす
     }
 
     private Animator GetCurrentEnemyAnimator()
     {
-        int index = GameStateManager.lastSelectedIndex;
+        int index = GameStateManager.lastSelectedIndex; // 最後に選択された敵のインデックス
         // Debug.Log("index: " + index);
         if (index >= 0 && index < enemyAnimators.Length)
         {
-            Animator currentAnimator = enemyAnimators[index];
+            Animator currentAnimator = enemyAnimators[index]; // 現在の敵のアニメーター
             // Debug.Log("Current enemy animator: " + currentAnimator.name);
 
-            // 获取 SpriteRenderer 并输出当前的 Sprite 名称
+            // SpriteRenderer を取得して現在の Sprite 名を出力
             SpriteRenderer spriteRenderer = currentAnimator.GetComponent<SpriteRenderer>();
             // if (spriteRenderer != null)
             // {
@@ -127,15 +127,15 @@ public class BattleAnimationManager : MonoBehaviour
             // }
             if (spriteRenderer == null)
             {
-                Debug.LogWarning("No SpriteRenderer found on " + currentAnimator.name);
+                Debug.LogWarning("SpriteRenderer が " + currentAnimator.name + " に見つかりません。");
             }
 
             return currentAnimator;
         }
         else
         {
-            Debug.LogWarning("Invalid enemy animator index, using default.");
-            return enemyAnimators[0]; // 返回默认的动画
+            Debug.LogWarning("無効な敵アニメーターのインデックス、デフォルトを使用します。");
+            return enemyAnimators[0]; // デフォルトのアニメーターを返す
         }
     }
 
@@ -143,11 +143,11 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (HasTrigger(animator, triggerName))
         {
-            animator.SetTrigger(triggerName);
+            animator.SetTrigger(triggerName); // トリガーを設定
         }
         else
         {
-            Debug.LogWarning($"Animator does not have a trigger called {triggerName}");
+            Debug.LogWarning($"アニメーターには {triggerName} というトリガーがありません。");
         }
     }
 
@@ -167,11 +167,11 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerAnimator.enabled = enabled;
+            playerAnimator.enabled = enabled; // プレイヤーのアニメーターを有効/無効にする
         }
         else
         {
-            GetCurrentEnemyAnimator().enabled = enabled;
+            GetCurrentEnemyAnimator().enabled = enabled; // 敵のアニメーターを有効/無効にする
         }
     }
 
@@ -179,29 +179,29 @@ public class BattleAnimationManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerAnimator.SetTrigger("ExitTrigger");
+            playerAnimator.SetTrigger("ExitTrigger"); // プレイヤーの退出トリガーを設定
         }
         else
         {
-            GetCurrentEnemyAnimator().SetTrigger("ExitTrigger");
+            GetCurrentEnemyAnimator().SetTrigger("ExitTrigger"); // 敵の退出トリガーを設定
         }
     }
 
     public void ResetWhenRestart()
     {
-        ResetTriggers(playerAnimator);
+        ResetTriggers(playerAnimator); // プレイヤーのトリガーをリセット
         foreach (var animator in enemyAnimators)
         {
-            ResetTriggers(animator);
+            ResetTriggers(animator); // 敵のトリガーをリセット
         }
 
-        SetDefaultAnimationStates();
+        SetDefaultAnimationStates(); // デフォルトのアニメーション状態を設定
 
-        TriggerExitAnimation(true); 
-        TriggerExitAnimation(false); 
+        TriggerExitAnimation(true); // プレイヤーの退出アニメーションをトリガー
+        TriggerExitAnimation(false); // 敵の退出アニメーションをトリガー
 
-        SetAnimatorEnabled(true, true);
-        SetAnimatorEnabled(true, false);
+        SetAnimatorEnabled(true, true); // プレイヤーのアニメーターを有効にする
+        SetAnimatorEnabled(true, false); // 敵のアニメーターを有効にする
     }
 
     public void ResetTriggers(Animator animator)
@@ -210,17 +210,17 @@ public class BattleAnimationManager : MonoBehaviour
         {
             if (param.type == AnimatorControllerParameterType.Trigger)
             {
-                animator.ResetTrigger(param.name);
+                animator.ResetTrigger(param.name); // トリガーをリセット
             }
         }
     }
 
     private void UpdateEnemyVisibility()
     {
-        int currentIndex = GameStateManager.lastSelectedIndex;
+        int currentIndex = GameStateManager.lastSelectedIndex; // 現在選択されている敵のインデックス
         for (int i = 0; i < enemyAnimators.Length; i++)
         {
-            enemyAnimators[i].gameObject.SetActive(i == currentIndex);
+            enemyAnimators[i].gameObject.SetActive(i == currentIndex); // 敵の表示状態を更新
         }
     }
 }
