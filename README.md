@@ -1,6 +1,6 @@
 ```
 ゲームプレイ動画  
-https://www.youtube.com
+https://www.youtube.com/watch?v=P6u0MVZYUS0
 
 ソースコードについて
 - Assets/Scripts/
